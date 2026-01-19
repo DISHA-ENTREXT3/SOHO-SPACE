@@ -91,18 +91,23 @@ const PartnerCard: React.FC<{ partner: PartnerProfile, onUpvote: () => void, cur
                 ))}
             </div>
             
-            <div className="flex items-center gap-3 mt-auto">
+            <div className="mt-auto">
                 <Link 
                     to={`/partner/${partner.id}`} 
-                    className="flex-grow text-center py-3 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg"
+                    className="block w-full text-center py-3 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg mb-3"
                 >
                     View Profile
                 </Link>
                 <button 
                     onClick={(e) => { e.preventDefault(); onUpvote(); }}
-                    className={`p-3 rounded-xl border-2 transition-all duration-300 ${isUpvoted ? 'bg-rose-500 border-rose-500 text-white' : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-rose-500 hover:text-rose-500'}`}
+                    className={`w-full py-3 rounded-xl border-2 transition-all duration-300 flex items-center justify-center gap-2 ${
+                        isUpvoted 
+                            ? 'bg-rose-500 border-rose-500 text-white' 
+                            : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-rose-500 hover:text-rose-500'
+                    }`}
                 >
                     <FireIcon className={`h-5 w-5 ${isUpvoted ? 'animate-pulse' : ''}`} />
+                    <span className="text-sm font-semibold">{isUpvoted ? 'Endorsed' : 'Endorse'}</span>
                 </button>
             </div>
         </div>
@@ -534,7 +539,7 @@ const DashboardPage = () => {
                                     className="px-10 py-5 bg-indigo-600 text-white rounded-[1.5rem] font-black uppercase tracking-[0.2em] text-[10px] transition-all shadow-2xl shadow-indigo-600/25 hover:bg-indigo-500 hover:-translate-y-1 active:scale-95 flex items-center gap-3"
                                 >
                                     <BriefcaseIcon className="h-4 w-4" />
-                                    Company Vector
+                                    Company Profile
                                 </Link>
                                 <Link
                                     to="/settings"
@@ -583,36 +588,36 @@ const DashboardPage = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
                     {/* Founder Onboarding Checklist */}
-                    <div className="lg:col-span-1 bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] p-10 rounded-[2.5rem] shadow-2xl">
+                    <div className="lg:col-span-1 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 p-8 rounded-2xl shadow-lg">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-[10px] font-black text-[var(--text-primary)] flex items-center gap-3 uppercase tracking-[0.2em]">
-                                <RocketLaunchIcon className="h-4 w-4 text-indigo-600" />
-                                Growth Sync
+                            <h2 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                <RocketLaunchIcon className="h-5 w-5 text-indigo-600" />
+                                Growth Progress
                             </h2>
-                            <span className="text-[10px] font-black text-indigo-600">{completedChecklist}/{checklistItems.length}</span>
+                            <span className="text-sm font-bold text-indigo-600">{completedChecklist}/{checklistItems.length}</span>
                         </div>
                         
                         {/* Progress bar */}
-                        <div className="w-full bg-[var(--bg-secondary)] rounded-full h-1.5 mb-10">
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-8">
                             <div 
-                                className="h-1.5 rounded-full bg-indigo-600 transition-all duration-700 shadow-[0_0_12px_rgba(79,70,229,0.4)]"
+                                className="h-2 rounded-full bg-indigo-600 transition-all duration-700 shadow-lg shadow-indigo-600/30"
                                 style={{ width: `${checklistProgress}%` }}
                             />
                         </div>
                         
-                        <ul className="space-y-6">
+                        <ul className="space-y-5">
                             {checklistItems.map((item, index) => (
-                                <li key={index} className={`flex items-start gap-4 transition-all ${item.completed ? 'opacity-100' : 'opacity-40'}`}>
+                                <li key={index} className={`flex items-start gap-3 transition-all ${item.completed ? 'opacity-100' : 'opacity-50'}`}>
                                     <div className={`flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mt-0.5 ${
-                                        item.completed ? 'bg-emerald-500 shadow-xl shadow-emerald-500/20' : 'bg-[var(--bg-secondary)] border border-[var(--glass-border)]'
+                                        item.completed ? 'bg-emerald-500 shadow-md' : 'bg-gray-200 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600'
                                     }`}>
-                                        {item.completed ? <CheckCircleIcon className="h-3 w-3 text-white" /> : <div className="w-1 h-1 bg-[var(--text-muted)] rounded-full" />}
+                                        {item.completed ? <CheckCircleIcon className="h-4 w-4 text-white" /> : <div className="w-2 h-2 bg-gray-400 rounded-full" />}
                                     </div>
                                     <div>
-                                        <p className="text-[11px] font-black uppercase tracking-tight text-[var(--text-primary)]">
+                                        <p className="text-sm font-bold text-gray-900 dark:text-white">
                                             {item.label}
                                         </p>
-                                        <p className="text-[9px] font-bold text-[var(--text-muted)] mt-1.5 leading-relaxed uppercase tracking-widest opacity-60">{item.description}</p>
+                                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">{item.description}</p>
                                     </div>
                                 </li>
                             ))}
