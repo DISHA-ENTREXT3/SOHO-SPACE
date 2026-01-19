@@ -55,7 +55,8 @@ const Header = () => {
     const scrollToSection = (sectionId: string) => {
         setMobileMenuOpen(false);
         if (!isHomePage) {
-            navigate('/' + (sectionId ? '?scroll=' + sectionId : ''));
+            const landingParam = user ? 'landing=true&' : '';
+            navigate('/' + (sectionId ? '?' + landingParam + 'scroll=' + sectionId : ''));
             return;
         }
         const element = document.getElementById(sectionId);
@@ -121,7 +122,7 @@ const Header = () => {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <div className="flex items-center">
-                        <Link to="/" className="flex items-center group">
+                        <Link to={user ? "/?landing=true" : "/"} className="flex items-center group">
                             <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all duration-300 p-1">
                                 <img src="/logo.png" alt="Soho Space Logo" className="w-full h-full object-contain" />
                             </div>

@@ -32,23 +32,28 @@ const StatCard: React.FC<{
     changeType?: 'positive' | 'negative' | 'neutral';
     gradient?: string;
 }> = ({ icon, label, value, change, changeType = 'neutral', gradient = 'from-indigo-500 to-purple-600' }) => (
-    <div className="relative bg-gray-900/50 backdrop-blur-sm border border-white/10 rounded-xl p-5 overflow-hidden group hover:border-white/20 transition-all duration-300">
-        <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient}`} />
-        <div className="flex items-start justify-between">
+    <div className="relative bg-gray-900/40 backdrop-blur-md border border-white/5 rounded-2xl p-6 overflow-hidden group hover:border-white/10 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500">
+        <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${gradient} opacity-50 group-hover:opacity-100 transition-opacity`} />
+        <div className="flex items-center justify-between">
             <div className="flex-1">
-                <p className="text-sm font-medium text-gray-400 mb-1">{label}</p>
-                <p className="text-2xl font-bold text-white">{value}</p>
-                {change && (
-                    <p className={`text-xs mt-2 font-medium ${
-                        changeType === 'positive' ? 'text-emerald-400' : 
-                        changeType === 'negative' ? 'text-rose-400' : 'text-gray-400'
-                    }`}>
-                        {change}
-                    </p>
-                )}
+                <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-2">{label}</p>
+                <div className="flex items-baseline gap-2">
+                    <p className="text-3xl font-extrabold text-white tracking-tight">{value}</p>
+                    {change && (
+                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
+                            changeType === 'positive' ? 'bg-emerald-500/10 text-emerald-400' : 
+                            changeType === 'negative' ? 'bg-rose-500/10 text-rose-400' : 'bg-white/5 text-gray-500'
+                        }`}>
+                            {change}
+                        </span>
+                    )}
+                </div>
             </div>
-            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg`}>
-                {icon}
+            <div className={`relative w-12 h-12 rounded-xl bg-gray-800/50 flex items-center justify-center border border-white/5 shadow-inner`}>
+                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20 blur-lg group-hover:opacity-40 transition-opacity`} />
+                <div className="relative z-10 scale-110">
+                    {icon}
+                </div>
             </div>
         </div>
     </div>
@@ -60,67 +65,42 @@ const PartnerCard: React.FC<{ partner: PartnerProfile, onUpvote: () => void, cur
     const skills = partner?.skills || [];
     
     return (
-        <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-lg hover:border-white/20 hover:shadow-xl transition-all duration-300 flex flex-col group">
-            <div className="flex items-start justify-between">
-                <div className="flex items-center">
-                    <div className="relative">
-                        <Avatar src={partner.avatarUrl} name={partner.name} size="lg" />
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-gray-900 flex items-center justify-center">
-                            <CheckCircleIcon className="h-3 w-3 text-white"/>
-                        </div>
-                    </div>
-                    <div className="ml-4">
-                        <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">{partner.name}</h3>
-                        <div className="flex items-center gap-2 mt-1">
-                            <MapPinIcon className="h-3.5 w-3.5 text-gray-500" />
-                            <span className="text-sm text-gray-400">{partner.location}</span>
-                        </div>
+        <div className="group relative bg-gray-900/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl hover:border-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 flex flex-col">
+            <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5 shadow-lg group-hover:scale-105 transition-transform duration-500">
+                    <Avatar src={partner.avatarUrl} name={partner.name} size="lg" className="h-full w-full rounded-2xl shadow-2xl" />
+                </div>
+                <div className="flex-grow min-w-0">
+                    <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors truncate">{partner.name}</h3>
+                    <div className="flex items-center gap-2 text-gray-500">
+                        <MapPinIcon className="h-3.5 w-3.5" />
+                        <span className="text-xs font-medium truncate">{partner.location}</span>
                     </div>
                 </div>
-                <div className="flex flex-col items-end gap-2">
-                    <div className={`inline-flex items-center px-2.5 py-1 rounded-lg border text-xs font-semibold ${getReputationColor(partner.reputationBand)}`}>
-                        <StarIcon className="h-3 w-3 mr-1"/>
-                        {partner.reputationBand}
-                    </div>
-                    {/* Upvote Button */}
-                    <button 
-                        onClick={(e) => {
-                            e.preventDefault();
-                            onUpvote();
-                        }}
-                        className={`flex items-center gap-1.5 px-2 py-1 rounded-lg border transition-all duration-200 ${
-                            isUpvoted 
-                                ? 'bg-indigo-500/20 border-indigo-500/50 text-indigo-400' 
-                                : 'bg-white/5 border-white/10 text-gray-500 hover:border-white/20 hover:text-gray-300'
-                        }`}
-                    >
-                        <ChevronUpIcon className="h-4 w-4" />
-                        <span className="text-xs font-bold">{partner.upvotes || 0}</span>
-                    </button>
-                </div>
+                <button 
+                    onClick={(e) => { e.preventDefault(); onUpvote(); }}
+                    className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl border transition-all duration-300 ${isUpvoted ? 'bg-indigo-500/20 border-indigo-500/30 text-indigo-400' : 'bg-white/5 border-white/10 text-gray-500 hover:border-white/20'}`}
+                >
+                    <ChevronUpIcon className={`h-4 w-4 ${isUpvoted ? 'animate-bounce' : ''}`} />
+                    <span className="text-[10px] font-black">{partner.upvotes || 0}</span>
+                </button>
             </div>
             
-            <p className="text-gray-400 mt-4 text-sm flex-grow line-clamp-2">
-                {partner.bio}
+            <p className="text-sm text-gray-400 line-clamp-2 leading-relaxed mb-6 group-hover:text-gray-300 transition-colors">
+                {partner.bio || "No biography available yet."}
             </p>
             
-            <div className="mt-5 pt-4 border-t border-white/10">
-                <p className="font-semibold text-xs text-gray-500 uppercase tracking-wider mb-2">Top Skills</p>
-                <div className="flex flex-wrap gap-2">
-                    {skills.slice(0, 3).map(skill => (
-                        <span key={skill} className="bg-indigo-500/15 text-indigo-300 px-2.5 py-1 rounded-lg text-xs font-medium border border-indigo-500/20">
-                            {skill}
-                        </span>
-                    ))}
-                    {skills.length > 3 && (
-                        <span className="text-gray-500 text-xs py-1">+{skills.length - 3} more</span>
-                    )}
-                </div>
+            <div className="flex flex-wrap gap-2 mb-8">
+                {skills.slice(0, 3).map(skill => (
+                    <span key={skill} className="text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+                        {skill}
+                    </span>
+                ))}
             </div>
             
             <Link 
                 to={`/partner/${partner.id}`} 
-                className="block text-center mt-5 bg-white/5 border border-white/10 text-white font-semibold py-2.5 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-200"
+                className="w-full text-center mt-auto py-3 bg-white/5 border border-white/10 rounded-xl text-xs font-black uppercase tracking-[0.2em] text-gray-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-500 transition-all duration-300"
             >
                 View Profile
             </Link>
@@ -134,7 +114,7 @@ const DashboardPage = () => {
     const { 
         applications, updateApplicationStatus, getPartner, partners, 
         toggleSaveOpportunity, companies, getCompany, getApplicationsForCompany,
-        toggleUpvoteCompany, toggleUpvotePartner
+        toggleUpvoteCompany, toggleUpvotePartner, updatePositionStatus
     } = useAppContext();
     const navigate = useNavigate();
 
@@ -198,80 +178,96 @@ const DashboardPage = () => {
             const isPro = user?.isPremium || false; 
 
             return (
-                <Link to={opportunityLink} className="block bg-gray-900/50 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-lg hover:border-white/20 hover:shadow-xl transition-all duration-300 group">
-                    <div className="flex items-start justify-between">
-                        <div className="flex items-center">
-                            <Avatar src={company.logoUrl} name={company.name} size="lg" className="rounded-xl" />
-                            <div className="ml-4">
-                                <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">{company.name}</h3>
-                                <div className="flex items-center gap-2 mt-1">
-                                    <MapPinIcon className="h-3.5 w-3.5 text-gray-500" />
-                                    <span className="text-sm text-gray-400">{company.location}</span>
-                                </div>
-                            </div>
+                <div className="group relative bg-gray-900/40 backdrop-blur-md border border-white/5 rounded-2xl hover:border-purple-500/30 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 overflow-hidden flex flex-col h-full">
+                    <Link to={opportunityLink} className="relative h-28 bg-gradient-to-br from-indigo-900/40 to-purple-900/40 flex items-center justify-center p-6 grayscale group-hover:grayscale-0 transition-all">
+                        <div className="absolute inset-0 bg-gray-900/20 backdrop-blur-sm" />
+                        <div className="relative z-10 w-16 h-16">
+                            <Avatar src={company.logoUrl} name={company.name} size="lg" className="rounded-2xl shadow-2xl transition-transform group-hover:scale-110" />
                         </div>
-                        <div className="flex flex-col items-end gap-2">
-                             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-1.5 flex flex-col items-center">
-                                <span className="text-[8px] font-bold text-gray-500 uppercase tracking-tighter mb-0.5">Match Score</span>
-                                <div className={`text-xs font-black ${isPro ? 'text-indigo-400' : 'text-gray-600 blur-[2px]'}`}>
-                                    {matchScore}%
-                                </div>
-                            </div>
+                        <div className="absolute top-4 right-4 z-20">
                             <button 
                                 onClick={handleSave}
-                                className={`p-2 rounded-lg border transition-all duration-200 ${
+                                className={`p-2 rounded-xl backdrop-blur-md border transition-all duration-300 ${
                                     isSaved 
-                                        ? 'bg-amber-500/20 border-amber-500/50 text-amber-400' 
-                                        : 'bg-white/5 border-white/10 text-gray-500 hover:border-white/20 hover:text-gray-300'
+                                        ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' 
+                                        : 'bg-black/40 border-white/10 text-gray-400 hover:bg-black/60 hover:text-white'
                                 }`}
                             >
                                 <BookmarkIcon className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
                             </button>
                         </div>
-                    </div>
+                    </Link>
                     
-                    <p className="text-gray-400 mt-4 text-sm line-clamp-2">
-                        {company.description?.replace(/<[^>]*>?/gm, '')}
-                    </p>
-                    
-                    <div className="mt-5 flex flex-wrap gap-2">
-                        {(company.seeking || []).slice(0, 2).map(role => (
-                            <span key={role} className="bg-emerald-400/10 text-emerald-400 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-emerald-400/20">
-                                {role}
-                            </span>
-                        ))}
+                    <div className="p-6 flex flex-col flex-grow">
+                        <div className="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 className="text-lg font-bold text-white group-hover:text-purple-400 transition-colors uppercase tracking-tight">{company.name}</h3>
+                                <div className="flex items-center gap-1.5 text-gray-500 mt-1">
+                                    <MapPinIcon className="h-3 w-3" />
+                                    <span className="text-[10px] font-bold tracking-wider">{company.location}</span>
+                                </div>
+                            </div>
+                            <div className="bg-white/5 rounded-lg px-2 py-1 border border-white/5 text-right">
+                                <p className="text-[8px] font-black text-gray-600 uppercase tracking-tighter">Match</p>
+                                <p className={`text-xs font-black ${isPro ? 'text-emerald-400' : 'text-gray-700 blur-[3px]'}`}>{matchScore}%</p>
+                            </div>
+                        </div>
+
+                        <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-6">
+                            {company.description?.replace(/<[^>]*>?/gm, '')}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-1.5 mb-8 mt-auto">
+                            {(company.seeking || []).slice(0, 2).map(role => (
+                                <span key={role} className="text-[9px] font-black uppercase tracking-widest bg-purple-500/10 text-purple-400 px-2.5 py-1 rounded-lg border border-purple-500/20">
+                                    {role}
+                                </span>
+                            ))}
+                        </div>
+                        
+                        <Link 
+                            to={opportunityLink} 
+                            className="block w-full text-center py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-[0.22em] text-gray-400 group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-500 transition-all duration-300"
+                        >
+                            Explore →
+                        </Link>
                     </div>
-                    
-                    <div className="mt-5 text-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold py-2.5 rounded-xl group-hover:from-indigo-500 group-hover:to-purple-500 transition-all">
-                        View Opportunity →
-                    </div>
-                </Link>
+                </div>
             );
         };
 
         return (
             <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
                 {/* Welcome Banner */}
-                <div className="mb-8 p-6 bg-gradient-to-br from-indigo-600/20 via-purple-600/10 to-pink-600/10 rounded-2xl border border-white/10">
-                    <div className="flex items-center justify-between">
+                <div className="mb-8 p-10 bg-gradient-to-br from-indigo-900/40 via-purple-900/20 to-transparent rounded-3xl border border-white/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] -mr-20 -mt-20 group-hover:bg-indigo-500/20 transition-all duration-700" />
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
                         <div>
-                            <h1 className="text-2xl font-bold text-white mb-2">
-                                Welcome back, {partnerProfile?.name?.split(' ')[0] || 'Partner'}! 👋
+                            <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+                                Welcome back,<br />
+                                <span className="bg-gradient-to-r from-indigo-400 to-emerald-400 bg-clip-text text-transparent">
+                                    {partnerProfile?.name?.split(' ')[0] || 'Partner'}! 👋
+                                </span>
                             </h1>
-                            <p className="text-gray-400 mb-6">
-                                Discover new opportunities and track your applications.
+                            <p className="text-gray-400 text-lg max-w-md leading-relaxed mb-8">
+                                Your growth journey continues. Explore new opportunities or track your active submissions.
                             </p>
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div className="flex flex-wrap gap-4">
                                 <Link 
                                     to={`/partner/${user.profileId}`}
-                                    className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-white font-semibold transition-all duration-300"
+                                    className="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-indigo-500/25 flex items-center gap-3"
                                 >
                                     <UserIcon className="h-4 w-4" />
-                                    My Public Profile
+                                    Public Profile
                                 </Link>
+                                <button className="px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 rounded-2xl font-black uppercase tracking-widest text-xs transition-all">
+                                    Account Settings
+                                </button>
                             </div>
                         </div>
-
+                        <div className="hidden lg:block w-32 h-32 rounded-3xl bg-indigo-500/10 border border-white/10 p-2 rotate-3 hover:rotate-0 transition-transform duration-500">
+                             <Avatar src={partnerProfile?.avatarUrl} name={partnerProfile?.name || ''} size="lg" className="h-full w-full rounded-2xl" />
+                        </div>
                     </div>
                 </div>
 
@@ -315,52 +311,61 @@ const DashboardPage = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     {/* Filters Sidebar */}
                     <aside className="lg:col-span-1">
-                        <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-lg sticky top-24">
-                            <h2 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                                <MagnifyingGlassIcon className="h-5 w-5 text-indigo-400" />
-                                Filter Opportunities
+                        <div className="bg-gray-900/40 backdrop-blur-md border border-white/5 p-8 rounded-2xl shadow-2xl sticky top-24">
+                            <h2 className="text-xs font-black text-white mb-8 flex items-center gap-3 uppercase tracking-[0.2em]">
+                                <MagnifyingGlassIcon className="h-4 w-4 text-indigo-400" />
+                                Refine Search
                             </h2>
-                            <div className="space-y-5">
+                            <div className="space-y-8">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Role / Skill</label>
-                                    <input 
-                                        type="text" 
-                                        name="seeking" 
-                                        value={filters.seeking} 
-                                        onChange={handleFilterChange} 
-                                        className="w-full bg-gray-800/60 border border-white/10 rounded-xl py-2.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all" 
-                                        placeholder="e.g. SaaS Growth"
-                                    />
+                                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Role / Skill</label>
+                                    <div className="relative group">
+                                        <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+                                        <input 
+                                            type="text" 
+                                            name="seeking" 
+                                            value={filters.seeking} 
+                                            onChange={handleFilterChange} 
+                                            className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 transition-all font-medium" 
+                                            placeholder="Growth lead..."
+                                        />
+                                    </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Location</label>
-                                    <input 
-                                        type="text" 
-                                        name="location" 
-                                        value={filters.location} 
-                                        onChange={handleFilterChange} 
-                                        className="w-full bg-gray-800/60 border border-white/10 rounded-xl py-2.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all" 
-                                        placeholder="e.g. New York"
-                                    />
+                                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Location</label>
+                                    <div className="relative group">
+                                        <MapPinIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+                                        <input 
+                                            type="text" 
+                                            name="location" 
+                                            value={filters.location} 
+                                            onChange={handleFilterChange} 
+                                            className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 transition-all font-medium" 
+                                            placeholder="Remote, NYC..."
+                                        />
+                                    </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Work Mode</label>
-                                    <select 
-                                        name="workMode" 
-                                        value={filters.workMode} 
-                                        onChange={handleFilterChange} 
-                                        className="w-full bg-gray-800/60 border border-white/10 rounded-xl py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
-                                    >
-                                        <option value="">All Modes</option>
-                                        {Object.values(WorkMode).map(mode => <option key={mode} value={mode}>{mode}</option>)}
-                                    </select>
+                                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Work Mode</label>
+                                    <div className="relative">
+                                        <select 
+                                            name="workMode" 
+                                            value={filters.workMode} 
+                                            onChange={handleFilterChange} 
+                                            className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-4 pr-10 text-sm text-white appearance-none focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium cursor-pointer"
+                                        >
+                                            <option value="">Any Mode</option>
+                                            {Object.values(WorkMode).map(mode => <option key={mode} value={mode}>{mode}</option>)}
+                                        </select>
+                                        <ChevronUpIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none rotate-180" />
+                                    </div>
                                 </div>
                                 
                                 <button 
                                     onClick={() => setFilters({ location: '', workMode: '', seeking: '' })}
-                                    className="w-full text-sm text-gray-400 hover:text-white py-2 transition-colors"
+                                    className="w-full text-[10px] font-black uppercase tracking-widest text-gray-600 hover:text-indigo-400 py-4 border-t border-white/5 transition-colors mt-4"
                                 >
-                                    Clear all filters
+                                    Reset Selection
                                 </button>
                             </div>
                         </div>
@@ -398,10 +403,10 @@ const DashboardPage = () => {
                                 <div className="flex items-center justify-between mb-6">
                                     <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                                         <DocumentCheckIcon className="h-6 w-6 text-emerald-400" />
-                                        Applied Positions
+                                        Your Submissions
                                     </h2>
                                     <span className="text-sm text-gray-400">
-                                        Tracking {appliedApplications.length} {appliedApplications.length === 1 ? 'application' : 'applications'}
+                                        Tracking {appliedApplications.length} active {appliedApplications.length === 1 ? 'application' : 'applications'}
                                     </span>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -409,33 +414,37 @@ const DashboardPage = () => {
                                         const company = getCompany(app.companyId);
                                         if (!company) return null;
                                         return (
-                                            <div key={app.id} className="bg-gray-900/50 backdrop-blur-sm border border-emerald-500/10 p-6 rounded-xl shadow-lg flex flex-col group">
-                                                <div className="flex items-start justify-between">
-                                                    <div className="flex items-center">
-                                                        <Avatar src={company.logoUrl} name={company.name} size="lg" className="rounded-xl" />
-                                                        <div className="ml-4">
-                                                            <h3 className="text-lg font-bold text-white">{company.name}</h3>
-                                                            <div className="flex items-center gap-2 mt-1">
-                                                                <ClockIcon className="h-3.5 w-3.5 text-gray-500" />
-                                                                <span className="text-xs text-gray-400">Applied on {new Date(app.appliedAt).toLocaleDateString()}</span>
-                                                            </div>
+                                            <div key={app.id} className="group bg-gray-900/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-500 flex flex-col">
+                                                <div className="flex items-center justify-between mb-6">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="w-12 h-12 rounded-xl bg-gray-800/50 p-2 border border-white/5">
+                                                            <Avatar src={company.logoUrl} name={company.name} size="md" className="h-full w-full rounded-lg" />
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="text-sm font-black text-white uppercase tracking-tight group-hover:text-emerald-400 transition-colors">{company.name}</h3>
+                                                            <p className="text-[10px] font-bold text-gray-500 mt-0.5">Applied {new Date(app.appliedAt).toLocaleDateString()}</p>
                                                         </div>
                                                     </div>
-                                                    <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
-                                                        app.status === 'Accepted' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' :
-                                                        app.status === 'Rejected' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' :
-                                                        'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                                                    <div className={`flex items-center gap-2 px-2.5 py-1 rounded-lg border text-[9px] font-black uppercase tracking-widest ${
+                                                        app.status === 'Accepted' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                                                        app.status === 'Rejected' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' :
+                                                        'bg-amber-500/10 text-amber-400 border-amber-500/20'
                                                     }`}>
+                                                        <span className={`w-1.5 h-1.5 rounded-full ${
+                                                            app.status === 'Accepted' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' :
+                                                            app.status === 'Rejected' ? 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]' :
+                                                            'bg-amber-500 animate-pulse'
+                                                        }`} />
                                                         {app.status}
                                                     </div>
                                                 </div>
-                                                <div className="mt-6 flex gap-3">
-                                                    <Link to={`/company/${company.id}`} className="flex-1 text-center bg-white/5 border border-white/10 text-white font-semibold py-2 rounded-lg hover:bg-white/10 transition-all text-xs">
-                                                        View Profile
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    <Link to={`/company/${company.id}`} className="py-2.5 bg-white/5 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-500 text-center hover:bg-white/10 hover:text-white transition-all">
+                                                        Details
                                                     </Link>
                                                     {app.status === 'Accepted' && (
-                                                        <Link to={`/workspace/${company.id}`} className="flex-1 text-center bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-500 transition-all text-xs">
-                                                            Go to Workspace
+                                                        <Link to={`/workspace/${company.id}`} className="py-2.5 bg-emerald-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest text-center shadow-lg shadow-emerald-500/20 hover:bg-emerald-500 transition-all">
+                                                            Workspace
                                                         </Link>
                                                     )}
                                                 </div>
@@ -497,24 +506,34 @@ const DashboardPage = () => {
         return (
             <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
                 {/* Welcome Banner */}
-                <div className="mb-8 p-6 bg-gradient-to-br from-indigo-600/20 via-purple-600/10 to-pink-600/10 rounded-2xl border border-white/10">
-                    <div className="flex items-center justify-between">
+                <div className="mb-8 p-10 bg-gradient-to-br from-purple-900/40 via-indigo-900/20 to-transparent rounded-3xl border border-white/5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] -mr-20 -mt-20 group-hover:bg-purple-500/20 transition-all duration-700" />
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
                         <div>
-                            <h1 className="text-2xl font-bold text-white mb-2">
-                                Welcome back, {founderProfile?.name?.split(' ')[0] || 'Founder'}! 🚀
+                            <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+                                Welcome, Founder.<br />
+                                <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                                    {founderProfile?.name?.split(' ')[0] || 'Sir'}! 🚀
+                                </span>
                             </h1>
-                            <p className="text-gray-400 mb-6">
-                                Find the perfect growth partners to scale your vision.
+                            <p className="text-gray-400 text-lg max-w-md leading-relaxed mb-8">
+                                Manage your recruitment flow and connect with world-class growth partners.
                             </p>
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                            <div className="flex flex-wrap gap-4">
                                 <Link 
                                     to={`/company/${user.profileId}`}
-                                    className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-white font-semibold transition-all duration-300"
+                                    className="px-8 py-3.5 bg-purple-600 hover:bg-purple-500 text-white rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-purple-500/25 flex items-center gap-3"
                                 >
-                                    <UserIcon className="h-4 w-4" />
-                                    My Company Profile
+                                    <BriefcaseIcon className="h-4 w-4" />
+                                    Company Profile
                                 </Link>
+                                <button className="px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 rounded-2xl font-black uppercase tracking-widest text-xs transition-all">
+                                    Analytics
+                                </button>
                             </div>
+                        </div>
+                        <div className="hidden lg:block w-32 h-32 rounded-3xl bg-purple-500/10 border border-white/10 p-2 -rotate-3 hover:rotate-0 transition-transform duration-500">
+                             <Avatar src={founderProfile?.logoUrl} name={founderProfile?.name || ''} size="lg" className="h-full w-full rounded-2xl shadow-xl" />
                         </div>
                     </div>
                 </div>
@@ -603,18 +622,23 @@ const DashboardPage = () => {
                                 {companyApplications.slice(0, 5).map(app => {
                                     const partner = getPartner(app.partnerId);
                                     return partner ? (
-                                        <div key={app.id} className="flex items-center justify-between p-4 bg-gray-800/50 border border-white/5 rounded-xl hover:border-white/10 transition-colors">
+                                        <div key={app.id} className="group flex items-center justify-between p-4 bg-gray-800/30 border border-white/5 rounded-2xl hover:bg-gray-800/50 hover:border-white/10 transition-all duration-300">
                                             <div className="flex items-center gap-4">
-                                                <Avatar src={partner.avatarUrl} name={partner.name} size="lg" />
+                                                <div className="relative">
+                                                    <Avatar src={partner.avatarUrl} name={partner.name} size="lg" className="rounded-xl" />
+                                                    <div className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-gray-900 ${
+                                                        app.status === 'Accepted' ? 'bg-emerald-500' :
+                                                        app.status === 'Rejected' ? 'bg-rose-500' : 'bg-amber-500 animate-pulse'
+                                                    }`} />
+                                                </div>
                                                 <div>
-                                                    <Link to={`/partner/${partner.id}`} className="font-semibold text-white hover:text-indigo-400 transition-colors">
+                                                    <Link to={`/partner/${partner.id}`} className="text-sm font-black text-white group-hover:text-indigo-400 transition-colors tracking-tight uppercase">
                                                         {partner.name}
                                                     </Link>
-                                                    <div className="flex items-center gap-3 mt-1">
-                                                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${getReputationColor(partner.reputationBand)}`}>
-                                                            {partner.reputationBand}
-                                                        </span>
-                                                        <span className={`text-xs font-medium ${
+                                                    <div className="flex items-center gap-2 mt-0.5">
+                                                        <span className="text-[10px] font-bold text-gray-500">{partner.reputationBand} Partner</span>
+                                                        <span className="w-1 h-1 bg-gray-700 rounded-full" />
+                                                        <span className={`text-[10px] font-black uppercase tracking-widest ${
                                                             app.status === 'Accepted' ? 'text-emerald-400' :
                                                             app.status === 'Rejected' ? 'text-rose-400' : 'text-amber-400'
                                                         }`}>
@@ -627,15 +651,15 @@ const DashboardPage = () => {
                                                 <div className="flex items-center gap-2">
                                                     <button 
                                                         onClick={() => updateApplicationStatus(app.id, ApplicationStatus.ACCEPTED)} 
-                                                        className="p-2 bg-emerald-500/20 text-emerald-400 rounded-lg hover:bg-emerald-500/30 transition-colors" 
-                                                        title="Accept Application"
+                                                        className="p-2.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-xl hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all shadow-lg shadow-emerald-500/10" 
+                                                        title="Accept"
                                                     >
                                                         <CheckCircleIcon className="h-5 w-5"/>
                                                     </button>
                                                     <button 
                                                         onClick={() => updateApplicationStatus(app.id, ApplicationStatus.REJECTED)} 
-                                                        className="p-2 bg-rose-500/20 text-rose-400 rounded-lg hover:bg-rose-500/30 transition-colors" 
-                                                        title="Reject Application"
+                                                        className="p-2.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-xl hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all shadow-lg shadow-rose-500/10" 
+                                                        title="Reject"
                                                     >
                                                         <XCircleIcon className="h-5 w-5"/>
                                                     </button>
@@ -644,10 +668,9 @@ const DashboardPage = () => {
                                             {app.status === 'Accepted' && (
                                                 <Link 
                                                     to={`/workspace/${partner.id}`}
-                                                    className="flex items-center gap-2 px-4 py-2 bg-indigo-600/10 text-indigo-400 hover:bg-indigo-600/20 rounded-lg text-xs font-bold border border-indigo-500/20 transition-all"
+                                                    className="px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 transition-all border border-indigo-500/20"
                                                 >
-                                                    <ChatBubbleLeftRightIcon className="w-4 h-4" />
-                                                    Go to Workspace
+                                                    Workspace
                                                 </Link>
                                             )}
                                         </div>
@@ -664,75 +687,140 @@ const DashboardPage = () => {
                     </div>
                 </div>
 
+                {/* Manage My Listings */}
+                <div className="bg-gray-900/40 backdrop-blur-md border border-white/5 p-8 rounded-2xl shadow-2xl mb-12">
+                     <h2 className="text-xs font-black text-white mb-8 flex items-center gap-3 uppercase tracking-[0.2em]">
+                        <ChartBarIcon className="h-4 w-4 text-purple-400" />
+                        Manage My Active Listings
+                    </h2>
+                    {founderProfile?.positions && founderProfile.positions.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {founderProfile.positions.map(pos => (
+                                <div key={pos.id} className="p-6 bg-gray-800/30 border border-white/5 rounded-2xl hover:border-purple-500/30 transition-all duration-500 group relative overflow-hidden">
+                                     <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${
+                                        pos.status === PositionStatus.OPEN ? 'from-emerald-500/20' :
+                                        pos.status === PositionStatus.PAUSED ? 'from-amber-500/20' : 'from-rose-500/20'
+                                    } blur-2xl opacity-0 group-hover:opacity-100 transition-opacity`} />
+                                    
+                                    <div className="flex justify-between items-start mb-6">
+                                        <h4 className="text-sm font-black text-white uppercase tracking-tight group-hover:text-purple-400 transition-colors">{pos.title}</h4>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-[10px] font-black text-purple-400/60 bg-purple-400/5 px-2 py-0.5 rounded-md border border-purple-400/10">
+                                                {companyApplications.length} Applicants
+                                            </span>
+                                            <div className={`w-2 h-2 rounded-full ${
+                                                pos.status === PositionStatus.OPEN ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' :
+                                                pos.status === PositionStatus.PAUSED ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)]' :
+                                                                                      'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]'
+                                            }`} />
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Status:</span>
+                                        <div className="flex-grow relative">
+                                            <select 
+                                                value={pos.status}
+                                                onChange={(e) => updatePositionStatus(user.profileId, pos.id, e.target.value as PositionStatus)}
+                                                className="w-full bg-gray-900/60 border border-white/10 rounded-xl py-2 pl-3 pr-8 text-[10px] font-black uppercase tracking-widest text-gray-400 focus:outline-none focus:ring-1 focus:ring-purple-500/50 appearance-none cursor-pointer"
+                                            >
+                                                {Object.values(PositionStatus).map(status => (
+                                                    <option key={status} value={status}>{status}</option>
+                                                ))}
+                                            </select>
+                                            <ChevronUpIcon className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-600 pointer-events-none rotate-180" />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-16 bg-white/5 rounded-2xl border border-dashed border-white/10">
+                            <BriefcaseIcon className="h-10 w-10 text-gray-700 mx-auto mb-4" />
+                            <p className="text-sm font-bold text-gray-500">No active positions found.</p>
+                            <Link to={`/company/${user.profileId}`} className="text-[10px] font-black text-purple-400 uppercase tracking-[0.2em] mt-4 inline-block hover:underline">Add First Role</Link>
+                        </div>
+                    )}
+                </div>
+
                 {/* Find Partners Section */}
-                <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-lg">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                                <MagnifyingGlassIcon className="h-5 w-5 text-white" />
+                <div className="bg-gray-900/40 backdrop-blur-md border border-white/5 p-10 rounded-3xl shadow-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[80px] -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-8 mb-12">
+                        <div className="flex items-center gap-6">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-indigo-500/20">
+                                <MagnifyingGlassIcon className="h-8 w-8 text-white" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-bold text-white">Find Growth Partners</h2>
-                                <p className="text-sm text-gray-400">Browse {partners.length} vetted professionals</p>
+                                <h2 className="text-2xl font-black text-white uppercase tracking-tight">Vetted Growth Partners</h2>
+                                <p className="text-sm text-gray-500">Discover top {partners.length} professionals</p>
                             </div>
                         </div>
                         <button 
                             onClick={handleAiFind} 
-                            title="Find best matches with AI" 
-                            className="flex items-center gap-2 text-sm font-semibold text-white px-5 py-2.5 rounded-xl transition-all bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-500/20"
+                            className="relative group/ai flex items-center gap-3 bg-white/5 border border-white/10 px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-[0.2em] text-indigo-400 hover:bg-indigo-600 hover:text-white hover:border-indigo-500 transition-all duration-500 overflow-hidden"
                         >
-                            <SparklesIcon className="h-4 w-4" />
-                            Find with AI
+                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover/ai:opacity-100 transition-opacity" />
+                            <span className="relative z-10 flex items-center gap-3">
+                                <SparklesIcon className="h-4 w-4 animate-pulse" />
+                                Find with AI
+                            </span>
                         </button>
                     </div>
 
                     {/* Filters */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Skills</label>
+                            <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Expertise</label>
                             <input 
                                 type="text" 
                                 name="skills" 
                                 value={partnerFilters.skills} 
                                 onChange={handlePartnerFilterChange} 
-                                className="w-full bg-gray-800/60 border border-white/10 rounded-xl py-2.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all" 
-                                placeholder="e.g., SEO, PPC"
+                                className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium" 
+                                placeholder="SEO, Meta Ads..."
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Reputation</label>
-                            <select 
-                                name="reputation" 
-                                value={partnerFilters.reputation} 
-                                onChange={handlePartnerFilterChange} 
-                                className="w-full bg-gray-800/60 border border-white/10 rounded-xl py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
-                            >
-                                <option value="">Any reputation</option>
-                                {Object.values(ReputationBand).map(band => <option key={band} value={band}>{band}</option>)}
-                            </select>
+                            <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Experience</label>
+                            <div className="relative">
+                                <select 
+                                    name="reputation" 
+                                    value={partnerFilters.reputation} 
+                                    onChange={handlePartnerFilterChange} 
+                                    className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-4 pr-10 text-sm text-white appearance-none focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium cursor-pointer"
+                                >
+                                    <option value="">Any Level</option>
+                                    {Object.values(ReputationBand).map(band => <option key={band} value={band}>{band}</option>)}
+                                </select>
+                                <ChevronUpIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none rotate-180" />
+                            </div>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Location</label>
+                            <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Territory</label>
                             <input 
                                 type="text" 
                                 name="location" 
                                 value={partnerFilters.location} 
                                 onChange={handlePartnerFilterChange} 
-                                className="w-full bg-gray-800/60 border border-white/10 rounded-xl py-2.5 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all" 
-                                placeholder="e.g., London"
+                                className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium" 
+                                placeholder="London, Berlin..."
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2">Work Mode</label>
-                            <select 
-                                name="workMode" 
-                                value={partnerFilters.workMode} 
-                                onChange={handlePartnerFilterChange} 
-                                className="w-full bg-gray-800/60 border border-white/10 rounded-xl py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
-                            >
-                                <option value="">Any mode</option>
-                                {Object.values(WorkMode).map(mode => <option key={mode} value={mode}>{mode}</option>)}
-                            </select>
+                            <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Availability</label>
+                            <div className="relative">
+                                <select 
+                                    name="workMode" 
+                                    value={partnerFilters.workMode} 
+                                    onChange={handlePartnerFilterChange} 
+                                    className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-4 pr-10 text-sm text-white appearance-none focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium cursor-pointer"
+                                >
+                                    <option value="">Any Mode</option>
+                                    {Object.values(WorkMode).map(mode => <option key={mode} value={mode}>{mode}</option>)}
+                                </select>
+                                <ChevronUpIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none rotate-180" />
+                            </div>
                         </div>
                     </div>
 

@@ -1,0 +1,27 @@
+﻿SUPABASE HEALTH REPORT
+======================
+
+[OK]   Table "users": Accessible. Row Count: 10
+       Columns detected: id, email, role, name, avatar_url, profile_id, has_completed_onboarding, created_at, is_premium, has_ai_access, subscription_expires_at
+
+[OK]   Table "companies": Accessible. Row Count: 4
+       Columns detected: id, name, logo_url, description, location, seeking, partner_expectations, collaboration_length, compensation_philosophy, upvotes, upvoted_by, nda_url, required_document_ids, completed_collaborations, partner_retention_rate, work_modes, subscription_plan, documents, created_at, is_premium, has_ai_access, subscription_expires_at, positions
+
+[OK]   Table "partners": Accessible. Row Count: 6
+       Columns detected: id, name, avatar_url, bio, skills, location, reputation_score, reputation_band, past_collaborations, managed_brands, saved_opportunities, upvotes, upvoted_by, subscription_plan, contact, time_zone, work_mode_preference, resume_url, created_at, is_premium, has_ai_access, subscription_expires_at
+
+[OK]   Table "applications": Accessible. Row Count: 7
+       Columns detected: id, company_id, partner_id, status, applied_at, nda_accepted_at, created_at
+
+[OK]   Table "notifications": Accessible. Row Count: 90
+       Columns detected: id, user_id, message, link, read, timestamp, created_at
+
+[OK]   Table "frameworks": Accessible. Row Count: 2
+       Columns detected: id, name, phases, metrics_to_track, decision_outcomes, created_at
+
+[OK]   Table "collaborations": Accessible. Row Count: 2
+       Columns detected: id, company_id, partner_id, framework, notes, metrics, files, decision_log, start_date, created_at
+
+[OK]   Table "messages": Accessible. Row Count: 0
+
+

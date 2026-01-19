@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { RocketLaunchIcon, ShieldCheckIcon, UserGroupIcon, LightBulbIcon, ArrowRightIcon, SparklesIcon, CheckCircleIcon, StarIcon, ChartBarIcon, TwitterIcon, LinkedInIcon, InstagramIcon, DiscordIcon, GlobeAltIcon, SubstackIcon, ChevronDownIcon, PlusIcon, MinusIcon } from '../components/Icons';
 import ProcessGuide from '../components/ProcessGuide';
 import { useAuth } from '../context/AuthContext';
@@ -10,6 +10,19 @@ import SEO from '../components/SEO';
 const HomePage = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Redirect to dashboard if logged in, unless explicitly asking for landing
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        if (user && !params.get('landing')) {
+            if (user.role === UserRole.ADMIN) {
+                navigate('/admin');
+            } else {
+                navigate('/dashboard');
+            }
+        }
+    }, [user, navigate, location]);
     const [openFaqIndex, setOpenFaqIndex] = React.useState<number | null>(null);
     const [email, setEmail] = React.useState<string>('');
 

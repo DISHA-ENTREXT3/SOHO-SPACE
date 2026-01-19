@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, ReactNode, useEffect, useCa
 import { 
     Application, ApplicationStatus, Collaboration, CompanyProfile, Decision, Framework, 
     PartnerProfile, Notification, CompanyDocument, UserRole, User, ChatMessage,
-    CollaborationFile 
+    CollaborationFile, PositionStatus
 } from '../types';
 import { db, initializeDatabase } from '../services/database';
 import { v4 as uuidv4 } from 'uuid';
@@ -51,6 +51,7 @@ interface AppContextType {
   toggleUpvotePartner: (partnerId: string, userId: string) => void;
   updateUserAvatar: (userId: string, avatarUrl: string) => void;
   updateUserRole: (userId: string, newRole: UserRole) => Promise<{success: boolean, message: string}>;
+  updatePositionStatus: (companyId: string, positionId: string, status: PositionStatus) => void;
   refreshData: () => void;
   sendMessage: (collabId: string, senderId: string, content: string) => Promise<ChatMessage>;
   getMessages: (collabId: string) => Promise<ChatMessage[]>;
@@ -340,6 +341,18 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     refreshData();
   };
 
+  const updatePositionStatus = async (companyId: string, positionId: string, status: PositionStatus) => {
+    const company = companies.find(c => c.id === companyId);
+    if (!company) return;
+
+    const updatedPositions = company.positions.map(p => 
+      p.id === positionId ? { ...p, status } : p
+    );
+
+    await db.companies.update(companyId, { positions: updatedPositions });
+    await refreshData();
+  };
+
 
 
   const deleteCompany = async (companyId: string) => {
@@ -458,6 +471,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     sendMessage,
     getMessages,
     markMessagesAsRead,
+    updatePositionStatus,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

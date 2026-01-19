@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
-import { UserRole } from '../types';
+import { UserRole, PositionStatus } from '../types';
 import { MapPinIcon, ClockIcon, BanknotesIcon, LightBulbIcon, PaperClipIcon, ArrowDownTrayIcon, ShieldCheckIcon } from '../components/Icons';
 import NdaModal from '../components/NdaModal';
 import BackButton from '../components/BackButton';
@@ -25,6 +25,10 @@ const CompanyProfilePage = () => {
   const userIsPartner = user?.role === UserRole.PARTNER;
   const partnerApplications = userIsPartner ? getApplicationsByPartner(user.profileId) : [];
   const hasApplied = partnerApplications.some(app => app.companyId === company.id);
+  
+  const openPositions = (company.positions || []).filter(p => p.status === PositionStatus.OPEN);
+  const hasNoOpenPositions = openPositions.length === 0 && (company.seeking || []).length === 0;
+  const isPaused = (company.positions || []).every(p => p.status === PositionStatus.PAUSED) && (company.positions || []).length > 0;
 
   const handleApply = async () => {
     if (!user || user.role !== UserRole.PARTNER) return;
@@ -79,11 +83,17 @@ const CompanyProfilePage = () => {
                 <div className="mt-6 sm:mt-0 sm:ml-6 flex-shrink-0">
                     <button 
                         onClick={handleApply}
-                        disabled={hasApplied || isApplying}
-                        className="w-full sm:w-auto bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition disabled:bg-gray-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        disabled={hasApplied || isApplying || hasNoOpenPositions}
+                        className={`w-full sm:w-auto font-bold py-3 px-8 rounded-lg transition disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
+                            hasApplied 
+                                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-default' 
+                                : hasNoOpenPositions 
+                                    ? 'bg-gray-800 text-gray-500 border border-white/5'
+                                    : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-500/25'
+                        }`}
                     >
                         {isApplying && <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
-                        {hasApplied ? 'Application Submitted' : 'Apply to Collaborate'}
+                        {hasApplied ? 'Application Submitted' : hasNoOpenPositions ? 'No Open Roles' : isPaused ? 'Recruitment Paused' : 'Apply to Collaborate'}
                     </button>
                 </div>
             )}
@@ -106,11 +116,32 @@ const CompanyProfilePage = () => {
       </div>
 
       <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 shadow-lg rounded-lg p-8 mb-8">
-        <h2 className="text-2xl font-bold text-white mb-4">Seeking Growth Partners For:</h2>
-        <div className="flex flex-wrap gap-3">
-            {(company.seeking || []).map(role => (
-                <span key={role} className="bg-teal-400/20 text-teal-300 px-3 py-1.5 rounded-full text-md font-medium">{role}</span>
-            ))}
+        <h2 className="text-2xl font-bold text-white mb-6">Open Roles & Opportunities</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {company.positions && company.positions.length > 0 ? (
+                company.positions.map(pos => (
+                    <div key={pos.id} className={`p-4 rounded-xl border transition-all ${
+                        pos.status === PositionStatus.OPEN ? 'bg-indigo-500/5 border-indigo-500/20' : 'bg-white/5 border-white/5 opacity-60'
+                    }`}>
+                        <div className="flex justify-between items-start mb-2">
+                            <h3 className="font-bold text-white text-sm">{pos.title}</h3>
+                            <span className={`text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter ${
+                                pos.status === PositionStatus.OPEN ? 'bg-emerald-500/20 text-emerald-400' :
+                                pos.status === PositionStatus.PAUSED ? 'bg-amber-500/20 text-amber-400' :
+                                'bg-rose-500/20 text-rose-400'
+                            }`}>
+                                {pos.status}
+                            </span>
+                        </div>
+                    </div>
+                ))
+            ) : (
+                (company.seeking || []).map(role => (
+                    <span key={role} className="bg-teal-400/10 text-teal-400 px-3 py-1.5 rounded-lg text-sm font-medium border border-teal-400/20">
+                        {role}
+                    </span>
+                ))
+            )}
         </div>
       </div>
 
