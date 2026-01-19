@@ -32,23 +32,23 @@ const StatCard: React.FC<{
     changeType?: 'positive' | 'negative' | 'neutral';
     gradient?: string;
 }> = ({ icon, label, value, change, changeType = 'neutral', gradient = 'from-indigo-600 to-purple-600' }) => (
-    <div className="relative bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] rounded-3xl p-8 overflow-hidden group hover:border-[var(--text-primary)] transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl">
-        <div className="flex items-center justify-between mb-6">
-            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center p-3 shadow-2xl`}>
+    <div className="relative bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-6 overflow-hidden group hover:border-indigo-500 transition-all duration-300 hover:shadow-xl">
+        <div className="flex items-center justify-between mb-4">
+            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg`}>
                 {icon}
             </div>
             {change && (
-                <span className={`text-[10px] font-black px-3 py-1.5 rounded-xl border ${
-                    changeType === 'positive' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/10' : 
-                    changeType === 'negative' ? 'bg-rose-500/10 text-rose-500 border-rose-500/10' : 'bg-[var(--bg-secondary)] text-[var(--text-muted)] border-[var(--glass-border)]'
+                <span className={`text-xs font-bold px-3 py-1 rounded-lg ${
+                    changeType === 'positive' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : 
+                    changeType === 'negative' ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
                 }`}>
                     {change}
                 </span>
             )}
         </div>
         <div>
-            <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mb-2 opacity-60 leading-none">{label}</p>
-            <p className="text-4xl font-black text-[var(--text-primary)] tracking-tighter leading-none">{value}</p>
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">{label}</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{value}</p>
         </div>
     </div>
 );
@@ -59,48 +59,48 @@ const PartnerCard: React.FC<{ partner: PartnerProfile, onUpvote: () => void, cur
     const skills = partner?.skills || [];
     
     return (
-        <div className="group relative bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] p-8 rounded-[2.5rem] hover:border-indigo-600 transition-all duration-500 flex flex-col hover:shadow-2xl hover:shadow-indigo-600/10">
-            <div className="flex items-center gap-6 mb-8">
-                <div className="w-20 h-20 rounded-3xl bg-[var(--bg-secondary)] border border-[var(--glass-border)] p-1 group-hover:scale-105 transition-all shadow-xl flex-shrink-0 overflow-hidden">
+        <div className="group relative bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 p-6 rounded-2xl hover:border-indigo-500 transition-all duration-300 flex flex-col hover:shadow-xl">
+            <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-xl border-2 border-gray-200 dark:border-gray-700 overflow-hidden flex-shrink-0">
                     <Avatar src={partner.avatarUrl} name={partner.name} size="lg" className="h-full w-full object-cover" />
                 </div>
                 <div className="flex-grow min-w-0">
-                    <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-black text-[var(--text-primary)] group-hover:text-indigo-600 transition-colors truncate uppercase tracking-tight">{partner.name}</h3>
-                        <div className="flex items-center gap-1.5 bg-amber-500/10 px-3 py-1.5 rounded-xl border border-amber-500/10">
-                             <StarIcon className="w-3 h-3 text-amber-500 fill-current" />
-                             <span className="text-[10px] font-black text-amber-500 tracking-widest">{partner.reputationScore || 0}</span>
+                    <div className="flex items-center justify-between mb-1">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">{partner.name}</h3>
+                        <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded-lg">
+                             <StarIcon className="w-3.5 h-3.5 text-amber-600 dark:text-amber-500 fill-current" />
+                             <span className="text-xs font-bold text-amber-700 dark:text-amber-400">{partner.reputationScore || 0}</span>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 text-[var(--text-muted)] opacity-60">
-                        <MapPinIcon className="h-3.5 w-3.5" />
-                        <span className="text-[10px] font-black uppercase tracking-widest truncate">{partner.location}</span>
+                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                        <MapPinIcon className="h-4 w-4" />
+                        <span className="text-sm font-medium truncate">{partner.location}</span>
                     </div>
                 </div>
             </div>
             
-            <p className="text-[12px] font-medium text-[var(--text-secondary)] line-clamp-2 leading-relaxed mb-8 opacity-70 group-hover:opacity-100 transition-all">
+            <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed mb-6">
                 {partner.bio || "No biography available yet."}
             </p>
             
-            <div className="flex flex-wrap gap-2 mb-10">
+            <div className="flex flex-wrap gap-2 mb-6">
                 {skills.slice(0, 3).map(skill => (
-                    <span key={skill} className="text-[9px] font-black uppercase tracking-[0.2em] bg-indigo-600/10 text-indigo-600 px-3 py-1.5 rounded-xl border border-indigo-600/10">
+                    <span key={skill} className="text-xs font-semibold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 px-3 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800">
                         {skill}
                     </span>
                 ))}
             </div>
             
-            <div className="flex items-center gap-4 mt-auto">
+            <div className="flex items-center gap-3 mt-auto">
                 <Link 
                     to={`/partner/${partner.id}`} 
-                    className="flex-grow text-center py-4 bg-indigo-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20"
+                    className="flex-grow text-center py-3 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg"
                 >
-                    View Vectors
+                    View Profile
                 </Link>
                 <button 
                     onClick={(e) => { e.preventDefault(); onUpvote(); }}
-                    className={`p-4 rounded-2xl border transition-all duration-300 ${isUpvoted ? 'bg-rose-500 border-rose-500 text-white shadow-lg shadow-rose-500/20' : 'bg-[var(--bg-secondary)] border-[var(--glass-border)] text-[var(--text-muted)] hover:border-rose-500 hover:text-rose-500'}`}
+                    className={`p-3 rounded-xl border-2 transition-all duration-300 ${isUpvoted ? 'bg-rose-500 border-rose-500 text-white' : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-rose-500 hover:text-rose-500'}`}
                 >
                     <FireIcon className={`h-5 w-5 ${isUpvoted ? 'animate-pulse' : ''}`} />
                 </button>
@@ -179,19 +179,18 @@ const DashboardPage = () => {
             const isPro = user?.isPremium || false; 
 
             return (
-                <div className="group relative bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] rounded-[2.5rem] hover:border-indigo-600 transition-all duration-500 overflow-hidden flex flex-col h-full hover:shadow-2xl hover:shadow-indigo-600/10">
-                    <Link to={opportunityLink} className="h-40 bg-[var(--bg-secondary)] relative flex items-center justify-center p-8 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent group-hover:opacity-100 transition-opacity" />
-                        <div className="relative z-10 w-20 h-20 rounded-3xl bg-[var(--bg-primary)] border border-[var(--glass-border)] shadow-2xl flex items-center justify-center p-1 overflow-hidden group-hover:scale-110 transition-transform">
+                <div className="group relative bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl hover:border-indigo-500 transition-all duration-300 overflow-hidden flex flex-col h-full hover:shadow-xl">
+                    <Link to={opportunityLink} className="h-32 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 relative flex items-center justify-center p-6 overflow-hidden">
+                        <div className="relative z-10 w-16 h-16 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 shadow-lg flex items-center justify-center p-1 overflow-hidden">
                             <Avatar src={company.logoUrl} name={company.name} size="lg" className="h-full w-full object-contain" />
                         </div>
-                        <div className="absolute top-6 right-6 z-20">
+                        <div className="absolute top-4 right-4 z-20">
                             <button 
                                 onClick={handleSave}
-                                className={`p-3 rounded-2xl border transition-all duration-300 ${
+                                className={`p-2.5 rounded-xl border-2 transition-all duration-300 ${
                                     isSaved 
-                                        ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' 
-                                        : 'bg-[var(--bg-primary)] border-[var(--glass-border)] text-[var(--text-muted)] hover:bg-[var(--bg-secondary)] hover:text-amber-500'
+                                        ? 'bg-amber-500 text-white border-amber-500 shadow-md' 
+                                        : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-amber-500 hover:text-amber-500'
                                 }`}
                             >
                                 <BookmarkIcon className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
@@ -199,28 +198,28 @@ const DashboardPage = () => {
                         </div>
                     </Link>
                     
-                    <div className="p-8 flex flex-col flex-grow">
-                        <div className="flex justify-between items-start mb-6">
+                    <div className="p-6 flex flex-col flex-grow">
+                        <div className="flex justify-between items-start mb-4">
                             <div>
-                                <h3 className="text-xl font-black text-[var(--text-primary)] group-hover:text-indigo-600 transition-colors uppercase tracking-tight leading-none">{company.name}</h3>
-                                <div className="flex items-center gap-1.5 text-[var(--text-muted)] mt-2 opacity-60">
-                                    <MapPinIcon className="h-3.5 w-3.5" />
-                                    <span className="text-[10px] font-black uppercase tracking-widest">{company.location}</span>
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight">{company.name}</h3>
+                                <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 mt-1">
+                                    <MapPinIcon className="h-4 w-4" />
+                                    <span className="text-sm font-medium">{company.location}</span>
                                 </div>
                             </div>
-                            <div className="bg-[var(--bg-secondary)] rounded-2xl px-4 py-2 border border-[var(--glass-border)] text-center">
-                                <p className="text-[8px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-0.5 opacity-60">Match</p>
-                                <p className={`text-[12px] font-black ${isPro ? 'text-indigo-600' : 'text-[var(--text-muted)] blur-[4px]'}`}>{matchScore}%</p>
+                            <div className="bg-gray-100 dark:bg-gray-800 rounded-xl px-3 py-2 border border-gray-200 dark:border-gray-700 text-center">
+                                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-0.5">Match</p>
+                                <p className={`text-sm font-bold ${isPro ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400 blur-sm'}`}>{matchScore}%</p>
                             </div>
                         </div>
 
-                        <p className="text-[12px] font-medium text-[var(--text-secondary)] mb-8 line-clamp-2 leading-relaxed opacity-70 group-hover:opacity-100 transition-all">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-6 line-clamp-2 leading-relaxed">
                             {company.description?.replace(/<[^>]*>?/gm, '')}
                         </p>
                         
-                        <div className="flex flex-wrap gap-2 mb-10 mt-auto">
+                        <div className="flex flex-wrap gap-2 mb-6 mt-auto">
                             {(company.seeking || []).slice(0, 2).map(role => (
-                                <span key={role} className="text-[9px] font-black uppercase tracking-[0.2em] bg-indigo-600/10 text-indigo-600 px-3 py-1.5 rounded-xl border border-indigo-600/10">
+                                <span key={role} className="text-xs font-semibold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 px-3 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800">
                                     {role}
                                 </span>
                             ))}
@@ -228,9 +227,9 @@ const DashboardPage = () => {
                         
                         <Link 
                             to={opportunityLink} 
-                            className="block w-full text-center py-4 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-[var(--text-muted)] group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-all"
+                            className="block w-full text-center py-3 bg-gray-100 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all"
                         >
-                            Establish Link →
+                            View Details →
                         </Link>
                     </div>
                 </div>
