@@ -16,11 +16,11 @@ test.describe('Production Smoke Tests', () => {
 
     test('should allow navigation to login', async ({ page }) => {
         await page.click('text="I\'m a Founder"'); 
-        await expect(page).toHaveURL(/.*#\/login/);
+        await expect(page).toHaveURL(/\/login/);
     });
 
     test('should enforce password length limit on signup', async ({ page }) => {
-        await page.goto('/#/login?mode=signup');
+        await page.goto('/login?mode=signup');
         await page.waitForSelector('input[name="password"]');
         await page.fill('input[name="password"]', 'verylongpassword123');
         
