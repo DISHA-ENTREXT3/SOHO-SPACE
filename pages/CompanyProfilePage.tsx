@@ -61,34 +61,33 @@ const CompanyProfilePage = () => {
             noindex={true}
         />
       <BackButton />
-      <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[3rem] p-12 my-8 relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] -mr-40 -mt-40 animate-pulse" />
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-12 relative z-10">
+      <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-8 my-6 shadow-lg">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
             <div className="flex-grow">
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
-                    <div className="w-40 h-40 rounded-[2.5rem] bg-[var(--bg-primary)] border border-[var(--glass-border)] p-2 shadow-2xl group-hover:scale-105 transition-all duration-700 flex-shrink-0">
-                         <Avatar src={company.logoUrl} name={company.name} size="lg" className="h-full w-full rounded-[2rem] object-contain p-4" />
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                    <div className="w-24 h-24 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 p-2 shadow-md flex-shrink-0">
+                         <Avatar src={company.logoUrl} name={company.name} size="lg" className="h-full w-full rounded-lg object-contain" />
                     </div>
                     <div>
-                        <div className="inline-flex items-center gap-2 bg-indigo-600/10 border border-indigo-500/20 rounded-full px-4 py-2 mb-6">
-                            <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
-                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-600">Verified Growth Mandate</span>
+                        <div className="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 rounded-full px-3 py-1 mb-3">
+                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse" />
+                            <span className="text-xs font-bold text-indigo-700 dark:text-indigo-400">Verified Company</span>
                         </div>
-                        <h1 className="text-5xl md:text-6xl font-black text-[var(--text-primary)] tracking-tight leading-none mb-6">{company.name}</h1>
-                        <div className="flex flex-wrap items-center gap-6">
-                            <span className="flex items-center text-xs font-black uppercase tracking-widest text-[var(--text-secondary)]">
-                                <MapPinIcon className="h-5 w-5 mr-3 text-indigo-600" />
+                        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3">{company.name}</h1>
+                        <div className="flex flex-wrap items-center gap-4">
+                            <span className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-400">
+                                <MapPinIcon className="h-4 w-4 mr-2 text-indigo-600" />
                                 {company.location}
                             </span>
-                            <span className="flex items-center text-xs font-black uppercase tracking-widest text-[var(--text-secondary)]">
-                                <ClockIcon className="h-5 w-5 mr-3 text-indigo-600" />
+                            <span className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-400">
+                                <ClockIcon className="h-4 w-4 mr-2 text-indigo-600" />
                                 {(company.workModes || []).join(' / ')}
                             </span>
                         </div>
                     </div>
                 </div>
                 <div 
-                  className="text-lg md:text-xl text-[var(--text-secondary)] font-medium leading-[1.8] mt-12 rich-text-content max-w-4xl selection:bg-indigo-600/20" 
+                  className="text-base text-gray-700 dark:text-gray-300 leading-relaxed mt-6 rich-text-content" 
                   dangerouslySetInnerHTML={{ __html: company.description }} 
                 />
             </div>
@@ -97,93 +96,85 @@ const CompanyProfilePage = () => {
                     <button 
                         onClick={handleApply}
                         disabled={hasApplied || isApplying || hasNoOpenPositions}
-                        className={`w-full lg:w-auto font-black uppercase tracking-[0.2em] text-[11px] py-6 px-12 rounded-[1.5rem] transition-all disabled:cursor-not-allowed flex items-center justify-center gap-4 shadow-2xl hover:-translate-y-1 active:scale-95 ${
+                        className={`w-full lg:w-auto font-bold text-sm py-4 px-8 rounded-xl transition-all disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-md ${
                             hasApplied 
-                                ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 cursor-default' 
+                                ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-2 border-emerald-200 dark:border-emerald-800' 
                                 : hasNoOpenPositions 
-                                    ? 'bg-[var(--bg-primary)] text-[var(--text-muted)] border border-[var(--glass-border)] opacity-50'
-                                    : 'bg-indigo-600 text-white shadow-indigo-600/25'
+                                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 border-2 border-gray-200 dark:border-gray-700 opacity-50'
+                                    : 'bg-indigo-600 text-white hover:bg-indigo-700 border-2 border-indigo-600'
                         }`}
                     >
                         {isApplying ? (
-                            <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : hasApplied ? (
                             <CheckCircleIcon className="h-5 w-5" />
                         ) : (
                             <RocketLaunchIcon className="h-5 w-5" />
                         )}
-                        {hasApplied ? 'PROTOCOL ACTIVE' : hasNoOpenPositions ? 'NO OPEN ROLES' : isPaused ? 'RECRUITMENT PAUSED' : 'INITIATE DEPLOYMENT'}
+                        {hasApplied ? 'Applied' : hasNoOpenPositions ? 'No Open Roles' : isPaused ? 'Recruitment Paused' : 'Apply Now'}
                     </button>
                     {hasApplied && (
-                        <p className="text-center mt-4 text-[9px] font-black uppercase tracking-[0.3em] text-emerald-500 opacity-60">Sequence Initiated</p>
+                        <p className="text-center mt-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">Application Submitted</p>
                     )}
                 </div>
             )}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-10 group relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-32 bg-gradient-to-b from-indigo-600 to-transparent opacity-40" />
-          <h2 className="text-[10px] font-black text-[var(--text-primary)] mb-8 flex items-center gap-4 uppercase tracking-[0.3em]">
-             <LightBulbIcon className="h-6 w-6 text-indigo-600"/>
-             Growth Expectations
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-md">
+          <h2 className="text-sm font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+             <LightBulbIcon className="h-5 w-5 text-indigo-600"/>
+             What We're Looking For
           </h2>
-          <p className="text-[var(--text-secondary)] text-base leading-relaxed font-medium selection:bg-indigo-600/20">{company.partnerExpectations}</p>
-          <div className="mt-10 pt-10 border-t border-[var(--glass-border)]">
-              <h3 className="text-[9px] font-black uppercase tracking-[0.3em] text-[var(--text-muted)] mb-4 opacity-40">Collaboration Cycle:</h3>
-              <div className="px-6 py-3 bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-2xl text-indigo-600 text-[10px] font-black uppercase tracking-[0.2em] w-fit">
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{company.partnerExpectations}</p>
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">Typical Collaboration:</h3>
+              <div className="inline-block px-4 py-2 bg-indigo-100 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 rounded-lg text-indigo-700 dark:text-indigo-400 text-sm font-bold">
                 {company.collaborationLength}
               </div>
           </div>
         </div>
-        <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-10 group relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-1 h-32 bg-gradient-to-b from-emerald-600 to-transparent opacity-40" />
-          <h2 className="text-[10px] font-black text-[var(--text-primary)] mb-8 flex items-center gap-4 uppercase tracking-[0.3em]">
-            <BanknotesIcon className="h-6 w-6 text-emerald-500"/>
-            Value Logic
+        <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-md">
+          <h2 className="text-sm font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <BanknotesIcon className="h-5 w-5 text-emerald-600"/>
+            Compensation Philosophy
           </h2>
-          <p className="text-[var(--text-secondary)] text-base leading-relaxed font-medium selection:bg-emerald-600/20">{company.compensationPhilosophy}</p>
-          <div className="mt-10 pt-10 border-t border-[var(--glass-border)] opacity-30">
-             <div className="text-[8px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)]">Equity & Revenue Share Compatible</div>
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{company.compensationPhilosophy}</p>
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+             <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">Equity & Revenue Share Compatible</div>
           </div>
         </div>
       </div>
-      </div>
 
-      <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[3rem] p-12 mb-12 relative overflow-hidden group">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-600/30 to-transparent" />
-        <h2 className="text-[10px] font-black text-[var(--text-primary)] mb-12 uppercase tracking-[0.3em] flex items-center gap-4">
+      <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-8 mb-8 shadow-md">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
              <div className="w-2 h-2 rounded-full bg-indigo-600" />
-             Active Growth Vectors
+             Open Positions
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {company.positions && company.positions.length > 0 ? (
                 company.positions.map(pos => (
-                    <div key={pos.id} className="group/item flex flex-col p-8 bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-[2rem] hover:border-indigo-600/40 transition-all shadow-xl hover:-translate-y-1">
-                        <div className="flex justify-between items-start gap-4 mb-8">
-                            <h3 className="font-black text-[var(--text-primary)] text-sm uppercase tracking-tight leading-tight group-hover/item:text-indigo-600 transition-colors">{pos.title}</h3>
-                            <span className={`text-[8px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest flex items-center gap-2 border ${
-                                pos.status === PositionStatus.OPEN ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' :
-                                pos.status === PositionStatus.PAUSED ? 'bg-amber-500/10 text-amber-600 border-amber-500/20' :
-                                'bg-rose-500/10 text-rose-600 border-rose-500/20'
+                    <div key={pos.id} className="group/item p-5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl hover:border-indigo-500 transition-all">
+                        <div className="flex justify-between items-start gap-3 mb-3">
+                            <h3 className="font-bold text-gray-900 dark:text-white text-sm leading-tight">{pos.title}</h3>
+                            <span className={`text-xs font-bold px-2 py-1 rounded-lg flex items-center gap-1.5 whitespace-nowrap ${
+                                pos.status === PositionStatus.OPEN ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' :
+                                pos.status === PositionStatus.PAUSED ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400' :
+                                'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400'
                             }`}>
                                 <span className={`w-1.5 h-1.5 rounded-full ${
-                                    pos.status === PositionStatus.OPEN ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' :
+                                    pos.status === PositionStatus.OPEN ? 'bg-emerald-500' :
                                     pos.status === PositionStatus.PAUSED ? 'bg-amber-500' : 'bg-rose-500'
                                 }`} />
                                 {pos.status}
                             </span>
                         </div>
-                         <div className="mt-auto pt-6 border-t border-[var(--glass-border)] opacity-20 group-hover/item:opacity-40 transition-opacity">
-                            <div className="text-[7px] font-black uppercase tracking-[0.4em]">Mandate Active • 2026 Serial v.1.0</div>
-                         </div>
                     </div>
                 ))
             ) : (
                 (company.seeking || []).map(role => (
-                    <div key={role} className="bg-[var(--bg-primary)] text-indigo-600 border border-indigo-600/10 px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl hover:border-indigo-600 transition-all text-center">
+                    <div key={role} className="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 px-4 py-3 rounded-xl text-sm font-bold text-center">
                         {role}
                     </div>
                 ))
