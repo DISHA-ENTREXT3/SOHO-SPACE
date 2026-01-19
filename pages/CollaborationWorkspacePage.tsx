@@ -10,7 +10,8 @@ import {
     DocumentTextIcon as DocumentIcon, CheckCircleIcon, InformationCircleIcon,
     ArrowPathIcon, UserIcon, BuildingOffice2Icon as BuildingOfficeIcon,
     PencilIcon, LightBulbIcon, MegaphoneIcon, XCircleIcon, ArrowDownTrayIcon,
-    PaperClipIcon, DocumentPlusIcon, SparklesIcon, LinkIcon, PhotoIcon
+    PaperClipIcon, DocumentPlusIcon, SparklesIcon, LinkIcon, PhotoIcon,
+    ChevronDownIcon
 } from '../components/Icons';
 import Avatar from '../components/Avatar';
 import BackButton from '../components/BackButton';
@@ -48,6 +49,7 @@ const CollaborationWorkspacePage = () => {
     const [showLinkInput, setShowLinkInput] = useState(false);
     const [newLinkTitle, setNewLinkTitle] = useState('');
     const [newLinkUrl, setNewLinkUrl] = useState('');
+    const [isPhaseFilterOpen, setIsPhaseFilterOpen] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const phaseFileInputRef = useRef<HTMLInputElement>(null);
     const imageInputRef = useRef<HTMLInputElement>(null);
@@ -736,17 +738,58 @@ const CollaborationWorkspacePage = () => {
                                             className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-2 pl-10 pr-4 text-xs text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50"
                                         />
                                     </div>
-                                    <select 
-                                        value={fileFilter}
-                                        onChange={(e) => setFileFilter(e.target.value)}
-                                        className="bg-gray-800/40 border border-white/5 rounded-xl py-2 px-4 text-xs text-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-500/50"
-                                    >
-                                        <option value="all">All Phases</option>
-                                        <option value="general">General (No Phase)</option>
-                                        {collaboration.framework.phases.map(p => (
-                                            <option key={p} value={p}>{p}</option>
-                                        ))}
-                                    </select>
+                                    <div className="relative">
+                                        <button 
+                                            onClick={() => setIsPhaseFilterOpen(!isPhaseFilterOpen)}
+                                            className="flex items-center justify-between gap-3 bg-gray-800/40 border border-white/5 rounded-xl py-2 px-4 text-xs text-gray-300 hover:bg-gray-800/60 hover:border-white/10 transition-all focus:outline-none min-w-[140px]"
+                                        >
+                                            <span className="truncate">
+                                                {fileFilter === 'all' ? 'All Phases' : fileFilter === 'general' ? 'General' : fileFilter}
+                                            </span>
+                                            <ChevronDownIcon className={`w-3.5 h-3.5 text-gray-500 transition-transform duration-300 ${isPhaseFilterOpen ? 'rotate-180' : ''}`} />
+                                        </button>
+                                        
+                                        {isPhaseFilterOpen && (
+                                            <>
+                                                <div 
+                                                    className="fixed inset-0 z-40" 
+                                                    onClick={() => setIsPhaseFilterOpen(false)} 
+                                                />
+                                                <div className="absolute top-full right-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                                                    <div className="px-3 py-1 mb-1">
+                                                        <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Filter by Phase</p>
+                                                    </div>
+                                                    <button 
+                                                        onClick={() => { setFileFilter('all'); setIsPhaseFilterOpen(false); }}
+                                                        className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all flex items-center justify-between ${fileFilter === 'all' ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'}`}
+                                                    >
+                                                        All Phases
+                                                        {fileFilter === 'all' && <div className="w-1 h-1 rounded-full bg-indigo-400" />}
+                                                    </button>
+                                                    <button 
+                                                        onClick={() => { setFileFilter('general'); setIsPhaseFilterOpen(false); }}
+                                                        className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all flex items-center justify-between ${fileFilter === 'general' ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'}`}
+                                                    >
+                                                        General (No Phase)
+                                                        {fileFilter === 'general' && <div className="w-1 h-1 rounded-full bg-indigo-400" />}
+                                                    </button>
+                                                    
+                                                    <div className="my-1 border-t border-white/5" />
+                                                    
+                                                    {collaboration.framework.phases.map(p => (
+                                                        <button 
+                                                            key={p}
+                                                            onClick={() => { setFileFilter(p); setIsPhaseFilterOpen(false); }}
+                                                            className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all flex items-center justify-between ${fileFilter === p ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'}`}
+                                                        >
+                                                            {p}
+                                                            {fileFilter === p && <div className="w-1 h-1 rounded-full bg-indigo-400" />}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
