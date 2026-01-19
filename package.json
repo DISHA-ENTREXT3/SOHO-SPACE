@@ -1,0 +1,50 @@
+{
+  "name": "soho-space",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@entrext/support-client": "^0.2.0",
+    "@google/genai": "latest",
+    "@supabase/supabase-js": "^2.90.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-helmet-async": "^2.0.5",
+    "react-quill-new": "^3.7.0",
+    "react-router-dom": "^7.12.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/dotenv": "^6.1.1",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "@vitest/ui": "^4.0.17",
+    "dotenv": "^17.2.3",
+    "jsdom": "^27.4.0",
+    "typescript": "~5.8.2",
+    "vercel": "^50.3.2",
+    "vite": "^6.2.0",
+    "vitest": "^4.0.17"
+  },
+  "overrides": {
+    "react-helmet-async": {
+      "react": "$react"
+    }
+  }
+}
