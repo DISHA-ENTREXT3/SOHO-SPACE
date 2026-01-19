@@ -158,63 +158,60 @@ const PartnerProfilePage = () => {
                 noindex={true}
             />
             <BackButton />
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
                 {/* Left Sidebar */}
-                <aside className="lg:col-span-1 flex flex-col gap-8">
-                    <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-10 text-center relative overflow-hidden group">
-                        <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-indigo-600/10 to-transparent" />
-                        <div className="relative z-10">
-                            <div className="relative inline-block mb-6">
-                                <Avatar src={partner.avatarUrl} name={partner.name} size="xl" className="h-32 w-32 rounded-[2rem] border-4 border-[var(--bg-primary)] shadow-2xl" />
-                                <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-xl">
-                                    <StarIcon className="h-5 w-5 fill-current" />
-                                </div>
+                <aside className="lg:col-span-1 flex flex-col gap-6">
+                    <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-6 text-center shadow-md">
+                        <div className="relative inline-block mb-4">
+                            <Avatar src={partner.avatarUrl} name={partner.name} size="xl" className="h-24 w-24 rounded-xl border-2 border-gray-200 dark:border-gray-700 shadow-md" />
+                            <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center text-white shadow-md">
+                                <StarIcon className="h-4 w-4 fill-current" />
                             </div>
-                            <h1 className="text-3xl font-black text-[var(--text-primary)] tracking-tight">{partner.name}</h1>
-                            <div className="flex items-center justify-center gap-2 mt-4">
-                                <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.2em] border border-current/20 ${reputationColors.bg} ${reputationColors.text}`}>
-                                    {partner.reputationBand} RANK
-                                </span>
-                            </div>
+                        </div>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{partner.name}</h1>
+                        <div className="flex items-center justify-center gap-2">
+                            <span className={`inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold border ${reputationColors.bg} ${reputationColors.text}`}>
+                                {partner.reputationBand} RANK
+                            </span>
                         </div>
                         
                         {/* Actions for Founder */}
                         {pendingApplication && (
-                            <div className="mt-10 flex flex-col gap-3 relative z-10">
-                                <p className="text-[9px] font-black text-indigo-600 uppercase tracking-[0.3em] mb-2">Protocol Pending</p>
+                            <div className="mt-6 flex flex-col gap-2">
+                                <p className="text-xs font-bold text-indigo-600 mb-1">Action Required</p>
                                 <button
                                     onClick={handleAccept}
-                                    className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-xl shadow-indigo-600/25 group"
+                                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition-all shadow-md"
                                 >
                                     <CheckCircleIcon className="h-4 w-4" />
-                                    Establish Link
+                                    Approve Partner
                                 </button>
                                 <button
                                     onClick={handleReject}
-                                    className="w-full flex items-center justify-center gap-3 px-6 py-3.5 bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-500 border border-rose-500/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all"
+                                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-rose-100 dark:bg-rose-900/30 hover:bg-rose-500 hover:text-white text-rose-600 dark:text-rose-400 border-2 border-rose-200 dark:border-rose-800 rounded-xl text-sm font-bold transition-all"
                                 >
                                     <XCircleIcon className="h-4 w-4" />
-                                    Reject Protocol
+                                    Reject
                                 </button>
                             </div>
                         )}
                     </div>
 
-                    <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-8">
-                        <h3 className="text-[9px] font-black text-[var(--text-primary)] uppercase tracking-[0.3em] mb-8 opacity-40">Operational Intel</h3>
-                        <ul className="space-y-6">
+                    <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-md">
+                        <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4">Details</h3>
+                        <ul className="space-y-3">
                             {[
-                                { icon: <MapPinIcon className="h-5 w-5" />, label: "Territory", value: partner.location },
-                                { icon: <ClockIcon className="h-5 w-5" />, label: "Cycle", value: partner.timeZone },
-                                { icon: <BriefcaseIcon className="h-5 w-5" />, label: "Mode", value: partner.workModePreference }
+                                { icon: <MapPinIcon className="h-4 w-4" />, label: "Location", value: partner.location },
+                                { icon: <ClockIcon className="h-4 w-4" />, label: "Timezone", value: partner.timeZone },
+                                { icon: <BriefcaseIcon className="h-4 w-4" />, label: "Work Mode", value: partner.workModePreference }
                             ].map((item, i) => (
-                                <li key={i} className="flex items-center gap-5">
-                                    <div className="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-600 shrink-0">
+                                <li key={i} className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
                                         {item.icon}
                                     </div>
                                     <div>
-                                        <p className="text-[8px] font-black text-[var(--text-muted)] uppercase tracking-widest opacity-60 mb-0.5">{item.label}</p>
-                                        <p className="text-xs font-black text-[var(--text-primary)] uppercase tracking-tight">{item.value}</p>
+                                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">{item.label}</p>
+                                        <p className="text-sm font-bold text-gray-900 dark:text-white">{item.value}</p>
                                     </div>
                                 </li>
                             ))}
@@ -222,51 +219,50 @@ const PartnerProfilePage = () => {
                     </div>
 
                     {isOwner && (
-                        <div className="space-y-8">
-                            <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-10 relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-600/10 rounded-full blur-[80px] -mr-24 -mt-24 group-hover:bg-indigo-600/20 transition-all duration-700" />
-                                <h3 className="text-[9px] font-black text-[var(--text-primary)] mb-8 text-center uppercase tracking-[0.3em] opacity-40 relative z-10">Commander Matrix</h3>
+                        <div className="space-y-6">
+                            <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-md">
+                                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4 text-center">Owner Workspace</h3>
                                 <button
                                     onClick={handleGenerateAiCV}
                                     disabled={isAiLoading}
-                                    className="w-full flex items-center justify-center gap-4 px-8 py-5 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-[1.5rem] transition-all shadow-2xl shadow-indigo-600/25 mb-8 relative z-10 hover:-translate-y-1 active:scale-95"
+                                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl transition-all shadow-md mb-4"
                                 >
-                                    <SparklesIcon className="h-4 w-4 animate-pulse" />
-                                    {isAiLoading ? 'Synthesizing...' : 'Generate AI CV'}
+                                    <SparklesIcon className="h-4 w-4" />
+                                    {isAiLoading ? 'Generating...' : 'Generate AI CV'}
                                 </button>
                                 
                                 {aiError && (
-                                    <div className="mb-8 p-5 bg-rose-500/5 border border-rose-500/10 rounded-2xl text-center relative z-10">
-                                        <p className="text-rose-500 text-[10px] font-bold leading-relaxed uppercase tracking-tighter">{aiError}</p>
+                                    <div className="mb-4 p-3 bg-rose-100 dark:bg-rose-900/30 border border-rose-200 dark:border-rose-800 rounded-xl text-center">
+                                        <p className="text-rose-600 dark:text-rose-400 text-xs font-semibold">{aiError}</p>
                                     </div>
                                 )}
 
-                                <div className="text-[8px] text-center text-[var(--text-muted)] font-black uppercase tracking-[0.4em] opacity-30 relative z-10">
-                                    Gemini 1.5 Pro • Active
+                                <div className="text-xs text-center text-gray-500 dark:text-gray-400 font-medium">
+                                    Powered by Gemini 1.5 Pro
                                 </div>
                             </div>
 
-                            <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-8">
-                                <h3 className="text-[9px] font-black text-[var(--text-primary)] mb-8 uppercase tracking-[0.3em] opacity-40">Vault Submittals</h3>
-                                <div className="flex flex-col gap-6">
-                                    <div className="flex items-center gap-5 p-5 bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-2xl group/input">
-                                        <div className="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-600 shrink-0 group-hover/input:bg-indigo-600 group-hover/input:text-white transition-all">
-                                            <PaperClipIcon className="h-5 w-5" />
+                            <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-md">
+                                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4">Manage CV</h3>
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl">
+                                        <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
+                                            <PaperClipIcon className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                                         </div>
-                                        <span className={`flex-grow font-black text-[10px] uppercase tracking-widest truncate ${partner.resumeUrl ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)] opacity-50'}`}>
-                                            {isResumeUploading ? 'Transmitting...' : resumeFileName}
+                                        <span className={`flex-grow font-semibold text-xs truncate ${partner.resumeUrl ? 'text-gray-900 dark:text-white' : 'text-gray-400'}`}>
+                                            {isResumeUploading ? 'Uploading...' : resumeFileName}
                                         </span>
                                     </div>
-                                    <div className="flex gap-4">
+                                    <div className="flex gap-2">
                                         <button
                                             onClick={() => resumeInputRef.current?.click()}
                                             disabled={isResumeUploading}
-                                            className="flex-grow px-6 py-4 bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-2xl text-[9px] font-black uppercase tracking-widest text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:border-indigo-600/30 transition-all"
+                                            className="flex-grow px-4 py-2.5 bg-gray-100 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl text-xs font-bold text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
                                         >
-                                            {isResumeUploading ? 'Syncing...' : (partner.resumeUrl ? 'Refine' : 'Upload')}
+                                            {isResumeUploading ? 'Uploading...' : (partner.resumeUrl ? 'Change' : 'Upload')}
                                         </button>
                                         {partner.resumeUrl && (
-                                            <button onClick={handleRemoveResume} className="px-6 py-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl text-[9px] font-black uppercase tracking-widest text-rose-500 hover:bg-rose-500 hover:text-white transition-all">Eraser</button>
+                                            <button onClick={handleRemoveResume} className="px-4 py-2.5 bg-rose-100 dark:bg-rose-900/30 border-2 border-rose-200 dark:border-rose-800 rounded-xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-500 hover:text-white transition-all">Remove</button>
                                         )}
                                     </div>
                                     <input type="file" ref={resumeInputRef} onChange={handleResumeUpload} className="hidden" accept=".pdf,.doc,.docx" />
@@ -276,55 +272,50 @@ const PartnerProfilePage = () => {
                     )}
 
                     {partner.resumeUrl && (user?.role === UserRole.FOUNDER || user?.role === UserRole.ADMIN || isOwner) && (
-                        <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-8">
-                            <h3 className="text-[9px] font-black text-[var(--text-primary)] mb-8 uppercase tracking-[0.3em] opacity-40">Briefings</h3>
-                            <div className="space-y-4">
+                        <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-md">
+                            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4">Documents</h3>
+                            <div className="space-y-3">
                                 <a 
                                     href={partner.resumeUrl} 
                                     target="_blank" 
                                     rel="noopener noreferrer" 
-                                    className="flex items-center justify-center w-full px-6 py-4 bg-indigo-600/10 hover:bg-indigo-600 text-indigo-600 hover:text-white border border-indigo-600/20 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all group"
+                                    className="flex items-center justify-center w-full px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white border-2 border-indigo-600 rounded-xl text-sm font-bold transition-all"
                                 >
-                                    <PaperClipIcon className="h-4 w-4 mr-3" />
-                                    Launch CV Viewer
+                                    <PaperClipIcon className="h-4 w-4 mr-2" />
+                                    View CV
                                 </a>
                                 <a 
                                     href={partner.resumeUrl} 
                                     download 
-                                    className="flex items-center justify-center w-full px-6 py-4 border border-[var(--glass-border)] rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] hover:bg-[var(--bg-primary)] transition-all"
+                                    className="flex items-center justify-center w-full px-4 py-2.5 border-2 border-gray-200 dark:border-gray-700 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                                 >
-                                    <ArrowDownTrayIcon className="h-4 w-4 mr-3" />
-                                    Download Matrix
+                                    <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
+                                    Download
                                 </a>
                             </div>
                         </div>
                     )}
 
                     {(user?.role === UserRole.FOUNDER || user?.role === UserRole.ADMIN) && partner.contact &&
-                        <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-8 relative overflow-hidden group">
-                            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <h3 className="text-[9px] font-black text-[var(--text-primary)] mb-8 uppercase tracking-[0.3em] opacity-40">Comms Vector</h3>
-                            <div className="space-y-5 relative z-10">
-                                <div className="flex items-center bg-[var(--bg-primary)] p-5 rounded-2xl border border-[var(--glass-border)] group/card hover:border-indigo-600/30 transition-all">
-                                    <div className="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-600 mr-5 group-hover/card:bg-indigo-600 group-hover/card:text-white transition-all">
-                                        <EnvelopeIcon className="h-5 w-5" />
-                                    </div>
-                                    <span className="text-xs font-black uppercase tracking-tight text-[var(--text-secondary)] truncate">{partner.contact.email}</span>
+                        <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-md">
+                            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4">Contact</h3>
+                            <div className="space-y-3">
+                                <div className="flex items-center bg-gray-50 dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700">
+                                    <EnvelopeIcon className="h-4 w-4 mr-3 text-indigo-600 shrink-0" />
+                                    <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 truncate">{partner.contact.email}</span>
                                 </div>
                                 {partner.contact.linkedin && (
-                                    <a href={partner.contact.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center bg-[var(--bg-primary)] p-5 rounded-2xl border border-[var(--glass-border)] group/card hover:border-indigo-600/30 transition-all">
-                                        <div className="w-10 h-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-600 mr-5 group-hover/card:bg-indigo-600 group-hover/card:text-white transition-all">
-                                            <GlobeAltIcon className="h-5 w-5" />
-                                        </div>
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 hover:underline truncate">
-                                            Handshake Profile
+                                    <a href={partner.contact.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center bg-gray-50 dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-indigo-500 transition-all">
+                                        <GlobeAltIcon className="h-4 w-4 mr-3 text-indigo-600 shrink-0" />
+                                        <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline truncate">
+                                            LinkedIn Profile
                                         </span>
                                     </a>
                                 )}
-                                <div className="pt-6">
-                                    <a href={`mailto:${partner.contact.email}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full px-8 py-5 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-[1.5rem] shadow-2xl shadow-indigo-600/25 transition-all hover:-translate-y-1 active:scale-95">
-                                        <EnvelopeIcon className="h-5 w-5 mr-3" />
-                                        Personal Inquiry
+                                <div className="pt-3">
+                                    <a href={`mailto:${partner.contact.email}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl shadow-md transition-all">
+                                        <EnvelopeIcon className="h-4 w-4 mr-2" />
+                                        Send Message
                                     </a>
                                 </div>
                             </div>
@@ -333,59 +324,57 @@ const PartnerProfilePage = () => {
                 </aside>
 
                 {/* Right Content */}
-                <main className="lg:col-span-2 flex flex-col gap-8">
+                <main className="lg:col-span-2 flex flex-col gap-6">
                     {(user?.role === UserRole.FOUNDER || user?.role === UserRole.ADMIN) && (
-                        <div className="bg-indigo-600/5 border border-indigo-500/10 p-12 rounded-[3rem] relative overflow-hidden group shadow-2xl">
-                             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] -mr-40 -mt-40 animate-pulse" />
-                            
-                            <div className="flex items-center justify-between mb-12 relative z-10">
-                                <h2 className="text-[10px] font-black text-[var(--text-primary)] flex items-center gap-4 uppercase tracking-[0.3em]">
-                                    <SparklesIcon className="h-6 w-6 text-indigo-600 animate-bounce" />
-                                    AI Perception Probe
+                        <div className="bg-indigo-50 dark:bg-indigo-950/20 border-2 border-indigo-200 dark:border-indigo-900/30 p-6 rounded-2xl shadow-md">
+                            <div className="flex items-center justify-between mb-6">
+                                <h2 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                    <SparklesIcon className="h-5 w-5 text-indigo-600" />
+                                    AI Partner Analysis
                                 </h2>
                                 {!aiAnalysis && !isAiLoading && (
                                     <button 
                                         onClick={handleAiAnalysis}
-                                        className="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-indigo-600/25 hover:-translate-y-1 active:scale-95"
+                                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl transition-all shadow-md"
                                     >
-                                        Initiate Scan
+                                        Analyze Profile
                                     </button>
                                 )}
                             </div>
 
                             {isAiLoading ? (
-                                <div className="p-20 text-center bg-[var(--bg-primary)] rounded-[2rem] border border-[var(--glass-border)] animate-in zoom-in-95 duration-500 relative z-10 shadow-inner">
-                                    <div className="w-16 h-16 border-4 border-indigo-600/20 border-t-indigo-600 rounded-full animate-spin mx-auto mb-8 shadow-2xl shadow-indigo-600/20" />
-                                    <p className="text-[var(--text-muted)] text-[10px] font-black uppercase tracking-[0.3em] opacity-60">Deciphering identity markers...</p>
+                                <div className="p-12 text-center bg-white dark:bg-gray-900 rounded-xl border-2 border-gray-200 dark:border-gray-700">
+                                    <div className="w-12 h-12 border-4 border-indigo-200 dark:border-indigo-900 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4" />
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm font-semibold">Analyzing partner profile...</p>
                                 </div>
                             ) : aiError ? (
-                                <div className="p-10 bg-rose-500/5 border border-rose-500/10 rounded-[2rem] text-center relative z-10">
-                                    <p className="text-rose-500 text-[10px] font-black uppercase tracking-[0.2em] mb-6">{aiError}</p>
-                                    <button onClick={handleAiAnalysis} className="text-indigo-600 text-[9px] font-black uppercase tracking-[0.3em] underline underline-offset-8 decoration-2 hover:text-indigo-500">Restart Sequence</button>
+                                <div className="p-6 bg-rose-100 dark:bg-rose-900/30 border border-rose-200 dark:border-rose-800 rounded-xl text-center">
+                                    <p className="text-rose-600 dark:text-rose-400 text-sm font-bold mb-3">{aiError}</p>
+                                    <button onClick={handleAiAnalysis} className="text-indigo-600 dark:text-indigo-400 text-sm font-bold underline hover:no-underline">Try Again</button>
                                 </div>
                             ) : aiAnalysis ? (
-                                <div className="bg-[var(--bg-primary)] border border-[var(--glass-border)] p-10 rounded-[2rem] relative z-10 shadow-2xl">
-                                    <div className="flex items-center gap-4 mb-10 text-[9px] font-black text-emerald-500 uppercase tracking-[0.3em] bg-emerald-500/10 w-fit px-5 py-2 rounded-full border border-emerald-500/20">
-                                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                                        Synthesis Complete
+                                <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 p-6 rounded-xl">
+                                    <div className="flex items-center gap-2 mb-4 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30 w-fit px-3 py-1.5 rounded-lg">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                        Analysis Complete
                                     </div>
-                                    <div className="text-[var(--text-secondary)] text-base leading-relaxed whitespace-pre-wrap font-medium selection:bg-indigo-500/30">
+                                    <div className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">
                                         <LinkifiedText text={aiAnalysis} />
                                     </div>
-                                    <div className="mt-12 pt-8 border-t border-[var(--glass-border)] text-[8px] font-black text-[var(--text-muted)] uppercase tracking-[0.4em] opacity-30">
-                                        Soho Neural Engine • Verified Profile Data
+                                    <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400 font-medium">
+                                        Powered by Gemini AI
                                     </div>
                                 </div>
                             ) : (
-                                <div className="bg-[var(--bg-primary)] border border-[var(--glass-border)] p-12 rounded-[2.5rem] text-center relative z-10 shadow-2xl">
-                                    <div className="w-24 h-24 bg-indigo-600/10 rounded-[2rem] flex items-center justify-center mx-auto mb-10 shadow-inner">
-                                        <SparklesIcon className="h-10 w-10 text-indigo-600/40" />
+                                <div className="bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 p-8 rounded-xl text-center">
+                                    <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                        <SparklesIcon className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
                                     </div>
-                                    <h3 className="text-[var(--text-primary)] text-lg font-black uppercase tracking-[0.1em] mb-4">Deep Professional Audit</h3>
-                                    <p className="text-[var(--text-muted)] text-sm mb-10 max-w-sm mx-auto font-medium opacity-60 leading-relaxed uppercase tracking-tight italic">Unlock core growth vectors, cognitive superpower summaries, and precision vetting trajectories.</p>
-                                    <div className="inline-flex items-center gap-3 bg-[var(--bg-secondary)] text-indigo-600 text-[9px] font-black py-3 px-8 rounded-2xl border border-indigo-600/10 uppercase tracking-[0.3em] shadow-lg shadow-indigo-600/5">
+                                    <h3 className="text-gray-900 dark:text-white text-base font-bold mb-2">AI-Powered Partner Insights</h3>
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 max-w-md mx-auto">Get detailed analysis of this partner's skills, experience, and potential fit for your company.</p>
+                                    <div className="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 text-xs font-bold py-2 px-4 rounded-lg">
                                         <RocketLaunchIcon className="w-4 h-4" />
-                                        Protocol Credit Ready
+                                        Ready to Analyze
                                     </div>
                                 </div>
                             )}
