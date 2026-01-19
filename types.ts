@@ -162,6 +162,8 @@ export interface Collaboration {
   links: { id: string, title: string, url: string, phase?: string }[];
   decisionLog: Decision[];
   startDate: Date;
+  status?: 'active' | 'completed' | 'paused';
+  projectName?: string;
 }
 
 export interface Notification {

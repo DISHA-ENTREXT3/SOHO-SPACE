@@ -101,25 +101,26 @@
 [data-theme="light"] {
   /* Backgrounds */
   --bg-primary: #f9fafb;
-  --bg-secondary: #f3f4f6;
-  --bg-card: rgba(255, 255, 255, 0.7);
-  --bg-card-hover: rgba(255, 255, 255, 0.9);
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --bg-card-hover: rgba(255, 255, 255, 1);
 
   /* Glass Effect */
-  --glass-bg: rgba(255, 255, 255, 0.6);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 8px 32px rgba(99, 102, 241, 0.08);
 
   /* Text Colors */
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
 
   /* Shadows - softer for light mode */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.15);
 }
 
 /* =====================================================
@@ -308,7 +309,7 @@ h6 {
 .form-select {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: rgba(17, 24, 39, 0.6);
+  background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--border-radius-md);
   color: var(--text-primary);
@@ -707,34 +708,34 @@ h6 {
 
 .ql-editor {
   min-height: 150px;
-  color: #fff !important;
+  color: var(--text-primary) !important;
 }
 
 .ql-toolbar.ql-snow {
   border: none !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  background: rgba(0, 0, 0, 0.2) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+  background: var(--bg-secondary) !important;
 }
 
 .ql-snow .ql-stroke {
-  stroke: #9ca3af !important;
+  stroke: var(--text-secondary) !important;
 }
 
 .ql-snow .ql-fill {
-  fill: #9ca3af !important;
+  fill: var(--text-secondary) !important;
 }
 
 .ql-snow .ql-picker {
-  color: #9ca3af !important;
+  color: var(--text-secondary) !important;
 }
 
 .ql-snow .ql-picker-options {
-  background-color: #1f2937 !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  background-color: var(--bg-primary) !important;
+  border-color: var(--glass-border) !important;
 }
 
 .ql-editor.ql-blank::before {
-  color: #6b7280 !important;
+  color: var(--text-muted) !important;
   font-style: normal !important;
 }
 
@@ -744,7 +745,7 @@ h6 {
   font-weight: 800;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .rich-text-content h2 {
@@ -752,14 +753,15 @@ h6 {
   font-weight: 700;
   margin-top: 1.25rem;
   margin-bottom: 0.75rem;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .rich-text-content p {
   margin-bottom: 1rem;
 }
 
-.rich-text-content ul, .rich-text-content ol {
+.rich-text-content ul,
+.rich-text-content ol {
   margin-left: 1.5rem;
   margin-bottom: 1rem;
   list-style-type: disc;
@@ -770,32 +772,32 @@ h6 {
 }
 
 .rich-text-content a {
-  color: #6366f1;
+  color: var(--color-primary-500);
   text-decoration: underline;
 }
 
 .rich-text-content blockquote {
-  border-left: 4px solid #6366f1;
+  border-left: 4px solid var(--color-primary-500);
   padding-left: 1rem;
   font-style: italic;
   margin-bottom: 1rem;
-  color: #9ca3af;
+  color: var(--text-secondary);
 }
 
 /* Glassmorphism & Premium UI Utilities */
 .glass-card {
-  background: rgba(15, 15, 20, 0.4);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
   border-radius: 1.5rem;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--glass-shadow);
   transition: all 0.3s ease;
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(15, 15, 20, 0.6);
+  border-color: var(--color-primary-500);
+  background: var(--bg-card-hover);
 }
 
 .form-textarea {
@@ -835,8 +837,14 @@ h6 {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-in {

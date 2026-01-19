@@ -21,19 +21,12 @@ const ClearableInput: React.FC<{
     const [showPlaceholder, setShowPlaceholder] = useState(!value);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleFocus = () => {
-        setShowPlaceholder(false);
-    };
-
-    const handleBlur = () => {
-        if (!value) {
-            setShowPlaceholder(true);
-        }
-    };
+    const handleFocus = () => setShowPlaceholder(false);
+    const handleBlur = () => { if (!value) setShowPlaceholder(true); };
 
     return (
         <div className="form-group">
-            <label className="block text-sm font-medium text-gray-300 mb-2">{label}</label>
+            <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] mb-3">{label}</label>
             <input
                 ref={inputRef}
                 type={type}
@@ -43,9 +36,9 @@ const ClearableInput: React.FC<{
                 onBlur={handleBlur}
                 placeholder={showPlaceholder ? placeholder : ''}
                 required={required}
-                className="w-full px-4 py-3 bg-gray-800/60 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all duration-200"
+                className="w-full px-5 py-4 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium"
             />
-            {helpText && <p className="text-xs text-gray-400 mt-2">{helpText}</p>}
+            {helpText && <p className="text-[9px] text-[var(--text-muted)] mt-2 font-bold uppercase tracking-wider opacity-60">{helpText}</p>}
         </div>
     );
 };
@@ -62,19 +55,12 @@ const ClearableTextarea: React.FC<{
 }> = ({ value, onChange, placeholder, helpText, label, rows = 4, required }) => {
     const [showPlaceholder, setShowPlaceholder] = useState(!value);
 
-    const handleFocus = () => {
-        setShowPlaceholder(false);
-    };
-
-    const handleBlur = () => {
-        if (!value) {
-            setShowPlaceholder(true);
-        }
-    };
+    const handleFocus = () => setShowPlaceholder(false);
+    const handleBlur = () => { if (!value) setShowPlaceholder(true); };
 
     return (
         <div className="form-group">
-            <label className="block text-sm font-medium text-gray-300 mb-2">{label}</label>
+            <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] mb-3">{label}</label>
             <textarea
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
@@ -83,9 +69,9 @@ const ClearableTextarea: React.FC<{
                 placeholder={showPlaceholder ? placeholder : ''}
                 rows={rows}
                 required={required}
-                className="w-full px-4 py-3 bg-gray-800/60 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all duration-200 resize-none"
+                className="w-full px-5 py-4 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium resize-none leading-relaxed"
             />
-            {helpText && <p className="text-xs text-gray-400 mt-2">{helpText}</p>}
+            {helpText && <p className="text-[9px] text-[var(--text-muted)] mt-2 font-bold uppercase tracking-wider opacity-60">{helpText}</p>}
         </div>
     );
 };
@@ -147,9 +133,9 @@ const OnboardingPage = () => {
     ];
 
     const ProgressBar = () => (
-        <div className="mb-10">
+        <div className="mb-12">
             {/* Step Indicators */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-8 px-2">
                 {stepConfig.map((s, index) => {
                     const StepIcon = s.icon;
                     const stepNum = index + 1;
@@ -157,17 +143,17 @@ const OnboardingPage = () => {
                     const isCompleted = step > stepNum;
                     
                     return (
-                        <div key={index} className="flex flex-col items-center">
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
-                                isCompleted ? 'bg-green-500' : isActive ? 'bg-gradient-to-br from-indigo-500 to-purple-600' : 'bg-gray-700'
+                        <div key={index} className="flex flex-col items-center group">
+                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 transform ${
+                                isCompleted ? 'bg-emerald-500 scale-90' : isActive ? 'bg-indigo-600 scale-110 shadow-xl shadow-indigo-500/25 ring-2 ring-indigo-500/10' : 'bg-[var(--bg-secondary)] border border-[var(--glass-border)] opacity-60'
                             }`}>
                                 {isCompleted ? (
-                                    <CheckCircleIcon className="h-5 w-5 text-white" />
+                                    <CheckCircleIcon className="h-6 w-6 text-white" />
                                 ) : (
-                                    <StepIcon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-400'}`} />
+                                    <StepIcon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-[var(--text-muted)]'}`} />
                                 )}
                             </div>
-                            <span className={`text-xs mt-2 font-medium ${isActive ? 'text-white' : 'text-gray-500'}`}>
+                            <span className={`text-[9px] mt-3 font-black uppercase tracking-[0.2em] transition-colors duration-300 ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)] opacity-50'}`}>
                                 {s.label}
                             </span>
                         </div>
@@ -175,9 +161,9 @@ const OnboardingPage = () => {
                 })}
             </div>
             {/* Progress Line */}
-            <div className="w-full bg-gray-700/50 rounded-full h-1">
+            <div className="w-full bg-[var(--bg-secondary)] rounded-full h-1 relative border border-[var(--glass-border)] overflow-hidden">
                 <div 
-                    className="h-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-500"
+                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 transition-all duration-700 ease-out"
                     style={{ width: `${((step - 1) / (totalSteps - 1)) * 100}%` }}
                 />
             </div>
@@ -202,50 +188,67 @@ const OnboardingPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl" />
                 <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
             </div>
             
-            <div className="max-w-xl w-full relative z-10">
+            <div className="max-w-xl w-full relative z-10 px-4">
+                {/* Brand Logo */}
+                <div className="flex justify-center mb-8">
+                     <div className="flex items-center gap-3">
+                         <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/20">
+                             <RocketLaunchIcon className="w-6 h-6 text-white" />
+                         </div>
+                         <h2 className="text-xl font-black text-[var(--text-primary)] tracking-tighter uppercase">Soho<span className="text-indigo-600">Space</span></h2>
+                     </div>
+                </div>
+
                 {/* Card */}
-                <div className="bg-gray-900/70 backdrop-blur-xl border border-white/10 p-8 rounded-2xl shadow-2xl">
+                <div className="bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] p-10 rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)]">
                     <ProgressBar />
-                    <div className="animate-fade-in">
+                    <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out">
                         {renderStep()}
                     </div>
                     
                     {/* Navigation */}
-                    <div className="mt-8 flex justify-between items-center">
+                    <div className="mt-10 pt-10 border-t border-[var(--glass-border)] flex justify-between items-center transition-all">
                         {step > 1 ? (
                             <button 
                                 onClick={handleBack} 
-                                className="px-5 py-2.5 text-gray-300 hover:text-white font-medium rounded-lg hover:bg-white/5 transition-colors"
+                                className="px-6 py-3 text-[var(--text-muted)] hover:text-[var(--text-primary)] font-black text-[10px] uppercase tracking-[0.2em] rounded-2xl bg-[var(--bg-secondary)] border border-[var(--glass-border)] hover:bg-[var(--bg-card-hover)] transition-all flex items-center gap-2"
                             >
-                                ← Back
+                                <span className="opacity-50">←</span> Prev Sequence
                             </button>
                         ) : (
                             <div />
                         )}
                         
                         {/* Step counter */}
-                        <span className="text-sm text-gray-500">
-                            Step {step} of {totalSteps}
-                        </span>
+                        <div className="flex items-center gap-3">
+                            <div className="flex gap-1">
+                                {[...Array(totalSteps)].map((_, i) => (
+                                    <div key={i} className={`w-1 h-1 rounded-full ${i + 1 === step ? 'bg-indigo-500 w-3' : 'bg-[var(--text-muted)] opacity-30'} transition-all`} />
+                                ))}
+                            </div>
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] opacity-50">
+                                Phase 0{step}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 
                 {/* Trust indicators */}
-                <div className="mt-6 flex items-center justify-center gap-6 text-gray-500 text-sm">
-                    <div className="flex items-center gap-1.5">
-                        <CheckCircleIcon className="h-4 w-4 text-green-500" />
-                        <span>Secure & Private</span>
+                <div className="mt-10 flex items-center justify-center gap-10 text-[var(--text-muted)] text-[9px] font-black uppercase tracking-[0.3em] opacity-40">
+                    <div className="flex items-center gap-2">
+                        <ShieldCheckIcon className="h-4 w-4" />
+                        <span>Encrypted Protocol</span>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                        <SparklesIcon className="h-4 w-4 text-yellow-500" />
-                        <span>Takes 2 minutes</span>
+                    <div className="flex items-center gap-2">
+                        <SparklesIcon className="h-4 w-4" />
+                        <span>Instant Access</span>
                     </div>
                 </div>
             </div>
@@ -260,53 +263,44 @@ const WelcomeStep: React.FC<{ onNext: (data: any) => void }> = ({ onNext }) => {
     const isFounder = user?.role === UserRole.FOUNDER || user?.role === UserRole.ADMIN;
     
     return (
-        <div className="text-center">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                <RocketLaunchIcon className="h-10 w-10 text-white" />
+        <div className="text-center py-4">
+            <div className="w-24 h-24 mx-auto mb-10 rounded-3xl bg-indigo-600 flex items-center justify-center shadow-2xl shadow-indigo-600/30 relative">
+                 <div className="absolute inset-0 bg-white/10 rounded-3xl animate-pulse" />
+                 <RocketLaunchIcon className="h-10 w-10 text-white relative z-10" />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-3">
-                Welcome to Soho Space!
+            <h1 className="text-3xl font-black text-[var(--text-primary)] mb-4 tracking-tight">
+                Initiate Your Journey
             </h1>
-            <p className="text-gray-400 mb-4 max-w-md mx-auto">
+            <p className="text-[var(--text-secondary)] mb-10 max-w-sm mx-auto text-sm font-medium leading-relaxed opacity-80">
                 {isFounder 
-                    ? "You're about to unlock access to elite growth partners ready to scale your vision."
-                    : "Discover vetted opportunities and connect with innovative founders building the future."
+                    ? "Welcome to the elite corridor. Access pre-vetted growth talent ready to scale your vision to the next dimension."
+                    : "Connect with high-growth startups and innovative founders building the next generation of digital infrastructure."
                 }
             </p>
             
             {/* Value propositions */}
-            <div className="mt-8 space-y-3 text-left bg-white/5 rounded-xl p-5">
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
-                        <CheckCircleIcon className="h-4 w-4 text-green-400" />
+            <div className="space-y-4 mb-10">
+                {[
+                    isFounder ? "Access elite growth vectors" : "Exclusive high-growth mandates",
+                    isFounder ? "Built-in strategic alignment" : "Reputation-based scaling",
+                    isFounder ? "AI-powered precision matching" : "Direct founder access"
+                ].map((text, i) => (
+                    <div key={i} className="flex items-center gap-4 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl p-4 hover:border-indigo-500/30 transition-all group">
+                        <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500/20 transition-all">
+                            <CheckCircleIcon className="h-4 w-4 text-emerald-500" />
+                        </div>
+                        <span className="text-[var(--text-secondary)] text-xs font-black uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-all">
+                            {text}
+                        </span>
                     </div>
-                    <span className="text-gray-300">
-                        {isFounder ? "Access pre-vetted growth experts" : "Find exciting high-growth startups"}
-                    </span>
-                </div>
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
-                        <CheckCircleIcon className="h-4 w-4 text-green-400" />
-                    </div>
-                    <span className="text-gray-300">
-                        {isFounder ? "Built-in NDA & collaboration tools" : "Build your reputation score"}
-                    </span>
-                </div>
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
-                        <CheckCircleIcon className="h-4 w-4 text-green-400" />
-                    </div>
-                    <span className="text-gray-300">
-                        {isFounder ? "AI-powered partner matching" : "Transparent project expectations"}
-                    </span>
-                </div>
+                ))}
             </div>
             
             <button 
                 onClick={() => onNext({})} 
-                className="mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3.5 px-6 rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 shadow-lg shadow-indigo-500/25"
+                className="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] py-5 px-8 rounded-2xl transition-all shadow-2xl shadow-indigo-600/25 active:scale-95"
             >
-                Let's Get Started →
+                Start Protocol →
             </button>
         </div>
     );
@@ -353,25 +347,26 @@ const ProfileInfoStep: React.FC<{ onNext: (data: any) => void }> = ({ onNext }) 
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="flex flex-col items-center mb-8">
-                <div className="relative group mb-4">
-                    <div className={`w-24 h-24 overflow-hidden bg-gray-800 border-2 border-white/10 shadow-inner ${isFounder ? 'rounded-2xl' : 'rounded-full'}`}>
+            <div className="flex flex-col items-center mb-10">
+                <div className="relative group mb-6">
+                    <div className={`w-28 h-28 overflow-hidden bg-[var(--bg-secondary)] border-2 border-[var(--glass-border)] shadow-2xl relative ${isFounder ? 'rounded-3xl' : 'rounded-full'}`}>
                         <Avatar 
                             src={user?.avatarUrl} 
                             name={user?.name || 'User'} 
                             className="w-full h-full"
                         />
+                         <div className="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                     <button 
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                         disabled={isUploading}
-                        className={`absolute bottom-1 right-1 p-2 bg-indigo-600 text-white rounded-xl shadow-lg hover:bg-indigo-700 transition-all scale-90 group-hover:scale-100 ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`absolute bottom-0 right-0 p-3 bg-indigo-600 text-white rounded-2xl shadow-xl hover:bg-indigo-500 transition-all transform hover:scale-110 active:scale-90 ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {isUploading ? (
                             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : (
-                            <CameraIcon className="w-4 h-4" />
+                            <CameraIcon className="w-5 h-5" />
                         )}
                     </button>
                     <input 
@@ -382,47 +377,41 @@ const ProfileInfoStep: React.FC<{ onNext: (data: any) => void }> = ({ onNext }) 
                         accept="image/*"
                     />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-1">
-                    {isFounder ? 'Tell us about your company' : 'Create your profile'}
+                <h2 className="text-2xl font-black text-[var(--text-primary)] mb-2 tracking-tight">
+                    {isFounder ? 'Identity & Vision' : 'Professional Identity'}
                 </h2>
-                <p className="text-gray-400 text-xs text-center max-w-xs">
+                <p className="text-[var(--text-muted)] text-[9px] font-black uppercase tracking-[0.2em] text-center max-w-[280px] opacity-60">
                     {isFounder 
-                        ? 'Upload a company logo and tell us about your vision.'
-                        : 'Upload a professional photo and showcase your expertise.'
+                        ? 'Establish your brand presence to attract top-tier growth executors.'
+                        : 'Your profile serves as your digital fingerprint in the Soho ecosystem.'
                     }
                 </p>
             </div>
             
-            <div className="space-y-5">
+            <div className="space-y-6">
                 <ClearableInput
                     label={isFounder ? 'Company Name' : 'Full Name'}
                     value={name}
                     onChange={setName}
-                    placeholder={isFounder ? 'e.g., Acme Technologies' : 'e.g., John Smith'}
-                    helpText={isFounder ? 'Your official company or brand name' : 'This is how you\'ll appear to founders'}
+                    placeholder={isFounder ? 'e.g., Nexus Growth Lab' : 'e.g., Alex Rivera'}
                     required
                 />
                 
                 <ClearableInput
-                    label="Location"
+                    label="Operations Hub"
                     value={location}
                     onChange={setLocation}
-                    placeholder="e.g., San Francisco, CA, USA"
-                    helpText="Helps match you with location-compatible opportunities"
+                    placeholder="e.g., Remote / Singapore"
                     required
                 />
                 
                 <ClearableTextarea
-                    label={isFounder ? 'Company Description' : 'Professional Bio'}
+                    label={isFounder ? 'Mission Statement & Background' : 'Strategic Overview'}
                     value={description}
                     onChange={setDescription}
                     placeholder={isFounder 
-                        ? 'Tell us about your company\'s mission, products, and what makes you unique. Include details about your target market, growth stage, and vision for the future...'
-                        : 'Share your professional background, areas of expertise, and what drives you. Mention notable achievements, industries you\'ve worked in, and the type of projects you\'re passionate about...'
-                    }
-                    helpText={isFounder 
-                        ? 'A compelling description attracts better-matched partners'
-                        : 'A strong bio increases your visibility and match quality'
+                        ? 'Synthesize your company\'s core mission, trajectory, and unique growth vectors...'
+                        : 'Project your professional baseline, execution frameworks, and growth philosophy...'
                     }
                     rows={5}
                     required
@@ -431,9 +420,9 @@ const ProfileInfoStep: React.FC<{ onNext: (data: any) => void }> = ({ onNext }) 
             
             <button 
                 type="submit" 
-                className="mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3.5 px-6 rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 shadow-lg shadow-indigo-500/25"
+                className="mt-10 w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] py-5 px-8 rounded-2xl transition-all shadow-2xl shadow-indigo-600/25 active:scale-95"
             >
-                Continue →
+                Confirm Identity →
             </button>
         </form>
     );
@@ -450,49 +439,47 @@ const FounderNeedsStep: React.FC<{ onNext: (data: any) => void }> = ({ onNext })
     
     return (
         <form onSubmit={handleSubmit}>
-            <div className="text-center mb-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-                    <LightBulbIcon className="h-8 w-8 text-white" />
+            <div className="text-center mb-10">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-indigo-600/10 flex items-center justify-center border border-indigo-500/20">
+                    <LightBulbIcon className="h-8 w-8 text-indigo-500" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">
-                    What are you looking for?
+                <h2 className="text-2xl font-black text-[var(--text-primary)] mb-2 tracking-tight">
+                    Strategic Requirements
                 </h2>
-                <p className="text-gray-400 text-sm">
-                    Define the skills and qualities you need in a growth partner to achieve your goals.
+                <p className="text-[var(--text-secondary)] text-xs font-medium leading-relaxed opacity-70">
+                    Define the execution vectors and professional DNA required to accelerate your vision.
                 </p>
             </div>
             
-            <div className="space-y-5">
+            <div className="space-y-6">
                 <ClearableInput
-                    label="Skills & Expertise Needed"
+                    label="Growth Vectors Needed"
                     value={seeking}
                     onChange={setSeeking}
-                    placeholder="e.g., SaaS Growth, Performance Marketing, SEO, E-commerce Strategy"
-                    helpText="Separate multiple skills with commas. Be specific to attract the right partners."
+                    placeholder="e.g., Performance Marketing, SEO Architecture, SaaS Ops"
                     required
                 />
                 
                 <ClearableTextarea
-                    label="Partner Expectations"
+                    label="Operational Expectations"
                     value={expectations}
                     onChange={setExpectations}
-                    placeholder="Describe your ideal partner: What experience level are you looking for? What kind of commitment (hours/week)? What communication style works best? What outcomes do you expect from the collaboration?..."
-                    helpText="Clear expectations lead to better matches and successful partnerships"
+                    placeholder="Describe the engagement model, expected outcomes, and the baseline expertise required for this mandate..."
                     rows={5}
                     required
                 />
             </div>
             
             {/* Quick suggestion chips */}
-            <div className="mt-4">
-                <p className="text-xs text-gray-500 mb-2">Popular skills:</p>
+            <div className="mt-6">
+                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4 opacity-50">Core mandates:</p>
                 <div className="flex flex-wrap gap-2">
-                    {['SaaS Growth', 'Content Marketing', 'PPC', 'SEO', 'Product Launch'].map(skill => (
+                    {['SaaS Growth', 'Content Scaling', 'Paid Media', 'SEO Architecture', 'Product GTM'].map(skill => (
                         <button
                             key={skill}
                             type="button"
                             onClick={() => setSeeking(prev => prev ? `${prev}, ${skill}` : skill)}
-                            className="text-xs px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-gray-400 hover:text-white hover:border-indigo-500/50 transition-colors"
+                            className="text-[9px] font-black uppercase tracking-widest px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-xl text-[var(--text-muted)] hover:text-indigo-500 hover:border-indigo-500/30 transition-all font-medium"
                         >
                             + {skill}
                         </button>
@@ -502,9 +489,9 @@ const FounderNeedsStep: React.FC<{ onNext: (data: any) => void }> = ({ onNext })
             
             <button 
                 type="submit" 
-                className="mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3.5 px-6 rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 shadow-lg shadow-indigo-500/25"
+                className="mt-10 w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] py-5 px-8 rounded-2xl transition-all shadow-2xl shadow-indigo-600/25 active:scale-95"
             >
-                Continue →
+                Lock Mandate →
             </button>
         </form>
     );
@@ -521,38 +508,37 @@ const PartnerSkillsStep: React.FC<{ onNext: (data: any) => void }> = ({ onNext }
     
     return (
         <form onSubmit={handleSubmit}>
-            <div className="text-center mb-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center">
-                    <ChartBarIcon className="h-8 w-8 text-white" />
+            <div className="text-center mb-10">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-indigo-600/10 flex items-center justify-center border border-indigo-500/20">
+                    <ChartBarIcon className="h-8 w-8 text-indigo-500" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">
-                    Showcase Your Expertise
+                <h2 className="text-2xl font-black text-[var(--text-primary)] mb-2 tracking-tight">
+                    Expertise Matrix
                 </h2>
-                <p className="text-gray-400 text-sm">
-                    Highlight your top skills and preferences to get matched with the best opportunities.
+                <p className="text-[var(--text-secondary)] text-xs font-medium leading-relaxed opacity-70">
+                    Map your professional superpowers to the growth mandates of top-tier partners.
                 </p>
             </div>
             
-            <div className="space-y-5">
+            <div className="space-y-6">
                 <ClearableInput
-                    label="Your Top Skills"
+                    label="Core Superpowers"
                     value={skills}
                     onChange={setSkills}
-                    placeholder="e.g., SEO Strategy, Content Marketing, PPC Management, Growth Hacking"
-                    helpText="Separate skills with commas. Focus on your strongest areas."
+                    placeholder="e.g., SEO Architecture, Paid Acquisition, Content Ops"
                     required
                 />
                 
                 {/* Quick skill suggestions */}
                 <div>
-                    <p className="text-xs text-gray-500 mb-2">Quick add:</p>
+                    <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4 opacity-50">Popular vectors:</p>
                     <div className="flex flex-wrap gap-2">
-                        {['SEO', 'PPC', 'Content Strategy', 'Email Marketing', 'Analytics'].map(skill => (
+                        {['SEO', 'PPC', 'Strategy', 'Email Ops', 'Retention'].map(skill => (
                             <button
                                 key={skill}
                                 type="button"
                                 onClick={() => setSkills(prev => prev ? `${prev}, ${skill}` : skill)}
-                                className="text-xs px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-gray-400 hover:text-white hover:border-indigo-500/50 transition-colors"
+                                className="text-[9px] font-black uppercase tracking-widest px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-xl text-[var(--text-muted)] hover:text-indigo-500 hover:border-indigo-500/30 transition-all"
                             >
                                 + {skill}
                             </button>
@@ -561,32 +547,31 @@ const PartnerSkillsStep: React.FC<{ onNext: (data: any) => void }> = ({ onNext }
                 </div>
                 
                 <div className="form-group">
-                    <label className="block text-sm font-medium text-gray-300 mb-3">Work Mode Preference</label>
-                    <div className="grid grid-cols-3 gap-3">
+                    <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] mb-4">Engagement Preference</label>
+                    <div className="grid grid-cols-3 gap-4">
                         {Object.values(WorkMode).map(mode => (
                             <button
                                 key={mode}
                                 type="button"
                                 onClick={() => setWorkMode(mode)}
-                                className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 ${
+                                className={`px-4 py-4 rounded-2xl border text-[9px] font-black uppercase tracking-widest transition-all duration-300 transform active:scale-95 ${
                                     workMode === mode 
-                                        ? 'bg-indigo-600 border-indigo-500 text-white' 
-                                        : 'bg-gray-800/50 border-white/10 text-gray-400 hover:border-white/20'
+                                        ? 'bg-indigo-600 border-indigo-500 text-white shadow-xl shadow-indigo-500/25' 
+                                        : 'bg-[var(--bg-secondary)] border-[var(--glass-border)] text-[var(--text-muted)] hover:border-indigo-500/30 hover:text-indigo-500'
                                 }`}
                             >
                                 {mode}
                             </button>
                         ))}
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">This helps match you with companies that support your preferred work style.</p>
                 </div>
             </div>
             
             <button 
                 type="submit" 
-                className="mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3.5 px-6 rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 shadow-lg shadow-indigo-500/25"
+                className="mt-10 w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] py-5 px-8 rounded-2xl transition-all shadow-2xl shadow-indigo-600/25 active:scale-95"
             >
-                Continue →
+                Finalize Matrix →
             </button>
         </form>
     );
@@ -606,21 +591,17 @@ const DocumentUpload: React.FC<{
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
-        if (file) {
-            onFileSelect(file);
-        }
+        if (file) onFileSelect(file);
     };
 
-    const handleDragOver = (e: React.DragEvent) => {
-        e.preventDefault();
-    };
+    const handleDragOver = (e: React.DragEvent) => e.preventDefault();
 
     return (
         <div
             onDrop={handleDrop}
             onDragOver={handleDragOver}
-            className={`relative border-2 border-dashed rounded-xl p-6 transition-all duration-300 cursor-pointer hover:border-indigo-500/50 ${
-                fileName ? 'border-green-500/50 bg-green-500/5' : 'border-white/10 bg-white/5'
+            className={`relative border-2 border-dashed rounded-[1.5rem] p-6 transition-all duration-300 cursor-pointer group ${
+                fileName ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-[var(--glass-border)] bg-[var(--bg-secondary)] hover:border-indigo-500/30 hover:bg-[var(--bg-primary)]'
             }`}
             onClick={() => inputRef.current?.click()}
         >
@@ -631,18 +612,18 @@ const DocumentUpload: React.FC<{
                 onChange={(e) => onFileSelect(e.target.files?.[0] || null)}
                 className="hidden"
             />
-            <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                    fileName ? 'bg-green-500/20 text-green-400' : 'bg-indigo-500/20 text-indigo-400'
+            <div className="flex items-center gap-6">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 ${
+                    fileName ? 'bg-emerald-500/10 text-emerald-500' : 'bg-indigo-500/10 text-indigo-500'
                 }`}>
                     {icon}
                 </div>
                 <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-white text-sm">{label}</h4>
-                    <p className="text-xs text-gray-400 mt-1">{description}</p>
+                    <h4 className="font-black text-[var(--text-primary)] text-xs uppercase tracking-tight">{label}</h4>
+                    <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] mt-1 opacity-60 line-clamp-1">{description}</p>
                     {fileName ? (
-                        <div className="mt-3 flex items-center gap-2 text-sm text-green-400">
-                            <PaperClipIcon className="h-4 w-4" />
+                        <div className="mt-3 flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-emerald-500">
+                            <PaperClipIcon className="h-3 w-3" />
                             <span className="truncate">{fileName}</span>
                             <button
                                 type="button"
@@ -650,15 +631,15 @@ const DocumentUpload: React.FC<{
                                     e.stopPropagation();
                                     onFileSelect(null);
                                 }}
-                                className="ml-2 text-gray-400 hover:text-rose-400 transition-colors"
+                                className="ml-2 text-[var(--text-muted)] hover:text-rose-500 transition-colors"
                             >
                                 ✕
                             </button>
                         </div>
                     ) : (
-                        <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
-                            <ArrowDownTrayIcon className="h-4 w-4" />
-                            <span>Drag & drop or click to upload</span>
+                        <div className="mt-3 flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] opacity-40">
+                            <ArrowDownTrayIcon className="h-3 w-3" />
+                            <span>Vault Transfer Mode</span>
                         </div>
                     )}
                 </div>
@@ -759,17 +740,17 @@ const DocumentsStep: React.FC<{ onNext: (data: any) => void; isFounder: boolean 
 
     return (
         <div>
-            <div className="text-center mb-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                    <DocumentTextIcon className="h-8 w-8 text-white" />
+            <div className="text-center mb-10">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-indigo-600/10 flex items-center justify-center border border-indigo-500/20">
+                    <DocumentTextIcon className="h-8 w-8 text-indigo-500" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">
-                    {isFounder ? 'Company Documents' : 'Your Documents'}
+                <h2 className="text-2xl font-black text-[var(--text-primary)] mb-2 tracking-tight">
+                    {isFounder ? 'Asset Repository' : 'Professional Vault'}
                 </h2>
-                <p className="text-gray-400 text-sm">
+                <p className="text-[var(--text-secondary)] text-xs font-medium leading-relaxed opacity-70">
                     {isFounder 
-                        ? 'Upload documents to streamline the onboarding process with partners. All uploads are optional.'
-                        : 'Upload your professional documents to stand out and build trust with companies.'
+                        ? 'Upload strategic assets to streamline the vetting and collaboration process. All items are secured.'
+                        : 'Upload your professional credentials to build instant trust with high-growth partners.'
                     }
                 </p>
             </div>
@@ -788,11 +769,13 @@ const DocumentsStep: React.FC<{ onNext: (data: any) => void; isFounder: boolean 
                 ))}
             </div>
 
-            <div className="mt-6 p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
-                <div className="flex items-start gap-3">
-                    <CheckCircleIcon className="h-5 w-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                    <div className="text-sm text-gray-400">
-                        <span className="text-white font-medium">Safe & Secure:</span> Your documents are encrypted and only shared with potential {isFounder ? 'partners' : 'companies'} after mutual agreement.
+            <div className="mt-8 p-5 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
+                        <ShieldCheckIcon className="h-4 w-4 text-indigo-600" />
+                    </div>
+                    <div className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] leading-relaxed opacity-60">
+                        <span className="text-[var(--text-primary)] opacity-100">End-to-End Encryption:</span> Assets are only decrypted for authorized {isFounder ? 'partners' : 'companies'} after mutual handshake.
                     </div>
                 </div>
             </div>
@@ -801,24 +784,24 @@ const DocumentsStep: React.FC<{ onNext: (data: any) => void; isFounder: boolean 
                 type="button"
                 onClick={handleSubmit}
                 disabled={isUploading}
-                className="mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3.5 px-6 rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2"
+                className="mt-10 w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] py-5 px-8 rounded-2xl transition-all shadow-2xl shadow-indigo-600/25 active:scale-95 flex items-center justify-center gap-3"
             >
                 {isUploading ? (
                     <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Uploading to Cloud...
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Encrypting & Syncing...
                     </>
                 ) : (
-                    <>Continue →</>
+                    <>Synchronize Vault →</>
                 )}
             </button>
 
             <button 
                 type="button"
                 onClick={() => onNext({})}
-                className="mt-3 w-full text-gray-400 hover:text-white font-medium py-2 transition-colors text-sm"
+                className="mt-6 w-full text-[var(--text-muted)] hover:text-indigo-600 font-black uppercase tracking-[0.3em] py-2 transition-all text-[9px] opacity-40 hover:opacity-100"
             >
-                Skip for now
+                Skip Phase
             </button>
         </div>
     );
@@ -829,53 +812,41 @@ const FinishStep: React.FC<{ onNext: (data: any) => void }> = ({ onNext }) => {
     const isFounder = user?.role === UserRole.FOUNDER || user?.role === UserRole.ADMIN;
     
     return (
-        <div className="text-center">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/20">
-                <CheckCircleIcon className="h-10 w-10 text-white" />
+        <div className="text-center py-4">
+            <div className="w-24 h-24 mx-auto mb-10 rounded-3xl bg-emerald-600 flex items-center justify-center shadow-2xl shadow-emerald-500/30">
+                <CheckCircleIcon className="h-12 w-12 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-3">
-                You're All Set! 🎉
+            <h1 className="text-3xl font-black text-[var(--text-primary)] mb-4 tracking-tight">
+                System Activated
             </h1>
-            <p className="text-gray-400 mb-6 max-w-md mx-auto">
-                Your profile is ready. You can always update your information later in Settings.
+            <p className="text-[var(--text-secondary)] mb-10 max-w-sm mx-auto text-sm font-medium leading-relaxed opacity-80">
+                Your professional profile has been successfully integrated into the Soho Space network.
             </p>
             
             {/* What's next */}
-            <div className="bg-white/5 rounded-xl p-5 text-left mb-8">
-                <h3 className="text-sm font-semibold text-gray-300 mb-3">What's next?</h3>
-                <ul className="space-y-2">
-                    <li className="flex items-start gap-3">
-                        <span className="w-5 h-5 rounded-full bg-indigo-500/20 flex items-center justify-center text-xs text-indigo-400 font-bold flex-shrink-0 mt-0.5">1</span>
-                        <span className="text-gray-400 text-sm">
-                            {isFounder 
-                                ? 'Browse vetted growth partners and review their profiles' 
-                                : 'Explore opportunities from innovative companies'}
-                        </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                        <span className="w-5 h-5 rounded-full bg-indigo-500/20 flex items-center justify-center text-xs text-indigo-400 font-bold flex-shrink-0 mt-0.5">2</span>
-                        <span className="text-gray-400 text-sm">
-                            {isFounder 
-                                ? 'Use AI-powered matching to find the best fit' 
-                                : 'Apply to projects that match your expertise'}
-                        </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                        <span className="w-5 h-5 rounded-full bg-indigo-500/20 flex items-center justify-center text-xs text-indigo-400 font-bold flex-shrink-0 mt-0.5">3</span>
-                        <span className="text-gray-400 text-sm">
-                            {isFounder 
-                                ? 'Start collaborating with built-in tools and frameworks' 
-                                : 'Build your reputation through successful collaborations'}
-                        </span>
-                    </li>
+            <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-[1.5rem] p-8 text-left mb-10">
+                <h3 className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] mb-6 opacity-40">Next Operations</h3>
+                <ul className="space-y-6">
+                    {[
+                        isFounder ? 'Review elite partner profiles' : 'Analyze active growth mandates',
+                        isFounder ? 'Initialize AI matching sequence' : 'Submit engagement applications',
+                        isFounder ? 'Establish secure collaboration workspaces' : 'Accelerate partner reputation score'
+                    ].map((text, i) => (
+                        <li key={i} className="flex items-start gap-5 group">
+                            <span className="w-6 h-6 rounded-lg bg-indigo-600/10 flex items-center justify-center text-[9px] text-indigo-600 font-black flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-all">{i + 1}</span>
+                            <span className="text-[var(--text-secondary)] text-[11px] font-bold uppercase tracking-tight leading-relaxed opacity-80 group-hover:opacity-100 transition-all">
+                                {text}
+                            </span>
+                        </li>
+                    )) }
                 </ul>
             </div>
             
             <button 
                 onClick={() => onNext({})} 
-                className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold py-3.5 px-6 rounded-xl hover:from-green-500 hover:to-emerald-500 transition-all duration-300 shadow-lg shadow-green-500/25"
+                className="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-[0.2em] py-5 px-8 rounded-2xl transition-all shadow-2xl shadow-emerald-600/25 active:scale-95"
             >
-                Go to Dashboard →
+                Enter Ecosystem →
             </button>
         </div>
     );

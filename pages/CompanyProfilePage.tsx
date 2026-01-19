@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { UserRole, PositionStatus } from '../types';
-import { MapPinIcon, ClockIcon, BanknotesIcon, LightBulbIcon, PaperClipIcon, ArrowDownTrayIcon, ShieldCheckIcon } from '../components/Icons';
+import { MapPinIcon, ClockIcon, BanknotesIcon, LightBulbIcon, PaperClipIcon, ArrowDownTrayIcon, ShieldCheckIcon, CheckCircleIcon, RocketLaunchIcon } from '../components/Icons';
 import NdaModal from '../components/NdaModal';
 import BackButton from '../components/BackButton';
 import Avatar from '../components/Avatar';
@@ -61,107 +61,156 @@ const CompanyProfilePage = () => {
             noindex={true}
         />
       <BackButton />
-      <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 shadow-lg rounded-lg p-8 my-4">
-        <div className="flex flex-col sm:flex-row items-start justify-between">
-            <div>
-                <div className="flex items-center mb-4">
-                    <Avatar src={company.logoUrl} name={company.name} size="xl" />
+      <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[3rem] p-12 my-8 relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] -mr-40 -mt-40 animate-pulse" />
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-12 relative z-10">
+            <div className="flex-grow">
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
+                    <div className="w-40 h-40 rounded-[2.5rem] bg-[var(--bg-primary)] border border-[var(--glass-border)] p-2 shadow-2xl group-hover:scale-105 transition-all duration-700 flex-shrink-0">
+                         <Avatar src={company.logoUrl} name={company.name} size="lg" className="h-full w-full rounded-[2rem] object-contain p-4" />
+                    </div>
                     <div>
-                        <h1 className="text-4xl font-bold text-white">{company.name}</h1>
-                        <div className="flex items-center mt-2 text-gray-300 space-x-6">
-                            <span className="flex items-center"><MapPinIcon className="h-5 w-5 mr-2" />{company.location}</span>
-                            <span className="flex items-center"><ClockIcon className="h-5 w-5 mr-2" />{(company.workModes || []).join(' / ')}</span>
+                        <div className="inline-flex items-center gap-2 bg-indigo-600/10 border border-indigo-500/20 rounded-full px-4 py-2 mb-6">
+                            <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-600">Verified Growth Mandate</span>
+                        </div>
+                        <h1 className="text-5xl md:text-6xl font-black text-[var(--text-primary)] tracking-tight leading-none mb-6">{company.name}</h1>
+                        <div className="flex flex-wrap items-center gap-6">
+                            <span className="flex items-center text-xs font-black uppercase tracking-widest text-[var(--text-secondary)]">
+                                <MapPinIcon className="h-5 w-5 mr-3 text-indigo-600" />
+                                {company.location}
+                            </span>
+                            <span className="flex items-center text-xs font-black uppercase tracking-widest text-[var(--text-secondary)]">
+                                <ClockIcon className="h-5 w-5 mr-3 text-indigo-600" />
+                                {(company.workModes || []).join(' / ')}
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div 
-                  className="text-lg text-gray-200 leading-relaxed mt-4 rich-text-content" 
+                  className="text-lg md:text-xl text-[var(--text-secondary)] font-medium leading-[1.8] mt-12 rich-text-content max-w-4xl selection:bg-indigo-600/20" 
                   dangerouslySetInnerHTML={{ __html: company.description }} 
                 />
             </div>
             {userIsPartner && (
-                <div className="mt-6 sm:mt-0 sm:ml-6 flex-shrink-0">
+                <div className="lg:mt-0 flex-shrink-0">
                     <button 
                         onClick={handleApply}
                         disabled={hasApplied || isApplying || hasNoOpenPositions}
-                        className={`w-full sm:w-auto font-bold py-3 px-8 rounded-lg transition disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
+                        className={`w-full lg:w-auto font-black uppercase tracking-[0.2em] text-[11px] py-6 px-12 rounded-[1.5rem] transition-all disabled:cursor-not-allowed flex items-center justify-center gap-4 shadow-2xl hover:-translate-y-1 active:scale-95 ${
                             hasApplied 
-                                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-default' 
+                                ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 cursor-default' 
                                 : hasNoOpenPositions 
-                                    ? 'bg-gray-800 text-gray-500 border border-white/5'
-                                    : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-500/25'
+                                    ? 'bg-[var(--bg-primary)] text-[var(--text-muted)] border border-[var(--glass-border)] opacity-50'
+                                    : 'bg-indigo-600 text-white shadow-indigo-600/25'
                         }`}
                     >
-                        {isApplying && <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
-                        {hasApplied ? 'Application Submitted' : hasNoOpenPositions ? 'No Open Roles' : isPaused ? 'Recruitment Paused' : 'Apply to Collaborate'}
+                        {isApplying ? (
+                            <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : hasApplied ? (
+                            <CheckCircleIcon className="h-5 w-5" />
+                        ) : (
+                            <RocketLaunchIcon className="h-5 w-5" />
+                        )}
+                        {hasApplied ? 'PROTOCOL ACTIVE' : hasNoOpenPositions ? 'NO OPEN ROLES' : isPaused ? 'RECRUITMENT PAUSED' : 'INITIATE DEPLOYMENT'}
                     </button>
+                    {hasApplied && (
+                        <p className="text-center mt-4 text-[9px] font-black uppercase tracking-[0.3em] text-emerald-500 opacity-60">Sequence Initiated</p>
+                    )}
                 </div>
             )}
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 shadow-lg rounded-lg p-8">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center"><LightBulbIcon className="h-6 w-6 mr-3 text-indigo-400"/>What We're Looking For</h2>
-          <p className="text-gray-300">{company.partnerExpectations}</p>
-          <div className="mt-4">
-              <h3 className="font-semibold text-gray-400">Typical Collaboration:</h3>
-              <p className="text-gray-200">{company.collaborationLength}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-10 group relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1 h-32 bg-gradient-to-b from-indigo-600 to-transparent opacity-40" />
+          <h2 className="text-[10px] font-black text-[var(--text-primary)] mb-8 flex items-center gap-4 uppercase tracking-[0.3em]">
+             <LightBulbIcon className="h-6 w-6 text-indigo-600"/>
+             Growth Expectations
+          </h2>
+          <p className="text-[var(--text-secondary)] text-base leading-relaxed font-medium selection:bg-indigo-600/20">{company.partnerExpectations}</p>
+          <div className="mt-10 pt-10 border-t border-[var(--glass-border)]">
+              <h3 className="text-[9px] font-black uppercase tracking-[0.3em] text-[var(--text-muted)] mb-4 opacity-40">Collaboration Cycle:</h3>
+              <div className="px-6 py-3 bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-2xl text-indigo-600 text-[10px] font-black uppercase tracking-[0.2em] w-fit">
+                {company.collaborationLength}
+              </div>
           </div>
         </div>
-        <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 shadow-lg rounded-lg p-8">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center"><BanknotesIcon className="h-6 w-6 mr-3 text-green-400"/>Compensation Philosophy</h2>
-          <p className="text-gray-300">{company.compensationPhilosophy}</p>
+        <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[2.5rem] p-10 group relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-1 h-32 bg-gradient-to-b from-emerald-600 to-transparent opacity-40" />
+          <h2 className="text-[10px] font-black text-[var(--text-primary)] mb-8 flex items-center gap-4 uppercase tracking-[0.3em]">
+            <BanknotesIcon className="h-6 w-6 text-emerald-500"/>
+            Value Logic
+          </h2>
+          <p className="text-[var(--text-secondary)] text-base leading-relaxed font-medium selection:bg-emerald-600/20">{company.compensationPhilosophy}</p>
+          <div className="mt-10 pt-10 border-t border-[var(--glass-border)] opacity-30">
+             <div className="text-[8px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)]">Equity & Revenue Share Compatible</div>
+          </div>
         </div>
       </div>
+      </div>
 
-      <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 shadow-lg rounded-lg p-8 mb-8">
-        <h2 className="text-2xl font-bold text-white mb-6">Open Roles & Opportunities</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[3rem] p-12 mb-12 relative overflow-hidden group">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-600/30 to-transparent" />
+        <h2 className="text-[10px] font-black text-[var(--text-primary)] mb-12 uppercase tracking-[0.3em] flex items-center gap-4">
+             <div className="w-2 h-2 rounded-full bg-indigo-600" />
+             Active Growth Vectors
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
             {company.positions && company.positions.length > 0 ? (
                 company.positions.map(pos => (
-                    <div key={pos.id} className={`p-4 rounded-xl border transition-all ${
-                        pos.status === PositionStatus.OPEN ? 'bg-indigo-500/5 border-indigo-500/20' : 'bg-white/5 border-white/5 opacity-60'
-                    }`}>
-                        <div className="flex justify-between items-start mb-2">
-                            <h3 className="font-bold text-white text-sm">{pos.title}</h3>
-                            <span className={`text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter ${
-                                pos.status === PositionStatus.OPEN ? 'bg-emerald-500/20 text-emerald-400' :
-                                pos.status === PositionStatus.PAUSED ? 'bg-amber-500/20 text-amber-400' :
-                                'bg-rose-500/20 text-rose-400'
+                    <div key={pos.id} className="group/item flex flex-col p-8 bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-[2rem] hover:border-indigo-600/40 transition-all shadow-xl hover:-translate-y-1">
+                        <div className="flex justify-between items-start gap-4 mb-8">
+                            <h3 className="font-black text-[var(--text-primary)] text-sm uppercase tracking-tight leading-tight group-hover/item:text-indigo-600 transition-colors">{pos.title}</h3>
+                            <span className={`text-[8px] font-black px-3 py-1.5 rounded-xl uppercase tracking-widest flex items-center gap-2 border ${
+                                pos.status === PositionStatus.OPEN ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' :
+                                pos.status === PositionStatus.PAUSED ? 'bg-amber-500/10 text-amber-600 border-amber-500/20' :
+                                'bg-rose-500/10 text-rose-600 border-rose-500/20'
                             }`}>
+                                <span className={`w-1.5 h-1.5 rounded-full ${
+                                    pos.status === PositionStatus.OPEN ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' :
+                                    pos.status === PositionStatus.PAUSED ? 'bg-amber-500' : 'bg-rose-500'
+                                }`} />
                                 {pos.status}
                             </span>
                         </div>
+                         <div className="mt-auto pt-6 border-t border-[var(--glass-border)] opacity-20 group-hover/item:opacity-40 transition-opacity">
+                            <div className="text-[7px] font-black uppercase tracking-[0.4em]">Mandate Active • 2026 Serial v.1.0</div>
+                         </div>
                     </div>
                 ))
             ) : (
                 (company.seeking || []).map(role => (
-                    <span key={role} className="bg-teal-400/10 text-teal-400 px-3 py-1.5 rounded-lg text-sm font-medium border border-teal-400/20">
+                    <div key={role} className="bg-[var(--bg-primary)] text-indigo-600 border border-indigo-600/10 px-8 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl hover:border-indigo-600 transition-all text-center">
                         {role}
-                    </span>
+                    </div>
                 ))
             )}
         </div>
       </div>
 
       {userIsPartner && company.documents && company.documents.length > 0 && (
-        <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 shadow-lg rounded-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Evaluation Documents</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="bg-[var(--bg-secondary)] border border-[var(--glass-border)] shadow-2xl rounded-[3rem] p-12">
+          <h2 className="text-[10px] font-black text-[var(--text-primary)] mb-12 uppercase tracking-[0.3em] flex items-center gap-4">
+             <div className="w-2 h-2 rounded-full bg-emerald-500" />
+             Mission Materials
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {company.documents.map(doc => (
-              <div key={doc.id} className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:border-white/20 transition-all">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+              <div key={doc.id} className="flex items-center justify-between p-6 bg-[var(--bg-primary)] rounded-[2rem] border border-[var(--glass-border)] hover:border-indigo-600/40 transition-all group shadow-xl">
+                <div className="flex items-center gap-6">
+                  <div className="w-14 h-14 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-inner">
                     {doc.type === 'NDA' ? <ShieldCheckIcon className="h-6 w-6" /> : <PaperClipIcon className="h-6 w-6" />}
                   </div>
                   <div>
-                    <p className="font-semibold text-white text-sm">{doc.name}</p>
-                    <p className="text-xs text-gray-500 uppercase tracking-wider">{doc.type}</p>
+                    <p className="font-black text-[var(--text-primary)] text-sm uppercase tracking-tight">{doc.name}</p>
+                    <p className="text-[9px] text-[var(--text-muted)] font-black uppercase tracking-[0.2em] mt-2 opacity-40">{doc.type} DEPLOYMENT</p>
                   </div>
                 </div>
-                <a href={doc.url} target="_blank" rel="noopener noreferrer" className="p-2 text-indigo-400 hover:text-indigo-300 hover:bg-white/5 rounded-lg transition">
-                  <ArrowDownTrayIcon className="h-5 w-5" />
+                <a href={doc.url} target="_blank" rel="noopener noreferrer" className="p-4 text-[var(--text-muted)] hover:text-indigo-600 hover:bg-indigo-600/10 rounded-2xl transition-all shadow-lg hover:shadow-indigo-600/10">
+                  <ArrowDownTrayIcon className="h-6 w-6" />
                 </a>
               </div>
             ))}

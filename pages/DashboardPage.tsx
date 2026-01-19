@@ -9,17 +9,17 @@ import {
     MagnifyingGlassIcon, StarIcon, BookmarkIcon, SparklesIcon, 
     UserGroupIcon, ChartBarIcon, RocketLaunchIcon, ClockIcon,
     DocumentCheckIcon, ArrowTrendingUpIcon, BriefcaseIcon, FireIcon,
-    ChevronUpIcon, UserIcon, ChatBubbleLeftRightIcon
+    ChevronUpIcon, UserIcon, ChatBubbleLeftRightIcon, ChevronDownIcon
 } from '../components/Icons';
 import Avatar from '../components/Avatar';
 import ProcessGuide from '../components/ProcessGuide';
 
 const getReputationColor = (band: ReputationBand) => {
     switch (band) {
-        case ReputationBand.HIGH: return 'text-emerald-400 bg-emerald-500/20 border-emerald-500/30';
-        case ReputationBand.MEDIUM: return 'text-amber-400 bg-amber-500/20 border-amber-500/30';
-        case ReputationBand.LOW: return 'text-rose-400 bg-rose-500/20 border-rose-500/30';
-        default: return 'text-gray-400 bg-gray-500/20 border-gray-500/30';
+        case ReputationBand.HIGH: return 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20';
+        case ReputationBand.MEDIUM: return 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/20';
+        case ReputationBand.LOW: return 'text-rose-600 dark:text-rose-400 bg-rose-500/10 border-rose-500/20';
+        default: return 'text-[var(--text-muted)] bg-[var(--bg-secondary)] border-[var(--glass-border)]';
     }
 };
 
@@ -31,30 +31,24 @@ const StatCard: React.FC<{
     change?: string;
     changeType?: 'positive' | 'negative' | 'neutral';
     gradient?: string;
-}> = ({ icon, label, value, change, changeType = 'neutral', gradient = 'from-indigo-500 to-purple-600' }) => (
-    <div className="relative bg-gray-900/40 backdrop-blur-md border border-white/5 rounded-2xl p-6 overflow-hidden group hover:border-white/10 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500">
-        <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${gradient} opacity-50 group-hover:opacity-100 transition-opacity`} />
-        <div className="flex items-center justify-between">
-            <div className="flex-1">
-                <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-2">{label}</p>
-                <div className="flex items-baseline gap-2">
-                    <p className="text-3xl font-extrabold text-white tracking-tight">{value}</p>
-                    {change && (
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
-                            changeType === 'positive' ? 'bg-emerald-500/10 text-emerald-400' : 
-                            changeType === 'negative' ? 'bg-rose-500/10 text-rose-400' : 'bg-white/5 text-gray-500'
-                        }`}>
-                            {change}
-                        </span>
-                    )}
-                </div>
+}> = ({ icon, label, value, change, changeType = 'neutral', gradient = 'from-indigo-600 to-purple-600' }) => (
+    <div className="relative bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] rounded-3xl p-8 overflow-hidden group hover:border-[var(--text-primary)] transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl">
+        <div className="flex items-center justify-between mb-6">
+            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center p-3 shadow-2xl`}>
+                {icon}
             </div>
-            <div className={`relative w-12 h-12 rounded-xl bg-gray-800/50 flex items-center justify-center border border-white/5 shadow-inner`}>
-                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20 blur-lg group-hover:opacity-40 transition-opacity`} />
-                <div className="relative z-10 scale-110">
-                    {icon}
-                </div>
-            </div>
+            {change && (
+                <span className={`text-[10px] font-black px-3 py-1.5 rounded-xl border ${
+                    changeType === 'positive' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/10' : 
+                    changeType === 'negative' ? 'bg-rose-500/10 text-rose-500 border-rose-500/10' : 'bg-[var(--bg-secondary)] text-[var(--text-muted)] border-[var(--glass-border)]'
+                }`}>
+                    {change}
+                </span>
+            )}
+        </div>
+        <div>
+            <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mb-2 opacity-60 leading-none">{label}</p>
+            <p className="text-4xl font-black text-[var(--text-primary)] tracking-tighter leading-none">{value}</p>
         </div>
     </div>
 );
@@ -65,45 +59,52 @@ const PartnerCard: React.FC<{ partner: PartnerProfile, onUpvote: () => void, cur
     const skills = partner?.skills || [];
     
     return (
-        <div className="group relative bg-gray-900/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl hover:border-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 flex flex-col">
-            <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5 shadow-lg group-hover:scale-105 transition-transform duration-500">
-                    <Avatar src={partner.avatarUrl} name={partner.name} size="lg" className="h-full w-full rounded-2xl shadow-2xl" />
+        <div className="group relative bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] p-8 rounded-[2.5rem] hover:border-indigo-600 transition-all duration-500 flex flex-col hover:shadow-2xl hover:shadow-indigo-600/10">
+            <div className="flex items-center gap-6 mb-8">
+                <div className="w-20 h-20 rounded-3xl bg-[var(--bg-secondary)] border border-[var(--glass-border)] p-1 group-hover:scale-105 transition-all shadow-xl flex-shrink-0 overflow-hidden">
+                    <Avatar src={partner.avatarUrl} name={partner.name} size="lg" className="h-full w-full object-cover" />
                 </div>
                 <div className="flex-grow min-w-0">
-                    <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors truncate">{partner.name}</h3>
-                    <div className="flex items-center gap-2 text-gray-500">
+                    <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-xl font-black text-[var(--text-primary)] group-hover:text-indigo-600 transition-colors truncate uppercase tracking-tight">{partner.name}</h3>
+                        <div className="flex items-center gap-1.5 bg-amber-500/10 px-3 py-1.5 rounded-xl border border-amber-500/10">
+                             <StarIcon className="w-3 h-3 text-amber-500 fill-current" />
+                             <span className="text-[10px] font-black text-amber-500 tracking-widest">{partner.reputationScore || 0}</span>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2 text-[var(--text-muted)] opacity-60">
                         <MapPinIcon className="h-3.5 w-3.5" />
-                        <span className="text-xs font-medium truncate">{partner.location}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest truncate">{partner.location}</span>
                     </div>
                 </div>
-                <button 
-                    onClick={(e) => { e.preventDefault(); onUpvote(); }}
-                    className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl border transition-all duration-300 ${isUpvoted ? 'bg-indigo-500/20 border-indigo-500/30 text-indigo-400' : 'bg-white/5 border-white/10 text-gray-500 hover:border-white/20'}`}
-                >
-                    <ChevronUpIcon className={`h-4 w-4 ${isUpvoted ? 'animate-bounce' : ''}`} />
-                    <span className="text-[10px] font-black">{partner.upvotes || 0}</span>
-                </button>
             </div>
             
-            <p className="text-sm text-gray-400 line-clamp-2 leading-relaxed mb-6 group-hover:text-gray-300 transition-colors">
+            <p className="text-[12px] font-medium text-[var(--text-secondary)] line-clamp-2 leading-relaxed mb-8 opacity-70 group-hover:opacity-100 transition-all">
                 {partner.bio || "No biography available yet."}
             </p>
             
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="flex flex-wrap gap-2 mb-10">
                 {skills.slice(0, 3).map(skill => (
-                    <span key={skill} className="text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+                    <span key={skill} className="text-[9px] font-black uppercase tracking-[0.2em] bg-indigo-600/10 text-indigo-600 px-3 py-1.5 rounded-xl border border-indigo-600/10">
                         {skill}
                     </span>
                 ))}
             </div>
             
-            <Link 
-                to={`/partner/${partner.id}`} 
-                className="w-full text-center mt-auto py-3 bg-white/5 border border-white/10 rounded-xl text-xs font-black uppercase tracking-[0.2em] text-gray-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-500 transition-all duration-300"
-            >
-                View Profile
-            </Link>
+            <div className="flex items-center gap-4 mt-auto">
+                <Link 
+                    to={`/partner/${partner.id}`} 
+                    className="flex-grow text-center py-4 bg-indigo-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20"
+                >
+                    View Vectors
+                </Link>
+                <button 
+                    onClick={(e) => { e.preventDefault(); onUpvote(); }}
+                    className={`p-4 rounded-2xl border transition-all duration-300 ${isUpvoted ? 'bg-rose-500 border-rose-500 text-white shadow-lg shadow-rose-500/20' : 'bg-[var(--bg-secondary)] border-[var(--glass-border)] text-[var(--text-muted)] hover:border-rose-500 hover:text-rose-500'}`}
+                >
+                    <FireIcon className={`h-5 w-5 ${isUpvoted ? 'animate-pulse' : ''}`} />
+                </button>
+            </div>
         </div>
     );
 };
@@ -120,8 +121,8 @@ const DashboardPage = () => {
 
     if (!user) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full"></div>
+            <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+                <div className="animate-spin w-8 h-8 border-2 border-indigo-600 border-t-transparent rounded-full"></div>
             </div>
         );
     }
@@ -178,19 +179,19 @@ const DashboardPage = () => {
             const isPro = user?.isPremium || false; 
 
             return (
-                <div className="group relative bg-gray-900/40 backdrop-blur-md border border-white/5 rounded-2xl hover:border-purple-500/30 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 overflow-hidden flex flex-col h-full">
-                    <Link to={opportunityLink} className="relative h-28 bg-gradient-to-br from-indigo-900/40 to-purple-900/40 flex items-center justify-center p-6 grayscale group-hover:grayscale-0 transition-all">
-                        <div className="absolute inset-0 bg-gray-900/20 backdrop-blur-sm" />
-                        <div className="relative z-10 w-16 h-16">
-                            <Avatar src={company.logoUrl} name={company.name} size="lg" className="rounded-2xl shadow-2xl transition-transform group-hover:scale-110" />
+                <div className="group relative bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] rounded-[2.5rem] hover:border-indigo-600 transition-all duration-500 overflow-hidden flex flex-col h-full hover:shadow-2xl hover:shadow-indigo-600/10">
+                    <Link to={opportunityLink} className="h-40 bg-[var(--bg-secondary)] relative flex items-center justify-center p-8 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent group-hover:opacity-100 transition-opacity" />
+                        <div className="relative z-10 w-20 h-20 rounded-3xl bg-[var(--bg-primary)] border border-[var(--glass-border)] shadow-2xl flex items-center justify-center p-1 overflow-hidden group-hover:scale-110 transition-transform">
+                            <Avatar src={company.logoUrl} name={company.name} size="lg" className="h-full w-full object-contain" />
                         </div>
-                        <div className="absolute top-4 right-4 z-20">
+                        <div className="absolute top-6 right-6 z-20">
                             <button 
                                 onClick={handleSave}
-                                className={`p-2 rounded-xl backdrop-blur-md border transition-all duration-300 ${
+                                className={`p-3 rounded-2xl border transition-all duration-300 ${
                                     isSaved 
                                         ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' 
-                                        : 'bg-black/40 border-white/10 text-gray-400 hover:bg-black/60 hover:text-white'
+                                        : 'bg-[var(--bg-primary)] border-[var(--glass-border)] text-[var(--text-muted)] hover:bg-[var(--bg-secondary)] hover:text-amber-500'
                                 }`}
                             >
                                 <BookmarkIcon className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
@@ -198,28 +199,28 @@ const DashboardPage = () => {
                         </div>
                     </Link>
                     
-                    <div className="p-6 flex flex-col flex-grow">
-                        <div className="flex justify-between items-start mb-4">
+                    <div className="p-8 flex flex-col flex-grow">
+                        <div className="flex justify-between items-start mb-6">
                             <div>
-                                <h3 className="text-lg font-bold text-white group-hover:text-purple-400 transition-colors uppercase tracking-tight">{company.name}</h3>
-                                <div className="flex items-center gap-1.5 text-gray-500 mt-1">
-                                    <MapPinIcon className="h-3 w-3" />
-                                    <span className="text-[10px] font-bold tracking-wider">{company.location}</span>
+                                <h3 className="text-xl font-black text-[var(--text-primary)] group-hover:text-indigo-600 transition-colors uppercase tracking-tight leading-none">{company.name}</h3>
+                                <div className="flex items-center gap-1.5 text-[var(--text-muted)] mt-2 opacity-60">
+                                    <MapPinIcon className="h-3.5 w-3.5" />
+                                    <span className="text-[10px] font-black uppercase tracking-widest">{company.location}</span>
                                 </div>
                             </div>
-                            <div className="bg-white/5 rounded-lg px-2 py-1 border border-white/5 text-right">
-                                <p className="text-[8px] font-black text-gray-600 uppercase tracking-tighter">Match</p>
-                                <p className={`text-xs font-black ${isPro ? 'text-emerald-400' : 'text-gray-700 blur-[3px]'}`}>{matchScore}%</p>
+                            <div className="bg-[var(--bg-secondary)] rounded-2xl px-4 py-2 border border-[var(--glass-border)] text-center">
+                                <p className="text-[8px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-0.5 opacity-60">Match</p>
+                                <p className={`text-[12px] font-black ${isPro ? 'text-indigo-600' : 'text-[var(--text-muted)] blur-[4px]'}`}>{matchScore}%</p>
                             </div>
                         </div>
 
-                        <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-6">
+                        <p className="text-[12px] font-medium text-[var(--text-secondary)] mb-8 line-clamp-2 leading-relaxed opacity-70 group-hover:opacity-100 transition-all">
                             {company.description?.replace(/<[^>]*>?/gm, '')}
                         </p>
                         
-                        <div className="flex flex-wrap gap-1.5 mb-8 mt-auto">
+                        <div className="flex flex-wrap gap-2 mb-10 mt-auto">
                             {(company.seeking || []).slice(0, 2).map(role => (
-                                <span key={role} className="text-[9px] font-black uppercase tracking-widest bg-purple-500/10 text-purple-400 px-2.5 py-1 rounded-lg border border-purple-500/20">
+                                <span key={role} className="text-[9px] font-black uppercase tracking-[0.2em] bg-indigo-600/10 text-indigo-600 px-3 py-1.5 rounded-xl border border-indigo-600/10">
                                     {role}
                                 </span>
                             ))}
@@ -227,9 +228,9 @@ const DashboardPage = () => {
                         
                         <Link 
                             to={opportunityLink} 
-                            className="block w-full text-center py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-[0.22em] text-gray-400 group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-500 transition-all duration-300"
+                            className="block w-full text-center py-4 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-[var(--text-muted)] group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-all"
                         >
-                            Explore →
+                            Establish Link →
                         </Link>
                     </div>
                 </div>
@@ -239,34 +240,38 @@ const DashboardPage = () => {
         return (
             <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
                 {/* Welcome Banner */}
-                <div className="mb-8 p-10 bg-gradient-to-br from-indigo-900/40 via-purple-900/20 to-transparent rounded-3xl border border-white/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] -mr-20 -mt-20 group-hover:bg-indigo-500/20 transition-all duration-700" />
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
-                        <div>
-                            <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+                <div className="mb-12 p-12 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-[3rem] relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] -mr-40 -mt-40 animate-pulse" />
+                    <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-12">
+                        <div className="flex-grow">
+                             <div className="inline-flex items-center gap-2 bg-indigo-600/10 border border-indigo-500/20 rounded-full px-4 py-2 mb-8">
+                                <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
+                                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-600">Session Initialized</span>
+                            </div>
+                            <h1 className="text-5xl md:text-7xl font-black text-[var(--text-primary)] mb-6 tracking-tighter leading-none">
                                 Welcome back,<br />
-                                <span className="bg-gradient-to-r from-indigo-400 to-emerald-400 bg-clip-text text-transparent">
-                                    {partnerProfile?.name?.split(' ')[0] || 'Partner'}! 👋
+                                <span className="text-indigo-600 italic">
+                                    {partnerProfile?.name?.split(' ')[0] || 'Partner'}.
                                 </span>
                             </h1>
-                            <p className="text-gray-400 text-lg max-w-md leading-relaxed mb-8">
-                                Your growth journey continues. Explore new opportunities or track your active submissions.
+                            <p className="text-[var(--text-secondary)] text-xl font-medium max-w-xl leading-relaxed mb-10 opacity-70">
+                                Your growth protocols are active. Synthesize new opportunities and accelerate your performance.
                             </p>
                             <div className="flex flex-wrap gap-4">
                                 <Link 
                                     to={`/partner/${user.profileId}`}
-                                    className="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-indigo-500/25 flex items-center gap-3"
+                                    className="px-10 py-5 bg-indigo-600 text-white rounded-[1.5rem] font-black uppercase tracking-[0.2em] text-[10px] transition-all shadow-2xl shadow-indigo-600/25 hover:bg-indigo-500 hover:-translate-y-1 active:scale-95 flex items-center gap-3"
                                 >
                                     <UserIcon className="h-4 w-4" />
-                                    Public Profile
+                                    Public ID Profile
                                 </Link>
-                                <button className="px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 rounded-2xl font-black uppercase tracking-widest text-xs transition-all">
-                                    Account Settings
+                                <button className="px-10 py-5 bg-[var(--bg-primary)] border border-[var(--glass-border)] text-[var(--text-primary)] rounded-[1.5rem] font-black uppercase tracking-[0.2em] text-[10px] transition-all hover:bg-[var(--bg-secondary)] hover:border-indigo-600/30">
+                                    System Console
                                 </button>
                             </div>
                         </div>
-                        <div className="hidden lg:block w-32 h-32 rounded-3xl bg-indigo-500/10 border border-white/10 p-2 rotate-3 hover:rotate-0 transition-transform duration-500">
-                             <Avatar src={partnerProfile?.avatarUrl} name={partnerProfile?.name || ''} size="lg" className="h-full w-full rounded-2xl" />
+                        <div className="hidden lg:block w-48 h-48 rounded-[2rem] bg-[var(--bg-primary)] border border-[var(--glass-border)] p-2 rotate-6 hover:rotate-0 transition-all duration-700 shadow-2xl flex-shrink-0 group-hover:scale-110">
+                             <Avatar src={partnerProfile?.avatarUrl} name={partnerProfile?.name || ''} size="lg" className="h-full w-full rounded-[1.5rem] object-cover" />
                         </div>
                     </div>
                 </div>
@@ -311,59 +316,60 @@ const DashboardPage = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     {/* Filters Sidebar */}
                     <aside className="lg:col-span-1">
-                        <div className="bg-gray-900/40 backdrop-blur-md border border-white/5 p-8 rounded-2xl shadow-2xl sticky top-24">
-                            <h2 className="text-xs font-black text-white mb-8 flex items-center gap-3 uppercase tracking-[0.2em]">
-                                <MagnifyingGlassIcon className="h-4 w-4 text-indigo-400" />
+                        <div className="bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] p-8 rounded-2xl shadow-2xl sticky top-24">
+                            <h2 className="text-xs font-black text-[var(--text-primary)] mb-8 flex items-center gap-3 uppercase tracking-[0.2em]">
+                                <MagnifyingGlassIcon className="h-4 w-4 text-indigo-500" />
                                 Refine Search
                             </h2>
                             <div className="space-y-8">
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Role / Skill</label>
+                                    <label className="block text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-3">Role / Skill</label>
                                     <div className="relative group">
-                                        <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+                                        <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)] group-focus-within:text-indigo-500 transition-colors" />
                                         <input 
                                             type="text" 
                                             name="seeking" 
                                             value={filters.seeking} 
                                             onChange={handleFilterChange} 
-                                            className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 transition-all font-medium" 
+                                            className="w-full bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-xl py-3 pl-10 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 transition-all font-medium" 
                                             placeholder="Growth lead..."
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Location</label>
+                                    <label className="block text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-3">Location</label>
                                     <div className="relative group">
-                                        <MapPinIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+                                        <MapPinIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)] group-focus-within:text-indigo-500 transition-colors" />
                                         <input 
                                             type="text" 
                                             name="location" 
                                             value={filters.location} 
                                             onChange={handleFilterChange} 
-                                            className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 transition-all font-medium" 
+                                            className="w-full bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-xl py-3 pl-10 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 transition-all font-medium" 
                                             placeholder="Remote, NYC..."
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Work Mode</label>
+                                    <label className="block text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest mb-3">Work Mode</label>
                                     <div className="relative">
                                         <select 
                                             name="workMode" 
                                             value={filters.workMode} 
                                             onChange={handleFilterChange} 
-                                            className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-4 pr-10 text-sm text-white appearance-none focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium cursor-pointer"
+                                            className="w-full bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-xl py-3 px-4 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/30 transition-all font-medium appearance-none cursor-pointer"
                                         >
-                                            <option value="">Any Mode</option>
-                                            {Object.values(WorkMode).map(mode => <option key={mode} value={mode}>{mode}</option>)}
+                                            <option value="">All Modes</option>
+                                            <option value="Remote">Remote</option>
+                                            <option value="Hybrid">Hybrid</option>
+                                            <option value="On-site">On-site</option>
                                         </select>
-                                        <ChevronUpIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none rotate-180" />
+                                        <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)] pointer-events-none" />
                                     </div>
                                 </div>
-                                
                                 <button 
-                                    onClick={() => setFilters({ location: '', workMode: '', seeking: '' })}
-                                    className="w-full text-[10px] font-black uppercase tracking-widest text-gray-600 hover:text-indigo-400 py-4 border-t border-white/5 transition-colors mt-4"
+                                    onClick={() => setFilters({ seeking: '', location: '', workMode: '' })}
+                                    className="w-full py-3 text-[10px] font-black text-indigo-500 uppercase tracking-widest hover:bg-indigo-500/5 rounded-xl transition-all border border-indigo-500/10"
                                 >
                                     Reset Selection
                                 </button>
@@ -375,11 +381,11 @@ const DashboardPage = () => {
                     <section className="lg:col-span-3 space-y-12">
                         <div>
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                                    <MagnifyingGlassIcon className="h-6 w-6 text-indigo-400" />
+                                <h2 className="text-2xl font-extrabold text-[var(--text-primary)] flex items-center gap-3 tracking-tight">
+                                    <MagnifyingGlassIcon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
                                     Explore Opportunities
                                 </h2>
-                                <span className="text-sm text-gray-400">
+                                <span className="text-xs font-black uppercase tracking-widest text-[var(--text-muted)]">
                                     {filteredCompanies.length} {filteredCompanies.length === 1 ? 'opportunity' : 'opportunities'} found
                                 </span>
                             </div>
@@ -389,24 +395,24 @@ const DashboardPage = () => {
                                     {filteredCompanies.map(c => <CompanyCard key={c.id} company={c}/>)}
                                 </div>
                             ) : (
-                                <div className="text-center py-16 bg-gray-900/30 rounded-xl border border-white/5">
-                                    <SparklesIcon className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                                    <h3 className="text-lg font-medium text-gray-400 mb-2">No new opportunities found</h3>
-                                    <p className="text-gray-500 text-sm">You have explored all current opportunities or they are incomplete.</p>
+                                <div className="text-center py-16 bg-[var(--bg-secondary)] rounded-3xl border border-dashed border-[var(--glass-border)]">
+                                    <SparklesIcon className="h-12 w-12 text-[var(--text-muted)] mx-auto mb-4" />
+                                    <h3 className="text-sm font-black uppercase tracking-widest text-[var(--text-muted)] mt-1">No new opportunities found</h3>
+                                    <p className="text-[var(--text-muted)] text-xs mt-1 font-medium italic">You have explored all current opportunities or they are incomplete.</p>
                                 </div>
                             )}
                         </div>
 
                         {/* Applied Positions Section */}
                         {appliedApplications.length > 0 && (
-                            <div>
+                            <div className="pt-12 border-t border-[var(--glass-border)]">
                                 <div className="flex items-center justify-between mb-6">
-                                    <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                                        <DocumentCheckIcon className="h-6 w-6 text-emerald-400" />
+                                    <h2 className="text-2xl font-extrabold text-[var(--text-primary)] flex items-center gap-3 tracking-tight">
+                                        <DocumentCheckIcon className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                                         Your Submissions
                                     </h2>
-                                    <span className="text-sm text-gray-400">
-                                        Tracking {appliedApplications.length} active {appliedApplications.length === 1 ? 'application' : 'applications'}
+                                    <span className="text-xs font-black uppercase tracking-widest text-[var(--text-muted)]">
+                                        Tracking {appliedApplications.length} active {appliedApplications.length === 1 ? 'submission' : 'submissions'}
                                     </span>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -414,21 +420,21 @@ const DashboardPage = () => {
                                         const company = getCompany(app.companyId);
                                         if (!company) return null;
                                         return (
-                                            <div key={app.id} className="group bg-gray-900/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-500 flex flex-col">
+                                            <div key={app.id} className="group bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] p-6 rounded-3xl hover:border-emerald-500/30 transition-all duration-500 flex flex-col">
                                                 <div className="flex items-center justify-between mb-6">
                                                     <div className="flex items-center gap-4">
-                                                        <div className="w-12 h-12 rounded-xl bg-gray-800/50 p-2 border border-white/5">
+                                                        <div className="w-12 h-12 rounded-xl bg-[var(--bg-secondary)] p-2 border border-[var(--glass-border)]">
                                                             <Avatar src={company.logoUrl} name={company.name} size="md" className="h-full w-full rounded-lg" />
                                                         </div>
                                                         <div>
-                                                            <h3 className="text-sm font-black text-white uppercase tracking-tight group-hover:text-emerald-400 transition-colors">{company.name}</h3>
-                                                            <p className="text-[10px] font-bold text-gray-500 mt-0.5">Applied {new Date(app.appliedAt).toLocaleDateString()}</p>
+                                                            <h3 className="text-sm font-black text-[var(--text-primary)] uppercase tracking-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{company.name}</h3>
+                                                            <p className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] mt-1 opacity-70">Applied {new Date(app.appliedAt).toLocaleDateString()}</p>
                                                         </div>
                                                     </div>
                                                     <div className={`flex items-center gap-2 px-2.5 py-1 rounded-lg border text-[9px] font-black uppercase tracking-widest ${
-                                                        app.status === 'Accepted' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                                        app.status === 'Rejected' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' :
-                                                        'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                                                        app.status === 'Accepted' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' :
+                                                        app.status === 'Rejected' ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20' :
+                                                        'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20'
                                                     }`}>
                                                         <span className={`w-1.5 h-1.5 rounded-full ${
                                                             app.status === 'Accepted' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' :
@@ -438,13 +444,13 @@ const DashboardPage = () => {
                                                         {app.status}
                                                     </div>
                                                 </div>
-                                                <div className="grid grid-cols-2 gap-3">
-                                                    <Link to={`/company/${company.id}`} className="py-2.5 bg-white/5 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-500 text-center hover:bg-white/10 hover:text-white transition-all">
-                                                        Details
+                                                <div className="grid grid-cols-2 gap-3 mt-auto pt-4 border-t border-[var(--glass-border)]">
+                                                    <Link to={`/company/${company.id}`} className="py-2.5 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-xl text-[9px] font-black uppercase tracking-widest text-[var(--text-muted)] text-center hover:bg-[var(--bg-secondary-hover)] hover:text-[var(--text-primary)] transition-all">
+                                                        View Details
                                                     </Link>
                                                     {app.status === 'Accepted' && (
-                                                        <Link to={`/workspace/${company.id}`} className="py-2.5 bg-emerald-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest text-center shadow-lg shadow-emerald-500/20 hover:bg-emerald-500 transition-all">
-                                                            Workspace
+                                                        <Link to={`/workspace/${company.id}`} className="py-2.5 bg-emerald-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest text-center shadow-lg shadow-emerald-500/20 hover:bg-emerald-500 transition-all">
+                                                            Enter Space
                                                         </Link>
                                                     )}
                                                 </div>
@@ -506,34 +512,41 @@ const DashboardPage = () => {
         return (
             <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
                 {/* Welcome Banner */}
-                <div className="mb-8 p-10 bg-gradient-to-br from-purple-900/40 via-indigo-900/20 to-transparent rounded-3xl border border-white/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] -mr-20 -mt-20 group-hover:bg-purple-500/20 transition-all duration-700" />
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
-                        <div>
-                            <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
-                                Welcome, Founder.<br />
-                                <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                                    {founderProfile?.name?.split(' ')[0] || 'Sir'}! 🚀
+                <div className="mb-12 p-12 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-[3rem] relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] -mr-40 -mt-40 animate-pulse" />
+                    <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-12">
+                        <div className="flex-grow">
+                             <div className="inline-flex items-center gap-2 bg-indigo-600/10 border border-indigo-500/20 rounded-full px-4 py-2 mb-8">
+                                <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
+                                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-600">Commander Access Active</span>
+                            </div>
+                            <h1 className="text-5xl md:text-7xl font-black text-[var(--text-primary)] mb-6 tracking-tighter leading-none">
+                                Welcome back,<br />
+                                <span className="text-indigo-600 italic">
+                                    {founderProfile?.name?.split(' ')[0] || 'Founder'}.
                                 </span>
                             </h1>
-                            <p className="text-gray-400 text-lg max-w-md leading-relaxed mb-8">
-                                Manage your recruitment flow and connect with world-class growth partners.
+                            <p className="text-[var(--text-secondary)] text-xl font-medium max-w-xl leading-relaxed mb-10 opacity-70">
+                                Your vision is scaling. Engage with vetted performance leads and accelerate your growth mandate.
                             </p>
                             <div className="flex flex-wrap gap-4">
                                 <Link 
                                     to={`/company/${user.profileId}`}
-                                    className="px-8 py-3.5 bg-purple-600 hover:bg-purple-500 text-white rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-purple-500/25 flex items-center gap-3"
+                                    className="px-10 py-5 bg-indigo-600 text-white rounded-[1.5rem] font-black uppercase tracking-[0.2em] text-[10px] transition-all shadow-2xl shadow-indigo-600/25 hover:bg-indigo-500 hover:-translate-y-1 active:scale-95 flex items-center gap-3"
                                 >
                                     <BriefcaseIcon className="h-4 w-4" />
-                                    Company Profile
+                                    Company Vector
                                 </Link>
-                                <button className="px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 rounded-2xl font-black uppercase tracking-widest text-xs transition-all">
-                                    Analytics
-                                </button>
+                                <Link
+                                    to="/settings"
+                                    className="px-10 py-5 bg-[var(--bg-primary)] border border-[var(--glass-border)] text-[var(--text-primary)] rounded-[1.5rem] font-black uppercase tracking-[0.2em] text-[10px] transition-all hover:bg-[var(--bg-secondary)] hover:border-indigo-600/30"
+                                >
+                                    Control Panel
+                                </Link>
                             </div>
                         </div>
-                        <div className="hidden lg:block w-32 h-32 rounded-3xl bg-purple-500/10 border border-white/10 p-2 -rotate-3 hover:rotate-0 transition-transform duration-500">
-                             <Avatar src={founderProfile?.logoUrl} name={founderProfile?.name || ''} size="lg" className="h-full w-full rounded-2xl shadow-xl" />
+                        <div className="hidden lg:block w-48 h-48 rounded-[2rem] bg-[var(--bg-primary)] border border-[var(--glass-border)] p-2 -rotate-6 hover:rotate-0 transition-all duration-700 shadow-2xl flex-shrink-0 group-hover:scale-110">
+                             <Avatar src={founderProfile?.logoUrl} name={founderProfile?.name || ''} size="lg" className="h-full w-full rounded-[1.5rem] object-contain p-4" />
                         </div>
                     </div>
                 </div>
@@ -571,36 +584,36 @@ const DashboardPage = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
                     {/* Founder Onboarding Checklist */}
-                    <div className="lg:col-span-1 bg-gray-900/50 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-lg">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                                <RocketLaunchIcon className="h-5 w-5 text-indigo-400" />
-                                Getting Started
+                    <div className="lg:col-span-1 bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] p-10 rounded-[2.5rem] shadow-2xl">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-[10px] font-black text-[var(--text-primary)] flex items-center gap-3 uppercase tracking-[0.2em]">
+                                <RocketLaunchIcon className="h-4 w-4 text-indigo-600" />
+                                Growth Sync
                             </h2>
-                            <span className="text-sm font-semibold text-indigo-400">{completedChecklist}/{checklistItems.length}</span>
+                            <span className="text-[10px] font-black text-indigo-600">{completedChecklist}/{checklistItems.length}</span>
                         </div>
                         
                         {/* Progress bar */}
-                        <div className="w-full bg-gray-700/50 rounded-full h-2 mb-5">
+                        <div className="w-full bg-[var(--bg-secondary)] rounded-full h-1.5 mb-10">
                             <div 
-                                className="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500"
+                                className="h-1.5 rounded-full bg-indigo-600 transition-all duration-700 shadow-[0_0_12px_rgba(79,70,229,0.4)]"
                                 style={{ width: `${checklistProgress}%` }}
                             />
                         </div>
                         
-                        <ul className="space-y-3">
+                        <ul className="space-y-6">
                             {checklistItems.map((item, index) => (
-                                <li key={index} className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${item.completed ? 'bg-white/5' : 'hover:bg-white/5'}`}>
-                                    <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${
-                                        item.completed ? 'bg-emerald-500' : 'bg-gray-700'
+                                <li key={index} className={`flex items-start gap-4 transition-all ${item.completed ? 'opacity-100' : 'opacity-40'}`}>
+                                    <div className={`flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mt-0.5 ${
+                                        item.completed ? 'bg-emerald-500 shadow-xl shadow-emerald-500/20' : 'bg-[var(--bg-secondary)] border border-[var(--glass-border)]'
                                     }`}>
-                                        {item.completed && <CheckCircleIcon className="h-3 w-3 text-white" />}
+                                        {item.completed ? <CheckCircleIcon className="h-3 w-3 text-white" /> : <div className="w-1 h-1 bg-[var(--text-muted)] rounded-full" />}
                                     </div>
                                     <div>
-                                        <p className={`text-sm font-medium ${item.completed ? 'text-white' : 'text-gray-400'}`}>
+                                        <p className="text-[11px] font-black uppercase tracking-tight text-[var(--text-primary)]">
                                             {item.label}
                                         </p>
-                                        <p className="text-xs text-gray-500 mt-0.5">{item.description}</p>
+                                        <p className="text-[9px] font-bold text-[var(--text-muted)] mt-1.5 leading-relaxed uppercase tracking-widest opacity-60">{item.description}</p>
                                     </div>
                                 </li>
                             ))}
@@ -608,152 +621,154 @@ const DashboardPage = () => {
                     </div>
 
                     {/* Applications Received */}
-                    <div className="lg:col-span-2 bg-gray-900/50 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-lg">
-                        <div className="flex items-center justify-between mb-5">
-                            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                                <FireIcon className="h-5 w-5 text-orange-400" />
-                                Recent Applications
+                    <div className="lg:col-span-2 bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] p-10 rounded-[2.5rem] shadow-2xl">
+                        <div className="flex items-center justify-between mb-10">
+                            <h2 className="text-[10px] font-black text-[var(--text-primary)] flex items-center gap-3 uppercase tracking-[0.2em]">
+                                <FireIcon className="h-4 w-4 text-indigo-600" />
+                                Deployment Requests
                             </h2>
-                            <span className="text-sm text-gray-400">{companyApplications.length} total</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)]">{companyApplications.length} Submissions</span>
                         </div>
                         
                         {companyApplications.length > 0 ? (
-                            <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
+                            <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2 no-scrollbar">
                                 {companyApplications.slice(0, 5).map(app => {
                                     const partner = getPartner(app.partnerId);
                                     return partner ? (
-                                        <div key={app.id} className="group flex items-center justify-between p-4 bg-gray-800/30 border border-white/5 rounded-2xl hover:bg-gray-800/50 hover:border-white/10 transition-all duration-300">
-                                            <div className="flex items-center gap-4">
+                                        <div key={app.id} className="group flex items-center justify-between p-6 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-[2rem] hover:border-indigo-600 transition-all duration-300">
+                                            <div className="flex items-center gap-6">
                                                 <div className="relative">
-                                                    <Avatar src={partner.avatarUrl} name={partner.name} size="lg" className="rounded-xl" />
-                                                    <div className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-gray-900 ${
-                                                        app.status === 'Accepted' ? 'bg-emerald-500' :
-                                                        app.status === 'Rejected' ? 'bg-rose-500' : 'bg-amber-500 animate-pulse'
+                                                     <div className="w-16 h-16 rounded-2xl bg-[var(--bg-primary)] border border-[var(--glass-border)] p-0.5 shadow-xl group-hover:scale-105 transition-all">
+                                                        <Avatar src={partner.avatarUrl} name={partner.name} size="lg" className="h-full w-full rounded-[14px] object-cover" />
+                                                     </div>
+                                                    <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-4 border-[var(--bg-secondary)] ${
+                                                        app.status === 'Accepted' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' :
+                                                        app.status === 'Rejected' ? 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]' : 'bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.5)]'
                                                     }`} />
                                                 </div>
-                                                <div>
-                                                    <Link to={`/partner/${partner.id}`} className="text-sm font-black text-white group-hover:text-indigo-400 transition-colors tracking-tight uppercase">
+                                                <div className="min-w-0">
+                                                    <Link to={`/partner/${partner.id}`} className="text-[13px] font-black text-[var(--text-primary)] group-hover:text-indigo-600 transition-colors tracking-tight uppercase block">
                                                         {partner.name}
                                                     </Link>
-                                                    <div className="flex items-center gap-2 mt-0.5">
-                                                        <span className="text-[10px] font-bold text-gray-500">{partner.reputationBand} Partner</span>
-                                                        <span className="w-1 h-1 bg-gray-700 rounded-full" />
-                                                        <span className={`text-[10px] font-black uppercase tracking-widest ${
-                                                            app.status === 'Accepted' ? 'text-emerald-400' :
-                                                            app.status === 'Rejected' ? 'text-rose-400' : 'text-amber-400'
+                                                    <div className="flex items-center gap-3 mt-2">
+                                                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] opacity-60">{partner.reputationBand} Protocol</span>
+                                                        <span className="w-1 h-1 bg-[var(--glass-border)] rounded-full" />
+                                                        <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${
+                                                            app.status === 'Accepted' ? 'text-emerald-500' :
+                                                            app.status === 'Rejected' ? 'text-rose-500' : 'text-amber-500'
                                                         }`}>
                                                             {app.status}
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            {app.status === 'Pending' && (
-                                                <div className="flex items-center gap-2">
-                                                    <button 
-                                                        onClick={() => updateApplicationStatus(app.id, ApplicationStatus.ACCEPTED)} 
-                                                        className="p-2.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-xl hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all shadow-lg shadow-emerald-500/10" 
-                                                        title="Accept"
+                                            <div className="flex items-center gap-3">
+                                                {app.status === 'Pending' ? (
+                                                    <>
+                                                        <button 
+                                                            onClick={() => updateApplicationStatus(app.id, ApplicationStatus.ACCEPTED)} 
+                                                            className="p-3.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/10 rounded-2xl hover:bg-emerald-500 hover:text-white transition-all shadow-xl shadow-emerald-500/10" 
+                                                            title="Accept Protocol"
+                                                        >
+                                                            <CheckCircleIcon className="h-5 w-5"/>
+                                                        </button>
+                                                        <button 
+                                                            onClick={() => updateApplicationStatus(app.id, ApplicationStatus.REJECTED)} 
+                                                            className="p-3.5 bg-rose-500/10 text-rose-500 border border-rose-500/10 rounded-2xl hover:bg-rose-500 hover:text-white transition-all shadow-xl shadow-rose-500/10" 
+                                                            title="Decline Protocol"
+                                                        >
+                                                            <XCircleIcon className="h-5 w-5"/>
+                                                        </button>
+                                                    </>
+                                                ) : app.status === 'Accepted' ? (
+                                                    <Link 
+                                                        to={`/workspace/${partner.id}`}
+                                                        className="px-8 py-3.5 bg-indigo-600 text-white rounded-2xl text-[9px] font-black uppercase tracking-[0.3em] shadow-xl shadow-indigo-600/25 hover:bg-indigo-500 transition-all"
                                                     >
-                                                        <CheckCircleIcon className="h-5 w-5"/>
-                                                    </button>
-                                                    <button 
-                                                        onClick={() => updateApplicationStatus(app.id, ApplicationStatus.REJECTED)} 
-                                                        className="p-2.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-xl hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all shadow-lg shadow-rose-500/10" 
-                                                        title="Reject"
-                                                    >
-                                                        <XCircleIcon className="h-5 w-5"/>
-                                                    </button>
-                                                </div>
-                                            )}
-                                            {app.status === 'Accepted' && (
-                                                <Link 
-                                                    to={`/workspace/${partner.id}`}
-                                                    className="px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 transition-all border border-indigo-500/20"
-                                                >
-                                                    Workspace
-                                                </Link>
-                                            )}
+                                                        Secure Workspace
+                                                    </Link>
+                                                ) : null}
+                                            </div>
                                         </div>
                                     ) : null;
                                 })}
                             </div>
                         ) : (
-                            <div className="text-center py-10">
-                                <DocumentCheckIcon className="h-10 w-10 text-gray-600 mx-auto mb-3" />
-                                <p className="text-gray-400 text-sm">No applications received yet.</p>
-                                <p className="text-gray-500 text-xs mt-1">Applications from partners will appear here.</p>
+                            <div className="text-center py-24 bg-[var(--bg-secondary)] rounded-[2rem] border border-dashed border-[var(--glass-border)]">
+                                <DocumentCheckIcon className="h-10 w-10 text-[var(--text-muted)] mx-auto mb-6 opacity-30" />
+                                <p className="text-[var(--text-muted)] text-[9px] font-black uppercase tracking-[0.3em]">No deployment requests</p>
                             </div>
                         )}
                     </div>
                 </div>
 
                 {/* Manage My Listings */}
-                <div className="bg-gray-900/40 backdrop-blur-md border border-white/5 p-8 rounded-2xl shadow-2xl mb-12">
-                     <h2 className="text-xs font-black text-white mb-8 flex items-center gap-3 uppercase tracking-[0.2em]">
-                        <ChartBarIcon className="h-4 w-4 text-purple-400" />
-                        Manage My Active Listings
+                <div className="bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] p-10 rounded-3xl shadow-2xl mb-12">
+                     <h2 className="text-sm font-black text-[var(--text-primary)] mb-10 flex items-center gap-3 uppercase tracking-widest">
+                        <ChartBarIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                        Active Listings
                     </h2>
                     {founderProfile?.positions && founderProfile.positions.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {founderProfile.positions.map(pos => (
-                                <div key={pos.id} className="p-6 bg-gray-800/30 border border-white/5 rounded-2xl hover:border-purple-500/30 transition-all duration-500 group relative overflow-hidden">
-                                     <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${
-                                        pos.status === PositionStatus.OPEN ? 'from-emerald-500/20' :
-                                        pos.status === PositionStatus.PAUSED ? 'from-amber-500/20' : 'from-rose-500/20'
-                                    } blur-2xl opacity-0 group-hover:opacity-100 transition-opacity`} />
+                                <div key={pos.id} className="p-8 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-3xl hover:border-purple-500/30 transition-all duration-500 group relative overflow-hidden">
+                                     <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${
+                                        pos.status === PositionStatus.OPEN ? 'from-emerald-500/10' :
+                                        pos.status === PositionStatus.PAUSED ? 'from-amber-500/10' : 'from-rose-500/10'
+                                    } blur-3xl opacity-0 group-hover:opacity-100 transition-opacity`} />
                                     
-                                    <div className="flex justify-between items-start mb-6">
-                                        <h4 className="text-sm font-black text-white uppercase tracking-tight group-hover:text-purple-400 transition-colors">{pos.title}</h4>
+                                    <div className="flex justify-between items-start mb-8 relative z-10">
+                                        <h4 className="text-[11px] font-black text-[var(--text-primary)] uppercase tracking-[0.1em] group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">{pos.title}</h4>
                                         <div className="flex items-center gap-3">
-                                            <span className="text-[10px] font-black text-purple-400/60 bg-purple-400/5 px-2 py-0.5 rounded-md border border-purple-400/10">
-                                                {companyApplications.length} Applicants
+                                            <span className="text-[9px] font-black text-purple-600 dark:text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">
+                                                {companyApplications.length}
                                             </span>
                                             <div className={`w-2 h-2 rounded-full ${
                                                 pos.status === PositionStatus.OPEN ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' :
                                                 pos.status === PositionStatus.PAUSED ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)]' :
-                                                                                      'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]'
+                                                                                       'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]'
                                             }`} />
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-3">
-                                        <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Status:</span>
+                                    <div className="flex items-center gap-4 mt-auto relative z-10">
+                                        <span className="text-[9px] font-black text-[var(--text-muted)] uppercase tracking-widest opacity-60">Status</span>
                                         <div className="flex-grow relative">
                                             <select 
                                                 value={pos.status}
                                                 onChange={(e) => updatePositionStatus(user.profileId, pos.id, e.target.value as PositionStatus)}
-                                                className="w-full bg-gray-900/60 border border-white/10 rounded-xl py-2 pl-3 pr-8 text-[10px] font-black uppercase tracking-widest text-gray-400 focus:outline-none focus:ring-1 focus:ring-purple-500/50 appearance-none cursor-pointer"
+                                                className="w-full bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-xl py-2.5 pl-4 pr-10 text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] focus:outline-none focus:ring-1 focus:ring-purple-500/50 appearance-none cursor-pointer"
                                             >
                                                 {Object.values(PositionStatus).map(status => (
                                                     <option key={status} value={status}>{status}</option>
                                                 ))}
                                             </select>
-                                            <ChevronUpIcon className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-600 pointer-events-none rotate-180" />
+                                            <ChevronDownIcon className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)] pointer-events-none" />
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-16 bg-white/5 rounded-2xl border border-dashed border-white/10">
-                            <BriefcaseIcon className="h-10 w-10 text-gray-700 mx-auto mb-4" />
-                            <p className="text-sm font-bold text-gray-500">No active positions found.</p>
-                            <Link to={`/company/${user.profileId}`} className="text-[10px] font-black text-purple-400 uppercase tracking-[0.2em] mt-4 inline-block hover:underline">Add First Role</Link>
+                        <div className="text-center py-20 bg-[var(--bg-secondary)] rounded-3xl border border-dashed border-[var(--glass-border)]">
+                            <BriefcaseIcon className="h-12 w-12 text-[var(--text-muted)] mx-auto mb-4 opacity-50" />
+                            <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4">No active positions yet</p>
+                            <Link to={`/company/${user.profileId}`} className="px-8 py-3 bg-purple-600 text-white rounded-2xl text-[9px] font-black uppercase tracking-widest shadow-lg shadow-purple-500/20 hover:bg-purple-500 transition-all">Add First Listing</Link>
                         </div>
                     )}
                 </div>
 
                 {/* Find Partners Section */}
-                <div className="bg-gray-900/40 backdrop-blur-md border border-white/5 p-10 rounded-3xl shadow-2xl relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[80px] -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                <div className="bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] p-12 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] -mr-32 -mt-32 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                     
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-8 mb-12">
-                        <div className="flex items-center gap-6">
-                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-indigo-500/20">
-                                <MagnifyingGlassIcon className="h-8 w-8 text-white" />
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-10 mb-12 relative z-10">
+                        <div className="flex items-center gap-8">
+                            <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-indigo-500/30">
+                                <MagnifyingGlassIcon className="h-10 w-10 text-white" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-white uppercase tracking-tight">Vetted Growth Partners</h2>
-                                <p className="text-sm text-gray-500">Discover top {partners.length} professionals</p>
+                                <h2 className="text-3xl font-black text-[var(--text-primary)] uppercase tracking-tight">Growth Network</h2>
+                                <p className="text-xs font-black uppercase tracking-[0.2em] text-[var(--text-muted)] mt-1.5 opacity-60">Discover top {partners.length}+ professionals</p>
                             </div>
                         </div>
                         <button 
@@ -769,64 +784,64 @@ const DashboardPage = () => {
                     </div>
 
                     {/* Filters */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 relative z-10">
                         <div>
-                            <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Expertise</label>
+                            <label className="block text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4">Expertise</label>
                             <input 
                                 type="text" 
                                 name="skills" 
                                 value={partnerFilters.skills} 
                                 onChange={handlePartnerFilterChange} 
-                                className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium" 
+                                className="w-full bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl py-3.5 px-5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium" 
                                 placeholder="SEO, Meta Ads..."
                             />
                         </div>
                         <div>
-                            <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Experience</label>
+                            <label className="block text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4">Experience</label>
                             <div className="relative">
                                 <select 
                                     name="reputation" 
                                     value={partnerFilters.reputation} 
                                     onChange={handlePartnerFilterChange} 
-                                    className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-4 pr-10 text-sm text-white appearance-none focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium cursor-pointer"
+                                    className="w-full bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl py-3.5 pl-5 pr-12 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium appearance-none cursor-pointer"
                                 >
                                     <option value="">Any Level</option>
                                     {Object.values(ReputationBand).map(band => <option key={band} value={band}>{band}</option>)}
                                 </select>
-                                <ChevronUpIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none rotate-180" />
+                                <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)] pointer-events-none" />
                             </div>
                         </div>
                         <div>
-                            <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Territory</label>
+                            <label className="block text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4">Territory</label>
                             <input 
                                 type="text" 
                                 name="location" 
                                 value={partnerFilters.location} 
                                 onChange={handlePartnerFilterChange} 
-                                className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium" 
+                                className="w-full bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl py-3.5 px-5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium" 
                                 placeholder="London, Berlin..."
                             />
                         </div>
                         <div>
-                            <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Availability</label>
+                            <label className="block text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4">Availability</label>
                             <div className="relative">
                                 <select 
                                     name="workMode" 
                                     value={partnerFilters.workMode} 
                                     onChange={handlePartnerFilterChange} 
-                                    className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-3 pl-4 pr-10 text-sm text-white appearance-none focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium cursor-pointer"
+                                    className="w-full bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl py-3.5 pl-5 pr-12 text-sm text-[var(--text-primary)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium appearance-none cursor-pointer"
                                 >
                                     <option value="">Any Mode</option>
                                     {Object.values(WorkMode).map(mode => <option key={mode} value={mode}>{mode}</option>)}
                                 </select>
-                                <ChevronUpIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none rotate-180" />
+                                <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)] pointer-events-none" />
                             </div>
                         </div>
                     </div>
 
                     {/* Partners Grid */}
                     {filteredPartners.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
                             {filteredPartners.map(partner => (
                                 <PartnerCard 
                                     key={partner.id} 
@@ -837,10 +852,10 @@ const DashboardPage = () => {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-16 bg-gray-800/30 rounded-xl border border-white/5">
-                            <UserGroupIcon className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                            <h3 className="text-lg font-medium text-gray-400 mb-2">No partners found</h3>
-                            <p className="text-gray-500 text-sm">Try adjusting your filters to see more results.</p>
+                        <div className="text-center py-20 bg-[var(--bg-secondary)] rounded-3xl border border-dashed border-[var(--glass-border)]">
+                            <UserGroupIcon className="h-12 w-12 text-[var(--text-muted)] mx-auto mb-4 opacity-50" />
+                            <h3 className="text-sm font-black uppercase tracking-widest text-[var(--text-muted)] mt-1">No partners found</h3>
+                            <p className="text-[var(--text-muted)] text-xs mt-1 font-medium italic">Try adjusting your filters to see more results.</p>
                         </div>
                     )}
                 </div>

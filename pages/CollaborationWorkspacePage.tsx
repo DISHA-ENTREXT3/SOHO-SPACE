@@ -332,10 +332,10 @@ const CollaborationWorkspacePage = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-950">
+            <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
                 <div className="flex flex-col items-center">
                     <ArrowPathIcon className="w-10 h-10 text-indigo-500 animate-spin mb-4" />
-                    <p className="text-gray-400 font-medium tracking-wide">Initializing Portal...</p>
+                    <p className="text-[var(--text-muted)] font-medium tracking-wide">Initializing Portal...</p>
                 </div>
             </div>
         );
@@ -344,11 +344,11 @@ const CollaborationWorkspacePage = () => {
     if (!collaboration) {
         return (
             <div className="max-w-4xl mx-auto p-8 text-center mt-20">
-                <div className="w-20 h-20 bg-gray-900 border border-white/5 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                    <InformationCircleIcon className="w-10 h-10 text-gray-600" />
+                <div className="w-20 h-20 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-3xl flex items-center justify-center mx-auto mb-6">
+                    <InformationCircleIcon className="w-10 h-10 text-[var(--text-muted)]" />
                 </div>
-                <h2 className="text-3xl font-black text-white mb-4">Workspace Not Established</h2>
-                <p className="text-gray-400 mb-8 max-w-md mx-auto">This collaboration channel hasn't been initialized. If you just accepted a partner, please wait a moment while we set up your secure workspace.</p>
+                <h2 className="text-3xl font-black text-[var(--text-primary)] mb-4">Workspace Not Established</h2>
+                <p className="text-[var(--text-secondary)] mb-8 max-w-md mx-auto">This collaboration channel hasn't been initialized. If you just accepted a partner, please wait a moment while we set up your secure workspace.</p>
                 <button onClick={() => navigate('/dashboard')} className="btn btn-primary px-8">Return to Dashboard</button>
             </div>
         );
@@ -365,7 +365,7 @@ const CollaborationWorkspacePage = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-4">
                     <BackButton />
-                    <div className="hidden sm:block h-8 w-px bg-white/10" />
+                    <div className="hidden sm:block h-8 w-px bg-[var(--glass-border)]" />
                     <div className="flex items-center gap-3">
                          <Avatar 
                             src={isPartner ? company?.logoUrl : partner?.avatarUrl} 
@@ -373,34 +373,34 @@ const CollaborationWorkspacePage = () => {
                             size="md" 
                          />
                          <div>
-                            <h1 className="text-lg font-black text-white tracking-tight leading-none">
+                            <h1 className="text-lg font-black text-[var(--text-primary)] tracking-tight leading-none">
                                 {otherUser?.name} <span className="text-indigo-500">Portal</span>
                             </h1>
-                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">
+                            <p className="text-[10px] text-[var(--text-muted)] font-bold uppercase tracking-widest mt-1">
                                 {isPartner ? 'Company Workspace' : 'Partner Collaboration'}
                             </p>
                          </div>
                     </div>
                 </div>
 
-                <div className="flex items-center bg-gray-900/40 p-1 rounded-xl border border-white/5">
+                <div className="flex items-center bg-[var(--bg-secondary)] p-1 rounded-xl border border-[var(--glass-border)]">
                     <button 
                         onClick={() => setActiveTab('CHAT')}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'CHAT' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-300'}`}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'CHAT' ? 'bg-indigo-600 text-white shadow-lg' : 'text-[var(--text-muted)] hover:text-indigo-500'}`}
                     >
                         <ChatBubbleLeftRightIcon className="w-4 h-4" />
                         Messaging
                     </button>
                     <button 
                         onClick={() => setActiveTab('FRAMEWORK')}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'FRAMEWORK' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-300'}`}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'FRAMEWORK' ? 'bg-indigo-600 text-white shadow-lg' : 'text-[var(--text-muted)] hover:text-indigo-500'}`}
                     >
                         <BriefcaseIcon className="w-4 h-4" />
                         Framework
                     </button>
                     <button 
                         onClick={() => setActiveTab('FILES')}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'FILES' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-gray-300'}`}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'FILES' ? 'bg-indigo-600 text-white shadow-lg' : 'text-[var(--text-muted)] hover:text-indigo-500'}`}
                     >
                         <DocumentIcon className="w-4 h-4" />
                         Documents
@@ -410,19 +410,19 @@ const CollaborationWorkspacePage = () => {
 
             <div className="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-6 min-h-[600px]">
                 {/* Main Content Area */}
-                <div className="lg:col-span-3 flex flex-col glass-card border-white/5 bg-gray-950/20 overflow-hidden h-[600px]">
+                <div className="lg:col-span-3 flex flex-col glass-card border-[var(--glass-border)] bg-[var(--glass-bg)] overflow-hidden h-[600px]">
                     {activeTab === 'CHAT' ? (
                         <>
                             {/* Messages */}
                             <div 
                                 ref={scrollContainerRef}
-                                className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scrollbar-thin scrollbar-thumb-white/10"
+                                className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scrollbar-thin scrollbar-thumb-indigo-500/20"
                             >
                                 {messages.length === 0 && hasInitialLoaded ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center p-8 opacity-50">
-                                        <ChatBubbleLeftRightIcon className="w-16 h-16 text-gray-700 mb-4" />
-                                        <h4 className="text-lg font-bold text-gray-400">Establish the Connection</h4>
-                                        <p className="text-sm text-gray-500 mt-2 max-w-xs">Introduce yourself and start aligning on your growth strategy. This is a private space for collaboration.</p>
+                                        <ChatBubbleLeftRightIcon className="w-16 h-16 text-[var(--text-muted)] mb-4" />
+                                        <h4 className="text-lg font-bold text-[var(--text-secondary)]">Establish the Connection</h4>
+                                        <p className="text-sm text-[var(--text-muted)] mt-2 max-w-xs">Introduce yourself and start aligning on your growth strategy. This is a private space for collaboration.</p>
                                     </div>
                                 ) : (
                                     <div className="space-y-6">
@@ -434,7 +434,7 @@ const CollaborationWorkspacePage = () => {
                                                 <div key={msg.id}>
                                                     {showDate && (
                                                         <div className="text-center my-6">
-                                                            <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest bg-white/2 px-4 py-1 rounded-full border border-white/5">
+                                                            <span className="text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest bg-[var(--bg-secondary)] px-4 py-1 rounded-full border border-[var(--glass-border)]">
                                                                 {new Date(msg.timestamp).toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
                                                             </span>
                                                         </div>
@@ -444,15 +444,15 @@ const CollaborationWorkspacePage = () => {
                                                             <div className={`
                                                                 p-4 rounded-2xl relative shadow-xl
                                                                 ${isMe 
-                                                                    ? 'bg-indigo-600 text-white rounded-tr-none' 
-                                                                    : 'bg-gray-800/80 text-gray-100 border border-white/5 rounded-tl-none'}
+                                                                    ? 'bg-indigo-600 text-white rounded-tr-none shadow-indigo-500/10' 
+                                                                    : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--glass-border)] rounded-tl-none'}
                                                             `}>
                                                                 <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                                                             </div>
-                                                            <span className="text-[9px] text-gray-500 mt-1.5 font-medium px-1 flex items-center gap-1">
+                                                            <span className="text-[9px] text-[var(--text-muted)] mt-1.5 font-medium px-1 flex items-center gap-1">
                                                                 {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                                 {isMe && (
-                                                                    <CheckCircleIcon className={`w-3 h-3 ${msg.read ? 'text-indigo-400' : 'text-gray-600'}`} />
+                                                                    <CheckCircleIcon className={`w-3 h-3 ${msg.read ? 'text-indigo-500' : 'text-[var(--text-muted)]'}`} />
                                                                 )}
                                                             </span>
                                                         </div>
@@ -466,7 +466,7 @@ const CollaborationWorkspacePage = () => {
                             </div>
 
                             {/* Input */}
-                            <div className="p-4 border-t border-white/5 bg-gray-900/20">
+                            <div className="p-4 border-t border-[var(--glass-border)] bg-[var(--bg-secondary)]">
                                 <form onSubmit={handleSendMessage} className="relative flex items-end gap-3">
                                     <div className="flex-1 relative">
                                         <textarea
@@ -479,7 +479,7 @@ const CollaborationWorkspacePage = () => {
                                                 }
                                             }}
                                             placeholder="Message..."
-                                            className="w-full bg-gray-800/60 border border-white/10 rounded-2xl py-3.5 px-5 pr-12 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all resize-none min-h-[56px] max-h-32 text-sm"
+                                            className="w-full bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-2xl py-3.5 px-5 pr-12 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all resize-none min-h-[56px] max-h-32 text-sm"
                                             rows={1}
                                         />
                                     </div>
@@ -488,7 +488,7 @@ const CollaborationWorkspacePage = () => {
                                         disabled={!newMessage.trim() || isSending}
                                         className={`
                                             btn p-3.5 rounded-2xl h-[56px] w-[56px] flex items-center justify-center shrink-0 transition-all
-                                            ${newMessage.trim() && !isSending ? 'bg-indigo-600 text-white shadow-lg' : 'bg-gray-800 text-gray-600 cursor-not-allowed'}
+                                            ${newMessage.trim() && !isSending ? 'bg-indigo-600 text-white shadow-lg' : 'bg-[var(--bg-primary)] text-[var(--text-muted)] cursor-not-allowed opacity-50'}
                                         `}
                                     >
                                         {isSending ? <ArrowPathIcon className="w-5 h-5 animate-spin" /> : <PaperAirplaneIcon className="w-5 h-5 -rotate-45" />}
@@ -498,9 +498,9 @@ const CollaborationWorkspacePage = () => {
                         </>
                     ) : activeTab === 'FRAMEWORK' ? (
                         <div className="flex flex-col h-full overflow-hidden">
-                            <div className="p-6 border-b border-white/5 bg-gray-900/10 flex items-center justify-between">
-                                <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                                    <BriefcaseIcon className="w-6 h-6 text-indigo-400" />
+                            <div className="p-6 border-b border-[var(--glass-border)] bg-[var(--bg-secondary)] flex items-center justify-between">
+                                <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+                                    <BriefcaseIcon className="w-6 h-6 text-indigo-500" />
                                     Execution Framework
                                 </h2>
                                 <button 
@@ -533,34 +533,34 @@ const CollaborationWorkspacePage = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-white/5">
                                     <div className="space-y-4">
-                                        <label className="text-sm font-bold text-white flex items-center gap-2">
-                                            <PencilIcon className="w-4 h-4 text-indigo-400" />
+                                        <label className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+                                            <PencilIcon className="w-4 h-4 text-indigo-500" />
                                             Progress Notes ({activePhase})
                                         </label>
                                         <textarea 
-                                            className="form-textarea h-64 bg-gray-900/40 border-white/10 focus:border-indigo-500/50 transition-all resize-none"
+                                            className="form-textarea h-64 bg-[var(--bg-secondary)] border-[var(--glass-border)] focus:border-indigo-500 transition-all resize-none text-sm text-[var(--text-secondary)]"
                                             placeholder="Document current blockers, wins, and updates..."
                                             value={frameworkNotes}
                                             onChange={(e) => setFrameworkNotes(e.target.value)}
                                         />
                                     </div>
                                     <div className="space-y-4">
-                                         <label className="text-sm font-bold text-white flex items-center gap-2">
-                                            <LightBulbIcon className="w-4 h-4 text-amber-400" />
+                                         <label className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+                                            <LightBulbIcon className="w-4 h-4 text-amber-500" />
                                             Key Metrics & KPIs
                                         </label>
                                         <textarea 
-                                            className="form-textarea h-64 bg-gray-900/40 border-white/10 focus:border-amber-500/50 transition-all resize-none"
+                                            className="form-textarea h-64 bg-[var(--bg-secondary)] border-[var(--glass-border)] focus:border-amber-500 transition-all resize-none text-sm text-[var(--text-secondary)]"
                                             placeholder="Track growth metrics for this stage..."
                                             value={frameworkMetrics}
                                             onChange={(e) => setFrameworkMetrics(e.target.value)}
                                         />
                                     </div>
 
-                                    <div className="md:col-span-2 space-y-4 pt-6 border-t border-white/5">
+                                    <div className="md:col-span-2 space-y-4 pt-6 border-t border-[var(--glass-border)]">
                                         <div className="flex items-center justify-between">
-                                            <label className="text-sm font-bold text-white flex items-center gap-2">
-                                                <PaperClipIcon className="w-4 h-4 text-emerald-400" />
+                                            <label className="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+                                                <PaperClipIcon className="w-4 h-4 text-emerald-500" />
                                                 Phase Assets & Links
                                             </label>
                                             <div className="flex items-center gap-2">
@@ -580,7 +580,7 @@ const CollaborationWorkspacePage = () => {
                                                 
                                                 <button 
                                                     onClick={() => setShowLinkInput(!showLinkInput)}
-                                                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all border ${showLinkInput ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20 hover:bg-indigo-500/20'}`}
+                                                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all border ${showLinkInput ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20 hover:bg-indigo-500/20'}`}
                                                 >
                                                     <LinkIcon className="w-3 h-3" />
                                                     Add Link
@@ -588,7 +588,7 @@ const CollaborationWorkspacePage = () => {
                                                 <button 
                                                     onClick={() => imageInputRef.current?.click()}
                                                     disabled={isUploading}
-                                                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 text-amber-400 text-[10px] font-black uppercase hover:bg-amber-500/20 transition-all border border-amber-500/20"
+                                                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase hover:bg-amber-500/20 transition-all border border-amber-500/20"
                                                 >
                                                     {isUploading ? <ArrowPathIcon className="w-3 h-3 animate-spin" /> : <PhotoIcon className="w-3 h-3" />}
                                                     Add Image
@@ -596,7 +596,7 @@ const CollaborationWorkspacePage = () => {
                                                 <button 
                                                     onClick={() => phaseFileInputRef.current?.click()}
                                                     disabled={isUploading}
-                                                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase hover:bg-emerald-500/20 transition-all border border-emerald-500/20"
+                                                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase hover:bg-emerald-500/20 transition-all border border-emerald-500/20"
                                                 >
                                                     {isUploading ? <ArrowPathIcon className="w-3 h-3 animate-spin" /> : <DocumentPlusIcon className="w-3 h-3" />}
                                                     Add Doc
@@ -611,14 +611,14 @@ const CollaborationWorkspacePage = () => {
                                                     placeholder="Link Title (e.g. Design Board)" 
                                                     value={newLinkTitle}
                                                     onChange={(e) => setNewLinkTitle(e.target.value)}
-                                                    className="flex-1 bg-black/20 border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-indigo-500/50"
+                                                    className="flex-1 bg-[var(--bg-primary)] border-[var(--glass-border)] rounded-lg py-2 px-3 text-xs text-[var(--text-primary)] focus:outline-none focus:border-indigo-500"
                                                 />
                                                 <input 
                                                     type="text" 
                                                     placeholder="URL (e.g. figma.com/...)" 
                                                     value={newLinkUrl}
                                                     onChange={(e) => setNewLinkUrl(e.target.value)}
-                                                    className="flex-1 bg-black/20 border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-indigo-500/50"
+                                                    className="flex-1 bg-[var(--bg-primary)] border-[var(--glass-border)] rounded-lg py-2 px-3 text-xs text-[var(--text-primary)] focus:outline-none focus:border-indigo-500"
                                                 />
                                                 <button 
                                                     onClick={handleAddLink}
@@ -703,10 +703,10 @@ const CollaborationWorkspacePage = () => {
                         </div>
                     ) : (
                         <div className="flex flex-col h-full overflow-hidden">
-                             <div className="p-6 border-b border-white/5 bg-gray-900/10 space-y-4">
+                             <div className="p-6 border-b border-[var(--glass-border)] bg-[var(--bg-secondary)] space-y-4">
                                 <div className="flex items-center justify-between">
-                                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                                        <DocumentIcon className="w-6 h-6 text-indigo-400" />
+                                    <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+                                        <DocumentIcon className="w-6 h-6 text-indigo-500" />
                                         Document Repository
                                     </h2>
                                     <div>
@@ -729,24 +729,24 @@ const CollaborationWorkspacePage = () => {
 
                                 <div className="flex flex-col sm:flex-row gap-4">
                                     <div className="flex-1 relative">
-                                        <MagnifyingGlassIcon className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                                        <MagnifyingGlassIcon className="w-4 h-4 text-[var(--text-muted)] absolute left-3 top-1/2 -translate-y-1/2" />
                                         <input 
                                             type="text"
                                             placeholder="Search documents..."
                                             value={fileSearch}
                                             onChange={(e) => setFileSearch(e.target.value)}
-                                            className="w-full bg-gray-800/40 border border-white/5 rounded-xl py-2 pl-10 pr-4 text-xs text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50"
+                                            className="w-full bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-xl py-2 pl-10 pr-4 text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50"
                                         />
                                     </div>
                                     <div className="relative">
                                         <button 
                                             onClick={() => setIsPhaseFilterOpen(!isPhaseFilterOpen)}
-                                            className="flex items-center justify-between gap-3 bg-gray-800/40 border border-white/5 rounded-xl py-2 px-4 text-xs text-gray-300 hover:bg-gray-800/60 hover:border-white/10 transition-all focus:outline-none min-w-[140px]"
+                                            className="flex items-center justify-between gap-3 bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-xl py-2 px-4 text-xs text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:border-[var(--glass-border)] transition-all focus:outline-none min-w-[140px]"
                                         >
                                             <span className="truncate">
                                                 {fileFilter === 'all' ? 'All Phases' : fileFilter === 'general' ? 'General' : fileFilter}
                                             </span>
-                                            <ChevronDownIcon className={`w-3.5 h-3.5 text-gray-500 transition-transform duration-300 ${isPhaseFilterOpen ? 'rotate-180' : ''}`} />
+                                            <ChevronDownIcon className={`w-3.5 h-3.5 text-[var(--text-muted)] transition-transform duration-300 ${isPhaseFilterOpen ? 'rotate-180' : ''}`} />
                                         </button>
                                         
                                         {isPhaseFilterOpen && (
@@ -755,35 +755,35 @@ const CollaborationWorkspacePage = () => {
                                                     className="fixed inset-0 z-40" 
                                                     onClick={() => setIsPhaseFilterOpen(false)} 
                                                 />
-                                                <div className="absolute top-full right-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                                                <div className="absolute top-full right-0 mt-2 w-56 bg-[var(--bg-secondary)] backdrop-blur-xl border border-[var(--glass-border)] rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
                                                     <div className="px-3 py-1 mb-1">
-                                                        <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Filter by Phase</p>
+                                                        <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">Filter by Phase</p>
                                                     </div>
                                                     <button 
                                                         onClick={() => { setFileFilter('all'); setIsPhaseFilterOpen(false); }}
-                                                        className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all flex items-center justify-between ${fileFilter === 'all' ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'}`}
+                                                        className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all flex items-center justify-between ${fileFilter === 'all' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10' : 'text-[var(--text-muted)] hover:bg-white/5 hover:text-[var(--text-secondary)]'}`}
                                                     >
                                                         All Phases
-                                                        {fileFilter === 'all' && <div className="w-1 h-1 rounded-full bg-indigo-400" />}
+                                                        {fileFilter === 'all' && <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />}
                                                     </button>
                                                     <button 
                                                         onClick={() => { setFileFilter('general'); setIsPhaseFilterOpen(false); }}
-                                                        className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all flex items-center justify-between ${fileFilter === 'general' ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'}`}
+                                                        className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all flex items-center justify-between ${fileFilter === 'general' ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10' : 'text-[var(--text-muted)] hover:bg-white/5 hover:text-[var(--text-secondary)]'}`}
                                                     >
                                                         General (No Phase)
-                                                        {fileFilter === 'general' && <div className="w-1 h-1 rounded-full bg-indigo-400" />}
+                                                        {fileFilter === 'general' && <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />}
                                                     </button>
                                                     
-                                                    <div className="my-1 border-t border-white/5" />
+                                                    <div className="my-1 border-t border-[var(--glass-border)]" />
                                                     
                                                     {collaboration.framework.phases.map(p => (
                                                         <button 
                                                             key={p}
                                                             onClick={() => { setFileFilter(p); setIsPhaseFilterOpen(false); }}
-                                                            className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all flex items-center justify-between ${fileFilter === p ? 'text-indigo-400 bg-indigo-500/10' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'}`}
+                                                            className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all flex items-center justify-between ${fileFilter === p ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10' : 'text-[var(--text-muted)] hover:bg-white/5 hover:text-[var(--text-secondary)]'}`}
                                                         >
                                                             {p}
-                                                            {fileFilter === p && <div className="w-1 h-1 rounded-full bg-indigo-400" />}
+                                                            {fileFilter === p && <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />}
                                                         </button>
                                                     ))}
                                                 </div>

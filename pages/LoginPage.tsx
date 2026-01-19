@@ -154,7 +154,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 relative overflow-hidden">
             <SEO 
                 title={isSignUp ? 'Sign Up' : 'Login'}
                 description="Join Soho Space to connect with elite growth partners and visionary founders. Sign up or login to start building category-defining products."
@@ -163,18 +163,18 @@ const LoginPage = () => {
             />
             {/* Background decoration */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-40 -left-40 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl" />
-                <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-indigo-500/5 to-purple-500/5 rounded-full blur-3xl" />
+                <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px] animate-pulse" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,var(--bg-secondary)_0%,transparent_70%)] opacity-50" />
             </div>
             
             <div className="max-w-5xl w-full mx-auto relative z-10">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     {/* Left Side - Branding */}
                     <div className="text-center lg:text-left hidden lg:block">
-                        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8">
-                            <SparklesIcon className="h-4 w-4 text-amber-400" />
-                            <span className="text-sm font-medium text-gray-300">Join 500+ professionals</span>
+                        <div className="inline-flex items-center gap-2 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-full px-4 py-2 mb-8">
+                            <SparklesIcon className="h-4 w-4 text-amber-500" />
+                            <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)]">Join 500+ professionals</span>
                         </div>
                         
                         <div className="flex items-center gap-3 mb-6 justify-center lg:justify-start">
@@ -183,77 +183,75 @@ const LoginPage = () => {
                             </div>
                         </div>
                         
-                        <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-                            {isSignUp ? 'Start Your' : 'Welcome Back to'}
-                            <span className="block bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                                Growth Journey
+                        <h1 className="text-6xl lg:text-7xl font-black text-[var(--text-primary)] leading-[1.1] mb-8 tracking-tighter">
+                            {isSignUp ? 'Initiate' : 'Continue'}
+                            <span className="block text-indigo-600">
+                                Growth.
                             </span>
                         </h1>
                         
-                        <p className="text-lg text-gray-400 mb-8 max-w-md mx-auto lg:mx-0">
+                        <p className="text-xl text-[var(--text-secondary)] mb-10 max-w-md mx-auto lg:mx-0 leading-relaxed font-medium opacity-80">
                             {isSignUp 
-                                ? 'Create your account and connect with the best growth partners in the industry.'
-                                : 'Log in to continue managing your partnerships and collaborations.'
+                                ? 'Join the hyper-growth ecosystem. Connect with elite partners and scale your architecture.'
+                                : 'Resume your scaling operations. Access your secure collaboration hub.'
                             }
                         </p>
                         
                         {/* Value props */}
-                        <div className="space-y-4">
+                        <div className="space-y-5">
                             {[
-                                'Access vetted growth experts',
-                                'Built-in NDA & collaboration tools',
-                                'AI-powered partner matching'
+                                'Access elite growth vectors',
+                                'Secure collaboration protocol',
+                                'AI-powered precision matching'
                             ].map((item, index) => (
-                                <div key={index} className="flex items-center gap-3">
-                                    <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                                        <CheckCircleIcon className="h-4 w-4 text-green-400" />
+                                <div key={index} className="flex items-center gap-4 group">
+                                    <div className="w-8 h-8 rounded-xl bg-indigo-600/10 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                        <CheckCircleIcon className="h-4 w-4 text-indigo-600 group-hover:text-white transition-all" />
                                     </div>
-                                    <span className="text-gray-300">{item}</span>
+                                    <span className="text-[var(--text-secondary)] font-black text-xs uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-all">{item}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
                     
                     {/* Right Side - Auth Form */}
-                    <div className="max-w-md w-full mx-auto lg:mx-0">
-                        <div className="bg-gray-900/70 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
-                            {/* Role Selection - Always Visible for Context */}
-                            <div className="mb-8">
-                                <label className="block text-xs font-bold text-gray-500 mb-4 uppercase tracking-[0.2em] text-center">I am joining as a</label>
+                    <div className="max-w-md w-full mx-auto lg:mx-0 animate-in fade-in slide-in-from-bottom-8 duration-700">
+                        <div className="bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] rounded-[2.5rem] p-10 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)]">
+                            {/* Role Selection */}
+                            <div className="mb-10">
+                                <label className="block text-[9px] font-black text-[var(--text-primary)] mb-5 uppercase tracking-[0.3em] text-center opacity-40">Select Operational Role</label>
                                 <div className="grid grid-cols-2 gap-4">
                                     <button
                                         type="button"
                                         onClick={() => { setSelectedRole(UserRole.FOUNDER); setError(''); }}
-                                        className={`p-4 rounded-2xl border-2 transition-all text-left relative overflow-hidden group ${
+                                        className={`p-5 rounded-2xl border transition-all text-left relative overflow-hidden group ${
                                             selectedRole === UserRole.FOUNDER
-                                                ? 'border-indigo-500 bg-indigo-500/10 shadow-[0_0_20px_rgba(99,102,241,0.2)]'
-                                                : 'border-white/5 bg-gray-800/40 hover:border-white/10'
+                                                ? 'border-indigo-600 bg-indigo-600/10 shadow-xl shadow-indigo-600/10'
+                                                : 'border-[var(--glass-border)] bg-[var(--bg-secondary)] hover:border-indigo-600/30'
                                         }`}
                                     >
-                                        <BuildingOffice2Icon className={`h-6 w-6 mb-2 transition-colors ${selectedRole === UserRole.FOUNDER ? 'text-indigo-400' : 'text-gray-500 group-hover:text-gray-400'}`} />
-                                        <div className={`font-bold text-sm transition-colors ${selectedRole === UserRole.FOUNDER ? 'text-white' : 'text-gray-400'}`}>Founder</div>
-                                        <div className="text-[10px] text-gray-500 mt-1 uppercase tracking-tight">Post Opportunities</div>
+                                        <BuildingOffice2Icon className={`h-6 w-6 mb-3 transition-colors ${selectedRole === UserRole.FOUNDER ? 'text-indigo-600' : 'text-[var(--text-muted)] group-hover:text-indigo-600'}`} />
+                                        <div className={`font-black uppercase tracking-widest text-[10px] transition-colors ${selectedRole === UserRole.FOUNDER ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}`}>Founder</div>
                                         {selectedRole === UserRole.FOUNDER && (
                                             <div className="absolute top-2 right-2">
-                                                <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
+                                                <div className="w-1.5 h-1.5 bg-indigo-600 rounded-full" />
                                             </div>
                                         )}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => { setSelectedRole(UserRole.PARTNER); setError(''); }}
-                                        className={`p-4 rounded-2xl border-2 transition-all text-left relative overflow-hidden group ${
+                                        className={`p-5 rounded-2xl border transition-all text-left relative overflow-hidden group ${
                                             selectedRole === UserRole.PARTNER
-                                                ? 'border-teal-500 bg-teal-500/10 shadow-[0_0_20px_rgba(20,184,166,0.2)]'
-                                                : 'border-white/5 bg-gray-800/40 hover:border-white/10'
+                                                ? 'border-indigo-600 bg-indigo-600/10 shadow-xl shadow-indigo-600/10'
+                                                : 'border-[var(--glass-border)] bg-[var(--bg-secondary)] hover:border-indigo-600/30'
                                         }`}
                                     >
-                                        <UserGroupIcon className={`h-6 w-6 mb-2 transition-colors ${selectedRole === UserRole.PARTNER ? 'text-teal-400' : 'text-gray-500 group-hover:text-gray-400'}`} />
-                                        <div className={`font-bold text-sm transition-colors ${selectedRole === UserRole.PARTNER ? 'text-white' : 'text-gray-400'}`}>Partner</div>
-                                        <div className="text-[10px] text-gray-500 mt-1 uppercase tracking-tight">Apply for Projects</div>
+                                        <UserGroupIcon className={`h-6 w-6 mb-3 transition-colors ${selectedRole === UserRole.PARTNER ? 'text-indigo-600' : 'text-[var(--text-muted)] group-hover:text-indigo-600'}`} />
+                                        <div className={`font-black uppercase tracking-widest text-[10px] transition-colors ${selectedRole === UserRole.PARTNER ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}`}>Partner</div>
                                         {selectedRole === UserRole.PARTNER && (
                                             <div className="absolute top-2 right-2">
-                                                <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
+                                                <div className="w-1.5 h-1.5 bg-indigo-600 rounded-full" />
                                             </div>
                                         )}
                                     </button>
@@ -261,66 +259,66 @@ const LoginPage = () => {
                             </div>
 
                             {/* Toggle */}
-                            <div className="flex bg-gray-800/40 rounded-xl p-1 mb-8 border border-white/5">
+                            <div className="flex bg-[var(--bg-secondary)] rounded-2xl p-1.5 mb-10 border border-[var(--glass-border)]">
                                 <button
                                     onClick={() => { setIsSignUp(false); setError(''); }}
-                                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all uppercase tracking-widest ${
+                                    className={`flex-1 py-3 text-[9px] font-black rounded-xl transition-all uppercase tracking-[0.2em] ${
                                         !isSignUp 
-                                            ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg' 
-                                            : 'text-gray-500 hover:text-gray-300'
+                                            ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/20' 
+                                            : 'text-[var(--text-muted)] hover:text-indigo-600'
                                     }`}
                                 >
-                                    Sign In
+                                    Access
                                 </button>
                                 <button
                                     onClick={() => { setIsSignUp(true); setError(''); }}
-                                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all uppercase tracking-widest ${
+                                    className={`flex-1 py-3 text-[9px] font-black rounded-xl transition-all uppercase tracking-[0.2em] ${
                                         isSignUp 
-                                            ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg' 
-                                            : 'text-gray-500 hover:text-gray-300'
+                                            ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/20' 
+                                            : 'text-[var(--text-muted)] hover:text-indigo-600'
                                     }`}
                                 >
-                                    Sign Up
+                                    Initiate
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-4">
+                            <form onSubmit={handleSubmit} className="space-y-6">
                                 {/* Name (Signup only) */}
                                 {isSignUp && (
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                                        <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] mb-4 opacity-40">Alias / Identity</label>
                                         <input
                                             type="text"
                                             name="name"
                                             value={formData.name}
                                             onChange={handleInputChange}
-                                            placeholder="John Doe"
-                                            className="w-full px-4 py-3 bg-gray-800/60 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                                            placeholder="Enter full name"
+                                            className="w-full px-5 py-4 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium"
                                         />
                                     </div>
                                 )}
 
                                 {/* Email */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                                    <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] mb-4 opacity-40">Network Identifier</label>
                                     <div className="relative">
-                                        <EnvelopeIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+                                        <EnvelopeIcon className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)]" />
                                         <input
                                             type="email"
                                             name="email"
                                             value={formData.email}
                                             onChange={handleInputChange}
-                                            placeholder="you@example.com"
-                                            className="w-full pl-10 pr-4 py-3 bg-gray-800/60 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                                            placeholder="address@nexus.io"
+                                            className="w-full pl-14 pr-5 py-4 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium"
                                         />
                                     </div>
                                 </div>
 
                                 {/* Password */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                                    <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] mb-4 opacity-40">Access Key</label>
                                     <div className="relative">
-                                        <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+                                        <LockClosedIcon className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)]" />
                                         <input
                                             type="password"
                                             name="password"
@@ -328,7 +326,7 @@ const LoginPage = () => {
                                             onChange={handleInputChange}
                                             placeholder="••••••••"
                                             maxLength={10}
-                                            className="w-full pl-10 pr-4 py-3 bg-gray-800/60 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                                            className="w-full pl-14 pr-5 py-4 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium"
                                         />
                                     </div>
                                 </div>
@@ -336,9 +334,9 @@ const LoginPage = () => {
                                 {/* Confirm Password (Signup only) */}
                                 {isSignUp && (
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-300 mb-2">Confirm Password</label>
+                                        <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] mb-4 opacity-40">Key Confirmation</label>
                                         <div className="relative">
-                                            <LockClosedIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+                                            <LockClosedIcon className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-muted)]" />
                                             <input
                                                 type="password"
                                                 name="confirmPassword"
@@ -346,7 +344,7 @@ const LoginPage = () => {
                                                 onChange={handleInputChange}
                                                 placeholder="••••••••"
                                                 maxLength={10}
-                                                className="w-full pl-10 pr-4 py-3 bg-gray-800/60 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                                                className="w-full pl-14 pr-5 py-4 bg-[var(--bg-secondary)] border border-[var(--glass-border)] rounded-2xl text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium"
                                             />
                                         </div>
                                     </div>
@@ -354,7 +352,7 @@ const LoginPage = () => {
 
                                 {/* Error message */}
                                 {error && (
-                                    <div className="p-3 bg-rose-500/20 border border-rose-500/30 rounded-lg text-rose-400 text-sm">
+                                    <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-500 text-[10px] font-black uppercase tracking-widest text-center animate-shake">
                                         {error}
                                     </div>
                                 )}
@@ -363,26 +361,26 @@ const LoginPage = () => {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    className="w-full py-5 bg-indigo-600 hover:bg-indigo-500 text-white font-black uppercase tracking-[0.2em] text-[9px] rounded-2xl transition-all shadow-2xl shadow-indigo-600/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 active:scale-95"
                                 >
                                     {isLoading ? (
-                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                     ) : (
                                         <>
-                                            {isSignUp ? 'Create Account' : 'Sign In'}
-                                            <ArrowRightIcon className="h-5 w-5" />
+                                            {isSignUp ? 'Initiate Sequence' : 'Access Hub'}
+                                            <ArrowRightIcon className="h-4 w-4" />
                                         </>
                                     )}
                                 </button>
                             </form>
                             
                             {/* Divider */}
-                            <div className="relative my-6">
+                            <div className="relative my-8">
                                 <div className="absolute inset-0 flex items-center">
-                                    <div className="w-full border-t border-white/10"></div>
+                                    <div className="w-full border-t border-[var(--glass-border)]"></div>
                                 </div>
-                                <div className="relative flex justify-center text-xs uppercase">
-                                    <span className="bg-gray-900/70 px-3 text-gray-500">or</span>
+                                <div className="relative flex justify-center text-[10px] font-black uppercase tracking-widest">
+                                    <span className="bg-[var(--glass-bg)] px-4 text-[var(--text-muted)]">or</span>
                                 </div>
                             </div>
 
@@ -390,22 +388,22 @@ const LoginPage = () => {
                             <button
                                 onClick={handleGoogleLogin}
                                 disabled={isLoading}
-                                className="w-full flex items-center justify-center gap-2 text-sm font-medium text-gray-400 hover:text-white py-2.5 rounded-lg hover:bg-white/5 transition-all border border-white/10 mb-2"
+                                className="w-full flex items-center justify-center gap-4 text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] py-4 rounded-2xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-card-hover)] transition-all border border-[var(--glass-border)] hover:border-indigo-500/30 active:scale-95 group"
                             >
-                                <svg className="h-5 w-5" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M24 9.5c3.54 0 6.7 1.22 9.19 3.61l6.85-6.85C35.64 2.36 30.23 0 24 0 14.82 0 6.71 5.82 2.69 14.09l7.98 6.2C12.13 13.98 17.62 9.5 24 9.5z"/><path fill="#34A853" d="M46.1 24.55c0-1.64-.15-3.22-.42-4.74H24v9.01h12.42c-.54 2.9-2.18 5.36-4.65 7.01l7.19 5.59C43.93 37.13 46.1 31.3 46.1 24.55z"/><path fill="#FBBC05" d="M10.67 28.29c-1.13-3.38-1.13-7.02 0-10.4l-7.98-6.2C.9 15.1 0 19.41 0 24c0 4.59.9 8.9 2.69 12.31l7.98-6.2z"/><path fill="#EA4335" d="M24 48c6.23 0 11.64-2.06 15.53-5.61l-7.19-5.59c-2.01 1.35-4.58 2.15-8.34 2.15-6.38 0-11.87-4.48-13.33-10.6l-7.98 6.2C6.71 42.18 14.82 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></g></svg>
-                                Continue with Google
+                                <svg className="h-4 w-4 transition-transform group-hover:scale-110" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M24 9.5c3.54 0 6.7 1.22 9.19 3.61l6.85-6.85C35.64 2.36 30.23 0 24 0 14.82 0 6.71 5.82 2.69 14.09l7.98 6.2C12.13 13.98 17.62 9.5 24 9.5z"/><path fill="#34A853" d="M46.1 24.55c0-1.64-.15-3.22-.42-4.74H24v9.01h12.42c-.54 2.9-2.18 5.36-4.65 7.01l7.19 5.59C43.93 37.13 46.1 31.3 46.1 24.55z"/><path fill="#FBBC05" d="M10.67 28.29c-1.13-3.38-1.13-7.02 0-10.4l-7.98-6.2C.9 15.1 0 19.41 0 24c0 4.59.9 8.9 2.69 12.31l7.98-6.2z"/><path fill="#EA4335" d="M24 48c6.23 0 11.64-2.06 15.53-5.61l-7.19-5.59c-2.01 1.35-4.58 2.15-8.34 2.15-6.38 0-11.87-4.48-13.33-10.6l-7.98 6.2C6.71 42.18 14.82 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></g></svg>
+                                Identity Handshake
                             </button>
                         </div>
                         
                         {/* Trust badges */}
-                        <div className="mt-6 flex items-center justify-center gap-6 text-gray-500 text-xs">
-                            <div className="flex items-center gap-1.5">
-                                <ShieldCheckIcon className="h-4 w-4 text-green-500" />
-                                <span>Secure Login</span>
+                        <div className="mt-10 flex items-center justify-center gap-10 text-[9px] font-black uppercase tracking-[0.3em] opacity-40">
+                            <div className="flex items-center gap-2">
+                                <ShieldCheckIcon className="h-4 w-4" />
+                                <span>Encrypted</span>
                             </div>
-                            <div className="flex items-center gap-1.5">
-                                <SparklesIcon className="h-4 w-4 text-amber-500" />
-                                <span>Free to Start</span>
+                            <div className="flex items-center gap-2">
+                                <SparklesIcon className="h-4 w-4" />
+                                <span>Zero-Fee</span>
                             </div>
                         </div>
                     </div>

@@ -1,12 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link
-      rel="icon"
-      type="image/png"
-      href="/logo.png"
-    />
+    <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- SEO Meta Tags -->
@@ -20,7 +16,12 @@
       content="growth partners, startup founders, equity collaboration, commission based growth, startup scaling, vetted talent, fractional cmo, growth atelier"
     />
     <link rel="canonical" href="https://sohospace.entrext.in/" />
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      title="Sitemap"
+      href="/sitemap.xml"
+    />
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website" />
@@ -94,23 +95,29 @@
     <style>
       /* Modern App Background */
       .app-bg {
-        background-color: #0a0f1c;
-        background-image: radial-gradient(
+        background-color: var(--bg-primary);
+        background-image: var(--gradient-mesh);
+        min-height: 100vh;
+        transition: background-color 0.3s ease;
+      }
+
+      [data-theme="light"] .app-bg {
+        background-image:
+          radial-gradient(
             ellipse at 0% 0%,
-            rgba(99, 102, 241, 0.15) 0%,
+            rgba(99, 102, 241, 0.05) 0%,
             transparent 50%
           ),
           radial-gradient(
             ellipse at 100% 0%,
-            rgba(139, 92, 246, 0.1) 0%,
+            rgba(139, 92, 246, 0.05) 0%,
             transparent 50%
           ),
           radial-gradient(
             ellipse at 50% 100%,
-            rgba(20, 184, 166, 0.08) 0%,
+            rgba(20, 184, 166, 0.03) 0%,
             transparent 50%
           );
-        min-height: 100vh;
       }
 
       /* Smooth scrolling */
@@ -157,7 +164,6 @@
         animation: fadeInUp 0.4s ease forwards;
       }
     </style>
-
 
     <link rel="stylesheet" href="/index.css" />
   </head>
