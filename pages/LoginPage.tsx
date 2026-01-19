@@ -367,7 +367,7 @@ const LoginPage = () => {
                                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                     ) : (
                                         <>
-                                            Sign in with Email
+                                            {isSignUp ? 'Initiate Growth' : 'Login with Email'}
                                             <ArrowRightIcon className="h-4 w-4" />
                                         </>
                                     )}
@@ -391,7 +391,7 @@ const LoginPage = () => {
                                 className="w-full flex items-center justify-center gap-4 text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-primary)] py-4 rounded-2xl bg-[var(--bg-secondary)] hover:bg-[var(--bg-card-hover)] transition-all border border-[var(--glass-border)] hover:border-indigo-500/30 active:scale-95 group"
                             >
                                 <svg className="h-4 w-4 transition-transform group-hover:scale-110" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M24 9.5c3.54 0 6.7 1.22 9.19 3.61l6.85-6.85C35.64 2.36 30.23 0 24 0 14.82 0 6.71 5.82 2.69 14.09l7.98 6.2C12.13 13.98 17.62 9.5 24 9.5z"/><path fill="#34A853" d="M46.1 24.55c0-1.64-.15-3.22-.42-4.74H24v9.01h12.42c-.54 2.9-2.18 5.36-4.65 7.01l7.19 5.59C43.93 37.13 46.1 31.3 46.1 24.55z"/><path fill="#FBBC05" d="M10.67 28.29c-1.13-3.38-1.13-7.02 0-10.4l-7.98-6.2C.9 15.1 0 19.41 0 24c0 4.59.9 8.9 2.69 12.31l7.98-6.2z"/><path fill="#EA4335" d="M24 48c6.23 0 11.64-2.06 15.53-5.61l-7.19-5.59c-2.01 1.35-4.58 2.15-8.34 2.15-6.38 0-11.87-4.48-13.33-10.6l-7.98 6.2C6.71 42.18 14.82 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></g></svg>
-                                Sign in with Google
+                                {isSignUp ? 'Join with Google' : 'Sign in with Google'}
                             </button>
                         </div>
                         
