@@ -113,6 +113,12 @@ export const BookmarkIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
+export const ChatBubbleLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.75V6.75A2.25 2.25 0 014.5 4.5h15a2.25 2.25 0 012.25 2.25v6a2.25 2.25 0 01-2.25 2.25H16.5l-4.5 4.5V15H4.5a2.25 2.25 0 01-2.25-2.25z" />
+    </svg>
+);
+
 export const ChatBubbleLeftRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193l-3.72.372a3.75 3.75 0 01-3.696-3.696V15a3.75 3.75 0 013.75-3.75h5.25zM12 15V9.75M8.25 9.75h3.75M3.75 9.75h.375m-1.5 3.375h1.5M4.125 15h.375M5.25 12h.375" />
