@@ -24,7 +24,9 @@ test.describe('Network Throttling & Resilience', () => {
     
     // Ensure critical elements load eventually
     await expect(page.locator('h1')).toBeVisible({ timeout: 30000 }); // Give it time
-    await expect(page.locator('text=The Growth Atelier')).toBeVisible();
+    
+    // Use first() to avoid strict mode violation since "The Growth Atelier" appears multiple times
+    await expect(page.locator('text=The Growth Atelier').first()).toBeVisible();
 
     const loadTime = Date.now() - startTime;
     console.log(`Slow 3G Load Time: ${loadTime}ms`);
@@ -41,6 +43,13 @@ test.describe('Network Throttling & Resilience', () => {
     test('Offline resilience', async ({ page }) => {
     await page.goto('/');
     
+    // Wait for page to fully load before going offline
+    await expect(page.locator('h1')).toBeVisible();
+    
+    // Verify Pricing link is visible in the header
+    const pricingLink = page.locator('a[href="/pricing"]').first();
+    await expect(pricingLink).toBeVisible();
+    
     // Go offline
     const client = await page.context().newCDPSession(page);
     await client.send('Network.enable');
@@ -51,17 +60,20 @@ test.describe('Network Throttling & Resilience', () => {
       latency: 0,
     });
 
-    // Try to navigate - should probably stay or show browser error, 
-    // but here we check if the CURRENT page remains somewhat stable or crashes
-    // Clicking a client-side route should still work if chunks are loaded or fail gracefully
+    // Try to navigate - client-side routing should still work since React is already loaded
+    // Click the visible pricing link
+    await pricingLink.click();
     
-    await page.click('text=Pricing'); 
+    // Wait for navigation to complete (client-side routing)
+    await page.waitForURL('**/pricing', { timeout: 10000 });
     
-    // Note: If chunks aren't cached, this might fail. 
-    // If we had a Service Worker, we'd check for offline page.
-    // For now, we just ensure the browser doesn't crash the existing DOM.
+    // Verify the page changed (body should still be visible)
     const body = page.locator('body');
     await expect(body).toBeVisible();
+    
+    // Verify we're on the pricing page by checking for pricing-specific content
+    // Since we're offline, external resources might not load, but the DOM should render
+    await expect(page.locator('h1, h2').first()).toBeVisible({ timeout: 5000 });
   });
 
 });

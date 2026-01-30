@@ -5,7 +5,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const SUPABASE_URL = "https://ldewwmfkymjmokopulys.supabase.co/functions/v1/submit-support";
+    const SUPPORT_ENDPOINT = process.env.VITE_SUPPORT_ENDPOINT || "https://ldewwmfkymjmokopulys.supabase.co";
+    const SUPABASE_URL = `${SUPPORT_ENDPOINT.replace(/\/$/, '')}/functions/v1/submit-support`;
     const FORM_SECRET = process.env.FORM_SECRET;
     
     const { product, category, message, user_email, metadata } = req.body;

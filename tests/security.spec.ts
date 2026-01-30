@@ -18,8 +18,13 @@ test.describe('Security & Input Validation', () => {
 
     // Inject XSS payload as Name
     const xssPayload = '<img src=x onerror=alert(1)>';
-    await page.fill('input[placeholder="Type your message..."]', xssPayload);
-    await page.click('button[type="submit"]');
+    const messageInput = page.locator('input[placeholder="Type your message..."]');
+    await messageInput.fill(xssPayload);
+    
+    // Wait for button to be enabled (input is not empty)
+    const submitButton = page.locator('button[type="submit"]');
+    await expect(submitButton).toBeEnabled({ timeout: 5000 });
+    await submitButton.click();
 
     // Verify the message appears in the chat bubbling
     // IMPORTANT: It should appear as TEXT, not execute the JS.
@@ -38,12 +43,22 @@ test.describe('Security & Input Validation', () => {
     
     // Inject SQL Input as Email - Client side validation should catch this invalid email
     const sqlPayload = "admin' --"; // Invalid email format
-    await page.fill('input[type="email"]', sqlPayload); // The input type might be text or email dynamically
-    await page.click('button[type="submit"]');
-
-    // Bot should complain about invalid email
-    // "That doesn't look like a valid email. Please try again."
-    await expect(page.locator('text=doesn\'t look like a valid email')).toBeVisible();
+    await messageInput.fill(sqlPayload);
+    
+    // Wait a bit for validation to kick in - button should remain disabled for invalid email
+    await page.waitForTimeout(500);
+    
+    // Try to click submit - it should be disabled
+    const isEnabled = await submitButton.isEnabled();
+    expect(isEnabled).toBe(false); // Button should be disabled for invalid email
+    
+    // Now enter a valid email to continue
+    await messageInput.fill('test@example.com');
+    await expect(submitButton).toBeEnabled({ timeout: 5000 });
+    await submitButton.click();
+    
+    // Should proceed to next step (category selection)
+    await expect(page.locator('text=category')).toBeVisible({ timeout: 10000 });
   });
 
   test('Forms should resist SQL Injection characters', async ({ page }) => {
