@@ -3,7 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
     ChatBubbleLeftRightIcon, 
     XMarkIcon, 
-    PaperAirplaneIcon
+    PaperAirplaneIcon,
+    SparklesIcon
 } from './Icons';
 import { 
     BugAntIcon,
@@ -131,33 +132,44 @@ const SupportChatbot = () => {
         <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
             {/* Chat Window */}
             {isOpen && (
-                <div className="mb-4 w-[90vw] max-w-[540px] bg-[#1a2332] border border-[#2d3b4e] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
+                <div className="mb-4 w-[90vw] max-w-[480px] glass-card flex flex-col overflow-hidden animate-fade-in-up border border-[var(--glass-border)] rounded-[var(--border-radius-xl)] shadow-[var(--shadow-xl)] bg-[var(--bg-secondary)]/95">
                     {/* Header */}
-                    <div className="bg-[#1a2332] p-5 border-b border-[#2d3b4e]">
-                        <div className="flex items-center gap-3 mb-3">
-                            <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg flex items-center justify-center">
-                                <ChatBubbleLeftRightIcon className="h-6 w-6 text-white" />
+                    <div className="p-6 border-b border-[var(--glass-border)] bg-gradient-to-r from-[var(--bg-secondary)] to-[var(--bg-primary)]">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-[var(--gradient-primary)] rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                                <SparklesIcon className="h-6 w-6 text-white" />
                             </div>
-                            <div>
-                                <h3 className="text-white font-bold text-base">Soho Space Concierge</h3>
-                                <p className="text-gray-400 text-xs italic">Our intelligence team typically responds within 24 hours.</p>
+                            <div className="flex-1">
+                                <h3 className="text-[var(--text-primary)] font-bold text-lg leading-tight group-hover:text-indigo-400 transition-colors">
+                                    Soho Space Concierge
+                                </h3>
+                                <p className="text-[var(--text-muted)] text-[10px] uppercase tracking-[0.2em] font-black mt-1">
+                                    Operational Support Protocol
+                                </p>
                             </div>
+                            <button 
+                                onClick={() => setIsOpen(false)}
+                                className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-white/5 transition-all"
+                            >
+                                <XMarkIcon className="h-5 w-5" />
+                            </button>
                         </div>
                     </div>
 
                     {/* Category Selection */}
-                    <div className="p-5 bg-[#1a2332] border-b border-[#2d3b4e]">
-                        <div className="grid grid-cols-2 gap-2">
+                    <div className="p-6 bg-[var(--bg-primary)]/50 border-b border-[var(--glass-border)]">
+                        <label className="block text-[10px] font-black text-[var(--text-muted)] mb-4 uppercase tracking-[0.3em]">Select Operation Type</label>
+                        <div className="grid grid-cols-2 gap-3">
                             {categories.map((cat) => {
                                 const Icon = cat.icon;
                                 return (
                                     <button
                                         key={cat.id}
                                         onClick={() => handleCategorySelect(cat.id)}
-                                        className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                                        className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border ${
                                             selectedCategory === cat.id
-                                                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/25'
-                                                : 'bg-[#0f1621] text-gray-400 hover:bg-[#2d3b4e] border border-[#2d3b4e]'
+                                                ? 'bg-indigo-600 text-white border-indigo-500 shadow-xl shadow-indigo-600/20'
+                                                : 'bg-[var(--bg-secondary)] text-[var(--text-muted)] border-[var(--glass-border)] hover:border-indigo-600/30 hover:text-[var(--text-primary)]'
                                         }`}
                                     >
                                         <Icon className="h-4 w-4" />
@@ -169,17 +181,17 @@ const SupportChatbot = () => {
                     </div>
 
                     {/* Messages Area */}
-                    <div className="flex-grow p-5 overflow-y-auto space-y-3 bg-[#0f1621] max-h-[250px]">
+                    <div className="flex-grow p-6 overflow-y-auto space-y-4 bg-[var(--bg-primary)]/30 min-h-[180px] max-h-[250px] scrollbar-hide">
                         {messages.map((msg) => (
                             <div 
                                 key={msg.id} 
                                 className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                             >
                                 <div 
-                                    className={`max-w-[85%] rounded-xl px-4 py-2.5 text-sm leading-relaxed ${
+                                    className={`max-w-[85%] rounded-[1.5rem] px-5 py-3.5 text-sm leading-relaxed shadow-sm ${
                                         msg.sender === 'user' 
-                                            ? 'bg-cyan-500 text-white rounded-tr-none' 
-                                            : 'bg-[#1a2332] text-gray-300 rounded-tl-none border border-[#2d3b4e]'
+                                            ? 'bg-indigo-600 text-white rounded-tr-none' 
+                                            : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] rounded-tl-none border border-[var(--glass-border)]'
                                     }`}
                                 >
                                     {msg.text}
@@ -190,34 +202,34 @@ const SupportChatbot = () => {
                     </div>
 
                     {/* Input Area */}
-                    <form onSubmit={handleSubmit} className="p-5 bg-[#1a2332] border-t border-[#2d3b4e] space-y-3">
+                    <form onSubmit={handleSubmit} className="p-6 bg-[var(--bg-secondary)] border-t border-[var(--glass-border)] space-y-6">
                         {/* Email Input */}
-                        <div>
-                            <label className="block text-xs font-medium text-gray-400 mb-2 uppercase tracking-wider">
-                                Your Email
+                        <div className="space-y-3">
+                            <label className="block text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.3em]">
+                                Network Identifier (Email)
                             </label>
                             <input
                                 type="email"
                                 value={userEmail}
                                 onChange={(e) => setUserEmail(e.target.value)}
-                                placeholder="you@example.com"
+                                placeholder="alias@nexus.io"
                                 required
-                                className="w-full bg-[#0f1621] border border-[#2d3b4e] rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all text-sm"
+                                className="w-full bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-2xl px-5 py-3.5 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all text-sm font-medium"
                             />
                         </div>
 
                         {/* Message Input */}
-                        <div>
-                            <label className="block text-xs font-medium text-gray-400 mb-2 uppercase tracking-wider">
-                                How can we help?
+                        <div className="space-y-3">
+                            <label className="block text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.3em]">
+                                Transmission Content
                             </label>
                             <textarea
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
-                                placeholder="Describe your issue or suggestion..."
+                                placeholder="Describe your growth request or technical anomaly..."
                                 required
                                 rows={3}
-                                className="w-full bg-[#0f1621] border border-[#2d3b4e] rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all text-sm resize-none"
+                                className="w-full bg-[var(--bg-primary)] border border-[var(--glass-border)] rounded-2xl px-5 py-4 text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all text-sm resize-none leading-relaxed font-medium"
                             />
                         </div>
 
@@ -225,17 +237,19 @@ const SupportChatbot = () => {
                         <button 
                             type="submit"
                             disabled={!selectedCategory || !userEmail || !inputValue.trim() || isSubmitting}
-                            className="w-full py-3.5 bg-cyan-500 hover:bg-cyan-400 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25"
+                            className="w-full py-5 bg-[var(--gradient-primary)] text-white font-black uppercase tracking-[0.3em] text-[10px] rounded-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(99,102,241,0.3)] active:scale-95 group"
                         >
-                            <PaperAirplaneIcon className="h-4 w-4" />
-                            {isSubmitting ? 'Submitting...' : 'Submit Ticket'}
+                            <PaperAirplaneIcon className="h-4 w-4 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                            {isSubmitting ? 'Transmitting...' : 'Initiate Transmission'}
                         </button>
 
                         {/* Footer */}
-                        <div className="flex items-center justify-center gap-2 pt-2">
-                            <span className="text-xs text-gray-500">Powered by</span>
-                            <span className="text-xs font-bold text-cyan-400">ENTREXT SUPPORT</span>
-                            <span className="text-[10px] bg-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full border border-cyan-500/30">v2.0</span>
+                        <div className="flex items-center justify-center gap-3 pt-4 border-t border-white/5">
+                            <span className="text-[9px] font-black text-[var(--text-muted)] uppercase tracking-widest">Powered by</span>
+                            <div className="flex items-center gap-1.5 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+                                <span className="text-[9px] font-black text-indigo-400">ENTREXT</span>
+                                <span className="text-[10px] bg-indigo-500/20 text-indigo-400 px-2 py-0.5 rounded-full border border-indigo-500/30 font-black">SUPPORT</span>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -245,20 +259,25 @@ const SupportChatbot = () => {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 data-testid="support-toggle"
-                className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 ${
+                className={`w-16 h-16 rounded-[1.5rem] shadow-[var(--shadow-xl)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 relative overflow-hidden group ${
                     isOpen 
-                        ? 'bg-rose-500 hover:bg-rose-600' 
-                        : 'bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500'
+                        ? 'bg-rose-500' 
+                        : 'bg-indigo-600'
                 }`}
             >
+                {/* Ping Animation */}
+                {!isOpen && (
+                    <span className="absolute inset-0 bg-white/20 scale-0 group-hover:scale-150 transition-transform duration-700 rounded-full" />
+                )}
+                
                 {isOpen ? (
-                    <XMarkIcon className="h-7 w-7 text-white" />
+                    <XMarkIcon className="h-7 w-7 text-white relative z-10" />
                 ) : (
-                    <div className="relative">
+                    <div className="relative z-10">
                         <ChatBubbleLeftRightIcon className="h-7 w-7 text-white" />
                         <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500 border border-white/20"></span>
                         </span>
                     </div>
                 )}
