@@ -244,6 +244,7 @@ const SupportChatbot = () => {
             {/* Floating Toggle Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
+                data-testid="support-toggle"
                 className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 ${
                     isOpen 
                         ? 'bg-rose-500 hover:bg-rose-600' 
@@ -251,10 +252,10 @@ const SupportChatbot = () => {
                 }`}
             >
                 {isOpen ? (
-                    <XMarkIcon className="h-8 w-8 text-white" />
+                    <XMarkIcon className="h-7 w-7 text-white" />
                 ) : (
                     <div className="relative">
-                        <ChatBubbleLeftRightIcon className="h-8 w-8 text-white" />
+                        <ChatBubbleLeftRightIcon className="h-7 w-7 text-white" />
                         <span className="absolute -top-1 -right-1 flex h-3 w-3">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
