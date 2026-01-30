@@ -215,7 +215,7 @@ const SupportChatbot = () => {
                                 className="w-full py-3 bg-indigo-600 text-white font-black uppercase tracking-[0.2em] text-[10px] rounded-xl transition-all disabled:opacity-30 disabled:grayscale flex items-center justify-center gap-2 active:scale-95 shadow-xl shadow-indigo-600/20"
                             >
                                 <PaperAirplaneIcon className="h-3 w-3" />
-                                {isSubmitting ? 'Transmitting...' : 'Initiate Sync'}
+                                {isSubmitting ? 'Transmitting...' : 'Submit Ticket'}
                             </button>
                         </form>
                     </div>
@@ -229,14 +229,14 @@ const SupportChatbot = () => {
                 className={`w-14 h-14 rounded-full shadow-[0_10px_30px_rgba(99,102,241,0.4)] flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-95 pointer-events-auto relative group ${
                     isOpen 
                         ? 'bg-white/10 backdrop-blur-md border border-white/20' 
-                        : 'bg-[#00f2fe] hover:bg-[#00d2de]'
+                        : 'bg-indigo-600 hover:bg-indigo-500'
                 }`}
             >
                 {isOpen ? (
                     <XMarkIcon className="h-6 w-6 text-white" />
                 ) : (
                     <div className="relative">
-                        <ChatBubbleLeftIcon className="h-6 w-6 text-black" strokeWidth={2.5} />
+                        <ChatBubbleLeftIcon className="h-6 w-6 text-white" strokeWidth={2.5} />
                         <span className="absolute -top-1 -right-1 flex h-3 w-3">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-600 border border-white/20"></span>
