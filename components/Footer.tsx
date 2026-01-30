@@ -17,7 +17,7 @@ const Footer = () => {
         company: [
             { name: 'About Us', href: 'https://www.entrext.in', type: 'external' },
             { name: 'Careers', href: '#', type: 'internal' },
-            { name: 'Blog', href: '#', type: 'internal' },
+            { name: 'Blog', href: '/blog', type: 'internal' },
             { name: 'Contact', href: 'mailto:business@entrext.in', type: 'email' },
         ],
         legal: [

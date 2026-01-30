@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import SupportChatbot from './components/SupportChatbot';
 import { AppProvider } from './context/AppContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
@@ -18,9 +19,11 @@ import HomePage from './pages/HomePage';
 import OnboardingPage from './pages/OnboardingPage';
 import ScrollToTop from './components/ScrollToTop';
 
-import FeedbackPage from './pages/FeedbackPage';
+
 import DiscoverPage from './pages/DiscoverPage';
 import PricingPage from './pages/PricingPage';
+import BlogsPage from './pages/BlogsPage';
+import BlogDetailPage from './pages/BlogDetailPage';
 
 // Fix: Extracted route elements into variables to simplify the JSX tree inside <Routes />.
 // This can prevent potential parser issues with complex nested components in props.
@@ -62,7 +65,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/login" element={<LoginPage />} />
-                  <Route path="/feedback" element={<FeedbackPage />} />
+
                   <Route path="/discover" element={<DiscoverPage />} />
                   <Route
                     path="/dashboard"
@@ -93,9 +96,12 @@ function App() {
                     element={OnboardingRoute}
                   />
                   <Route path="/pricing" element={<PricingPage />} />
+                  <Route path="/blog" element={<BlogsPage />} />
+                  <Route path="/blog/:id" element={<BlogDetailPage />} />
                 </Routes>
               </main>
               <Footer />
+              <SupportChatbot />
             </div>
           </BrowserRouter>
         </AuthProvider>

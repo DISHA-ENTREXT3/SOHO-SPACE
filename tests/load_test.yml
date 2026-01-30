@@ -1,0 +1,40 @@
+config:
+  target: "https://sohospace.entrext.in"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 120
+      arrivalRate: 20
+      rampTo: 50
+      name: "Ramp up load"
+    - duration: 240
+      arrivalRate: 50
+      name: "Sustained high load"
+  plugins:
+    ensure: {}
+  ensure:
+    p95: 500 # 95% of requests should allow be faster than 500ms
+    maxErrorRate: 1 # Stop if more than 1% errors
+
+scenarios:
+  - name: "Browsing User Flow"
+    flow:
+      - get:
+          url: "/"
+      - think: 2
+      - get:
+          url: "/pricing"
+      - think: 3
+      - get:
+          url: "/blog"
+      - think: 2
+      - get:
+          url: "/discover"
+
+  - name: "Support API Stress"
+    flow:
+      - post:
+          url: "/api/check-health-mock" # Since real endpoint is protected/external, we limit this stress test to main pages unless we mock
+          json:
+            dummy: "data"

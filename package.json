@@ -9,7 +9,10 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:ui": "vitest --ui",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:security": "playwright test tests/security.spec.ts",
+    "test:network": "playwright test tests/throttling.spec.ts",
+    "test:load": "npx artillery run tests/load_test.yml"
   },
   "dependencies": {
     "@entrext/support-client": "^0.2.0",

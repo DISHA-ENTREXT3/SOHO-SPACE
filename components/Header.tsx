@@ -105,8 +105,8 @@ const Header = () => {
         { name: 'How it Works', action: () => scrollToSection('how-it-works') },
         { name: 'Features', action: () => scrollToSection('features') },
         { name: 'Discover', path: '/discover' },
+        { name: 'Blog', path: '/blog' },
         { name: 'Pricing', path: '/pricing' },
-        { name: 'Feedback', path: '/feedback' },
     ];
 
     const textColorClass = scrolled || !isHomePage || theme === 'light' ? 'text-[var(--text-primary)]' : 'text-gray-100';
