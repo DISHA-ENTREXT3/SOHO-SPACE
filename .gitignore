@@ -25,3 +25,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+load-test-result.json
+zap-report.json
+test-results/
+playwright-report/

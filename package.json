@@ -12,7 +12,9 @@
     "test:watch": "vitest",
     "test:security": "playwright test tests/security.spec.ts",
     "test:network": "playwright test tests/throttling.spec.ts",
-    "test:load": "npx artillery run tests/load_test.yml"
+    "test:load": "npx artillery run tests/load_test.yml",
+    "test:all": "bash scripts/run-all-tests.sh",
+    "prod:guard": "node prod-guard/bin/prod-guard.js --ci"
   },
   "dependencies": {
     "@entrext/support-client": "^0.2.0",
@@ -43,7 +45,9 @@
     "typescript": "~5.8.2",
     "vercel": "^50.3.2",
     "vite": "^6.2.0",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.17",
+    "node-fetch": "^3.3.2",
+    "js-yaml": "^4.1.0"
   },
   "overrides": {
     "react-helmet-async": {
